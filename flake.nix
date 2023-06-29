@@ -29,7 +29,7 @@
 	      username = "insipx";
 	      homeDirectory = "/home/insipx";
 	      stateVersion = "23.05";
-	    }
+	    };
 	  }
 	];
       
