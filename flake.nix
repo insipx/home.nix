@@ -21,7 +21,7 @@
       lib = nixpkgs.lib;
     in {
       homeConfigurations."insipx" = home-manager.lib.homeManagerConfiguration {
-        inherit system pkgs;
+        inherit pkgs;
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
