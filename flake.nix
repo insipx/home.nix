@@ -22,16 +22,7 @@
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = [ 
-	  ./home.nix 
-	  {
-	    home = {
-	      username = "insipx";
-	      homeDirectory = "/home/insipx";
-	      stateVersion = "23.05";
-	    };
-	  }
-	];
+        modules = [ ./home.nix ];
       
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
