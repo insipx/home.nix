@@ -14,10 +14,7 @@
   outputs = { nixpkgs, home-manager, ... }:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-	config.allowUnfree = true;
-      };
+      pkgs = nixpkgs.legacyPackages.${system};
       lib = nixpkgs.lib;
     in {
       homeConfigurations."insipx" = home-manager.lib.homeManagerConfiguration {
@@ -25,13 +22,17 @@
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = [ ./home.nix ];
-	configuration = {
-	  imports = [
-	    ./home.nix
-	  ];
-	};
-       
+        modules = [ 
+	  ./home.nix 
+	  {
+	    home = {
+	      username = "insipx";
+	      homeDirectory = "/home/insipx";
+	      stateVersion = "23.05";
+	    }
+	  }
+	];
+      
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
       };
