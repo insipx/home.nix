@@ -25,6 +25,13 @@
     ripgrep
     tree-sitter
     glow
+    rust-analyzer
+
+    # headers for compiling
+    # gcc
+    # zlib
+    # libgit2
+    # protobuf
 
     # NixOs related
     deadnix
@@ -185,13 +192,14 @@
   #    # background_opacity 1.0
   #  '';
   #};
-  programs.neovim = {
-    enable = true;
-    withPython3 = true;
-    withNodeJs = true;
-    withRuby = true;
-    extraPython3Packages = (ps: with ps; [ pynvim unidecode black isort ]);
-  };
+  # programs.neovim = {
+  #   enable = true;
+  #   withPython3 = true;
+  #   withNodeJs = true;
+  #   withRuby = true;
+  #   defaultEditor = true;
+  #   extraPython3Packages = (ps: with ps; [ pynvim unidecode black isort ]);
+  # };
   programs.ssh = {
     enable = true;
     serverAliveInterval = 5;
@@ -213,6 +221,7 @@
     };
   };
   programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
 
   xdg.enable = true;
   xdg.configFile = {
