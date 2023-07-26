@@ -26,12 +26,9 @@
     tree-sitter
     glow
     rust-analyzer
-
-    # headers for compiling
-    # gcc
-    # zlib
-    # libgit2
-    # protobuf
+    git
+    bat # Cat clone with syntax highlighting and git integration
+    tokei
 
     # NixOs related
     deadnix
@@ -42,6 +39,15 @@
     gitlint
     # General
     codespell
+
+    # General usability
+    feh
+    gh # Github CLI tool
+    ncdu
+
+    # Networking
+    nmap
+    rustscan
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -113,6 +119,7 @@
       ls = "exa";
       du = "dust";
       hms = "home-manager switch";
+      cat = "bat";
     };
     loginShellInit = ''
       eval (direnv hook fish)

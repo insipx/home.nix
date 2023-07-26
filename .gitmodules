@@ -2,3 +2,6 @@
 	path = dotfiles/kitty/kitty-themes
 	url = git@github.com:dexpota/kitty-themes.git
 
+[submodule "nvim"]
+	path = dotfiles/insipx-nvim
+	url = git@github.com:insipx/insipx-nvim.git
