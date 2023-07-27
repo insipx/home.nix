@@ -124,8 +124,6 @@ in {
       fish_vi_key_bindings
       atuin init fish | source
 
-      set -Ux GOPATH $HOME/.go
-      fish_add_path --append $GOPATH/bin
       set -gx VOLTA_HOME "$HOME/.volta"
       set -gx PATH "$VOLTA_HOME/bin" $PATH
       if test (uname) = Darwin
