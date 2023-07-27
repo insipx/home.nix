@@ -90,7 +90,7 @@
   };
 
   services.gpg-agent = {
-    enable = true;
+    enable = pkgs.hostPlatform.isLinux;
     enableScDaemon = true;
     defaultCacheTtl = 1800;
     enableSshSupport = true;
@@ -102,7 +102,7 @@
   };
 
   services.lorri = {
-    enable = true;
+    enable = pkgs.hostPlatform.isLinux; # On Mac, Lorri must be setup according to [other](https://github.com/nix-community/lorri#setup-on-other-platforms) instructions
     enableNotifications = true;
   };
 
