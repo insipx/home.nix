@@ -1,5 +1,4 @@
 { config, pkgs, lib, ... }:
-
 let
   privateConfiguration = builtins.fetchGit {
     url = "git@github.com:insipx/home.private.nix.git";
@@ -22,23 +21,28 @@ in {
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    grc
+    grc # Colorizer
     exa # replacement for ls
     du-dust # replacement for du
-    fd
+    fd # find
     ripgrep
     tree-sitter
     glow
-    # rust-analyzer
     git
     bat # Cat clone with syntax highlighting and git integration
     tokei
+    erdtree
+    htop
+    jq # Json format
+    websocat # Query websockets
+    wget
 
     # NixOs related
     deadnix
     cbfmt
     nixfmt
     statix
+    nix-index # Run `nix-index` and then use `nix-locate` like the normal unix `locate`
     # Git
     gitlint
     # General
@@ -55,19 +59,8 @@ in {
 
     # From Github
 
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
   ];
+
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
@@ -83,16 +76,6 @@ in {
     # '';
   };
 
-  # You can also manage environment variables but you will have to manually
-  # source
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/insipx/etc/profile.d/hm-session-vars.sh
-  #
-  # if you don't want to manage your shell through Home Manager.
   home.sessionVariables = {
     # EDITOR = "emacs";
     KEYID = "25CB17AB243484C1687D6D067976AC4AEB07F67F";
@@ -145,6 +128,9 @@ in {
       fish_add_path --append $GOPATH/bin
       set -gx VOLTA_HOME "$HOME/.volta"
       set -gx PATH "$VOLTA_HOME/bin" $PATH
+      if test (uname) = Darwin
+        fish_add_path --prepend --global "$HOME/.nix-profile/bin" /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
+      end
     '';
     plugins = [
       {
@@ -196,9 +182,10 @@ in {
       "alt+shift+ctrl+t" = "goto_layout tall";
       "alt+shift+ctrl+z" = "toggle_layout stack";
       # Focus
-      "alt+shift+ctrl+l" = "neighboring_window right";
-      "alt+shift+ctrl+j" = "neighboring_window down";
-      "alt+shift+ctrl+k" = "neighboring_window up";
+      "ctrl+l" = "neighboring_window right";
+      "ctrl+j" = "neighboring_window down";
+      "ctrl+k" = "neighboring_window up";
+      "ctrl+h" = "neighboring_window left";
       "ctrl+alt+h" = "neighboring_window left";
       "alt+shift+ctrl+super+r" = "set_tab_title";
     };
@@ -217,14 +204,14 @@ in {
       # background_opacity 1.0
     '';
   };
-  # programs.neovim = {
-  #   enable = true;
-  #   withPython3 = true;
-  #   withNodeJs = true;
-  #   withRuby = true;
-  #   defaultEditor = true;
-  #   extraPython3Packages = (ps: with ps; [ pynvim unidecode black isort ]);
-  # };
+  programs.neovim = {
+    enable = true;
+    withPython3 = true;
+    withNodeJs = true;
+    withRuby = true;
+    defaultEditor = true;
+    extraPython3Packages = (ps: with ps; [ pynvim unidecode black isort ]);
+  };
   programs.git = {
     enable = true;
     userName = "Andrew Plaza";
