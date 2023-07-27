@@ -29,7 +29,7 @@ in {
     ripgrep
     tree-sitter
     glow
-    rust-analyzer
+    # rust-analyzer
     git
     bat # Cat clone with syntax highlighting and git integration
     tokei
