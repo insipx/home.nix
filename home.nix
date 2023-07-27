@@ -1,7 +1,14 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
-{
-  imports = [ ./profile.nix ];
+let
+  privateConfiguration = builtins.fetchGit {
+    url = "git@github.com:insipx/home.private.nix.git";
+    ref = "master";
+    rev = "68832b7898bd4fa3b372fa8b4994ef7e59d2e868";
+  };
+in {
+  imports = [ ./profile.nix (import privateConfiguration) ]
+    ++ lib.optional (builtins.getEnv "MACHINE" == "macbook") ./mac.nix;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -46,6 +53,8 @@
     nmap
     rustscan
 
+    # From Github
+
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -87,6 +96,7 @@
   home.sessionVariables = {
     # EDITOR = "emacs";
     KEYID = "25CB17AB243484C1687D6D067976AC4AEB07F67F";
+    CACHEPOT_CACHE_SIZE = "50G";
   };
 
   services.gpg-agent = {
@@ -102,7 +112,8 @@
   };
 
   services.lorri = {
-    enable = pkgs.hostPlatform.isLinux; # On Mac, Lorri must be setup according to [other](https://github.com/nix-community/lorri#setup-on-other-platforms) instructions
+    # On Mac, Lorri must be setup according to [other](https://github.com/nix-community/lorri#setup-on-other-platforms) instructions
+    enable = pkgs.hostPlatform.isLinux;
     enableNotifications = true;
   };
 
@@ -117,10 +128,11 @@
       du = "dust";
       hms = "home-manager switch";
       cat = "bat";
+      s = "kitty +kitten ssh";
     };
-    loginShellInit = ''
-      eval (direnv hook fish)
-    '';
+    #   loginShellInit = ''
+    #     eval (direnv hook fish)
+    #   '';
     interactiveShellInit = ''
       set fish_greeting # Disable greeting
       set -x GPG_TTY (tty)
@@ -128,6 +140,11 @@
       gpgconf --launch gpg-agent
       fish_vi_key_bindings
       atuin init fish | source
+
+      set -Ux GOPATH $HOME/.go
+      fish_add_path --append $GOPATH/bin
+      set -gx VOLTA_HOME "$HOME/.volta"
+      set -gx PATH "$VOLTA_HOME/bin" $PATH
     '';
     plugins = [
       {
@@ -148,54 +165,58 @@
       }
     ];
   };
-  #programs.kitty = {
-  #  enable = true;
-  #  shellIntegration.enableFishIntegration = true;
-  #  theme = "Spacedust";
-  #  # font.package = "${pkgs.pragmatapro}";
-  #  font.name = "mononoki Nerd Font";
-  #  font.size = 10;
-  #  keybindings = {
-  #    "ctrl+shift+z"     = "goto_layout stack";
-  #    "ctrl+shift+a"     = "goto_layout tall";
-  #    "super+shift+["    = "previous_tab";
-  #    "super+shift+]"    = "next_tab";
-  #    "super+shift+t"    = "new_tab";
-  #    "alt+shift+ctrl+left" = "move_tab_backward"; # meh + left
-  #    "alt+shift+ctrl+right" = "move_tab_forward"; # meh + right
-  #    
-  #    "ctrl+shift+enter" = "new_window";
-  #    "alt+shift+ctrl+1" = "first_window";
-  #    "alt+shift+ctrl+2" = "second_window";
-  #    "alt+shift+ctrl+3" = "third_window";
-  #    "alt+shift+ctrl+4" = "fourth_window";
-  #    "alt+shift+ctrl+5" = "fifth_window";
-  #    "alt+shift+ctrl+6" = "sixth_window";
-  #    "alt+shift+ctrl+7" = "seventh_window";
-  #    "alt+shift+ctrl+8" = "eight_window";
-  #    "alt+shift+ctrl+9" = "ninth_window";
-  #    "alt+shift+ctrl+0" = "tenth_window";
-  #    "alt+shift+ctrl+s" = "goto_layout stack";
-  #    "alt+shift+ctrl+t" = "goto_layout tall";
-  #    "alt+shift+ctrl+z" = "toggle_layout stack";
-  #    # Focus
-  #    "alt+shift+ctrl+l" = "neighboring_window right";
-  #    "alt+shift+ctrl+j" = "neighboring_window down";
-  #    "alt+shift+ctrl+k" = "neighboring_window up";
-  #    "ctrl+alt+h" = "neighboring_window left";
-  #    "alt+shift+ctrl+super+r" = "set_tab_title";
-  #  };
-  #  extraConfig = ''
-  #    modify_font underline_position +2
-  #    modify_font underline_thickness 200%
-  #    modify_font strikethrough_position 2px
-  #    tab_bar_style slant
-  #    tab_title_template "{title}"
-  #    # repaint_delay 6
-  #    # dim_opacity 0.9
-  #    # background_opacity 1.0
-  #  '';
-  #};
+  programs.kitty = {
+    enable = true;
+    shellIntegration.enableFishIntegration = true;
+    theme = "Spacedust";
+    # font.package = "${pkgs.pragmatapro}";
+    font.name = "PragmataPro Mono Liga";
+    font.size = 15;
+    keybindings = {
+      "ctrl+shift+z" = "goto_layout stack";
+      "ctrl+shift+a" = "goto_layout tall";
+      "super+shift+[" = "previous_tab";
+      "super+shift+]" = "next_tab";
+      "super+shift+t" = "new_tab";
+      "alt+shift+ctrl+left" = "move_tab_backward"; # meh + left
+      "alt+shift+ctrl+right" = "move_tab_forward"; # meh + right
+
+      "ctrl+shift+enter" = "new_window";
+      "alt+shift+ctrl+1" = "first_window";
+      "alt+shift+ctrl+2" = "second_window";
+      "alt+shift+ctrl+3" = "third_window";
+      "alt+shift+ctrl+4" = "fourth_window";
+      "alt+shift+ctrl+5" = "fifth_window";
+      "alt+shift+ctrl+6" = "sixth_window";
+      "alt+shift+ctrl+7" = "seventh_window";
+      "alt+shift+ctrl+8" = "eight_window";
+      "alt+shift+ctrl+9" = "ninth_window";
+      "alt+shift+ctrl+0" = "tenth_window";
+      "alt+shift+ctrl+s" = "goto_layout stack";
+      "alt+shift+ctrl+t" = "goto_layout tall";
+      "alt+shift+ctrl+z" = "toggle_layout stack";
+      # Focus
+      "alt+shift+ctrl+l" = "neighboring_window right";
+      "alt+shift+ctrl+j" = "neighboring_window down";
+      "alt+shift+ctrl+k" = "neighboring_window up";
+      "ctrl+alt+h" = "neighboring_window left";
+      "alt+shift+ctrl+super+r" = "set_tab_title";
+    };
+    extraConfig = ''
+      modify_font underline_position +2
+      modify_font underline_thickness 200%
+      modify_font strikethrough_position 2px
+      tab_bar_style powerline
+      tab_powerline_style round
+      tab_title_template "{title}"
+      draw_minimal_borders no
+      repaint_delay 8
+      window_border_width 1pt
+      # repaint_delay 6
+      # dim_opacity 0.9
+      # background_opacity 1.0
+    '';
+  };
   # programs.neovim = {
   #   enable = true;
   #   withPython3 = true;
@@ -204,17 +225,6 @@
   #   defaultEditor = true;
   #   extraPython3Packages = (ps: with ps; [ pynvim unidecode black isort ]);
   # };
-  programs.ssh = {
-    enable = true;
-    serverAliveInterval = 5;
-    matchBlocks = {
-      "github.com" = {
-        hostname = "github.com";
-        user = "insipx";
-        identityFile = "/home/insipx/.ssh/id_rsa_yubikey.pub";
-      };
-    };
-  };
   programs.git = {
     enable = true;
     userName = "Andrew Plaza";
@@ -224,16 +234,19 @@
       signByDefault = true;
     };
   };
-  programs.direnv.enable = true;
-  programs.direnv.nix-direnv.enable = true;
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    # enableFishIntegration = true;
+  };
 
   xdg.enable = true;
-  xdg.configFile = {
-    "kitty" = {
-      source = ./dotfiles/kitty;
-      recursive = true;
-    };
-  };
+  # xdg.configFile = {
+  #   "kitty" = {
+  #     source = ./dotfiles/kitty;
+  #     recursive = true;
+  #   };
+  # };
   xdg.configFile = {
     "nvim" = {
       source = ./dotfiles/insipx-nvim;
