@@ -64,6 +64,10 @@ in {
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
+    ".scripts" = {
+      source = ./dotfiles/.scripts;
+      recursive = true;
+    };
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
@@ -126,6 +130,7 @@ in {
 
       set -gx VOLTA_HOME "$HOME/.volta"
       set -gx PATH "$VOLTA_HOME/bin" $PATH
+      set -gx PATH "$HOME/.scripts" $PATH
       if test (uname) = Darwin
         fish_add_path --prepend --global "$HOME/.nix-profile/bin" /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
       end
