@@ -116,6 +116,7 @@ in {
       hms = "home-manager switch";
       cat = "bat";
       s = "kitty +kitten ssh";
+      commit-ai = "aicommits -a --type conventional --generate 4";
     };
     #   loginShellInit = ''
     #     eval (direnv hook fish)
