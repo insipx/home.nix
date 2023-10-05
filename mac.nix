@@ -10,10 +10,9 @@ let
   # frameworks = pkgs.darwin.apple_sdk.frameworks;
   test = "test";
 in {
-  home.packages = with pkgs;
-    [
-      # (pkgs.callPackage mkalias { CoreFoundation = frameworks.CoreFoundation; })
-    ];
+  home.packages = with pkgs; [
+    # (pkgs.callPackage mkalias { CoreFoundation = frameworks.CoreFoundation; })
+  ];
 
   home.file = {
     ".gnupg/gpg-agent.conf".text = ''

@@ -22,7 +22,7 @@ in {
   # environment.
   home.packages = with pkgs; [
     grc # Colorizer
-    exa # replacement for ls
+    eza # replacement for ls
     du-dust # replacement for du
     fd # find
     ripgrep
@@ -58,7 +58,7 @@ in {
     rustscan
 
     # From Github
-
+    zulip-term
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -111,7 +111,7 @@ in {
     shellAliases = {
       vi = "nvim";
       vim = "nvim";
-      ls = "exa";
+      ls = "eza";
       du = "dust";
       hms = "home-manager switch";
       cat = "bat";
