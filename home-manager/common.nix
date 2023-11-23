@@ -6,7 +6,7 @@ let
     allRefs = true;
   };
 in {
-  imports = [ ./profile.nix (import privateConfiguration) ];
+  imports = [ (import privateConfiguration) ];
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
