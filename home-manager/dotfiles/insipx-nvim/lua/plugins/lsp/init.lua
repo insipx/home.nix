@@ -23,7 +23,7 @@ return {
 	"folke/lsp-colors.nvim",
 	{
 		"folke/trouble.nvim",
-		dependencies = { "kyazdani42/nvim-web-devicons" },
+		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			require("trouble").setup()
 		end,
@@ -67,7 +67,7 @@ return {
 			require("lspsaga").setup({})
 		end,
 		dependencies = {
-			"kyazdani42/nvim-web-devicons",
+			"nvim-tree/nvim-web-devicons",
 			-- Please make sure you install markdown and markdown_inline parser
 			"nvim-treesitter/nvim-treesitter",
 		},

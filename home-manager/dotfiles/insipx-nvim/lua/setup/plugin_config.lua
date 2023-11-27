@@ -8,7 +8,7 @@ end
 if isModuleAvailable("which-key") then
 	require("../keys/keybinds")
 end
-if isModuleAvailable("dashboard_config") then
+if isModuleAvailable("dashboard") then
 	require("../ui/dashboard_config")
 end
 

@@ -20,6 +20,9 @@ in {
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+    # Fonts, Github's Font
+    monaspace
+
     grc # Colorizer
     eza # replacement for ls
     du-dust # replacement for du
@@ -33,18 +36,16 @@ in {
     erdtree
     htop
     jq # Json format
+    duf # alternative to df, filesystem free space viewer
     websocat # Query websockets
     wget
 
     # Nix & General linting applicable to p. much everything related
     deadnix
-    cbfmt
     nixfmt
     statix
     # Git
     gitlint
-    # General
-    codespell
 
     # General usability
     nix-index # Run `nix-index` and then use `nix-locate` like the normal unix `locate`
@@ -52,6 +53,11 @@ in {
     gh # Github CLI tool
     ncdu
     atuin
+
+    # Fun
+    lolcat
+    cowsay
+    chafa
 
     # Networking
     nmap
@@ -69,6 +75,10 @@ in {
       [codespell]
       ignore-words-list = create
     '';
+    ".config/wezterm" = {
+      source = ./dotfiles/wezterm;
+      recursive = true;
+    };
   };
 
   home.sessionVariables = {
@@ -77,6 +87,11 @@ in {
     CACHEPOT_CACHE_SIZE = "50G";
   };
 
+  programs.wezterm = {
+    enable = true;
+    enableZshIntegration = false;
+    enableBashIntegration = false;
+  };
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   programs.fish = {
