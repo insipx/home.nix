@@ -61,7 +61,7 @@
             "pinentry-mac"
             "swiftformat"
           ];
-          casks = [ "docker" ];
+          casks = [ "docker" "qmk-toolbox" ];
         };
         # launchd.user.agents = {
         #   "lorri" = {

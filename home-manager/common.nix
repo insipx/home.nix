@@ -83,7 +83,7 @@ in {
 
   home.sessionVariables = {
     # EDITOR = "emacs";
-    KEYID = "25CB17AB243484C1687D6D067976AC4AEB07F67F";
+    KEYID = "843D72A9EB79A8692C585B3AE7738A7A0F5CDB89";
     CACHEPOT_CACHE_SIZE = "50G";
   };
 
@@ -212,9 +212,9 @@ in {
   programs.git = {
     enable = true;
     userName = "Andrew Plaza";
-    userEmail = "aplaza@liquidthink.net";
+    userEmail = "github@andrewplaza.dev";
     signing = {
-      key = "25CB17AB243484C1687D6D067976AC4AEB07F67F";
+      key = "843D72A9EB79A8692C585B3AE7738A7A0F5CDB89";
       signByDefault = true;
     };
   };

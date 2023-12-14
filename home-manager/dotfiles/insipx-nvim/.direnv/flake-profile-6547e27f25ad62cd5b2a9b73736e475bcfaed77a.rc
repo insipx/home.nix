@@ -149,7 +149,7 @@ name='nix-shell-env'
 export name
 nativeBuildInputs=''
 export nativeBuildInputs
-out='/Users/andrewplaza/.config/nix-darwin/home-manager/dotfiles/insipx-nvim/outputs/out'
+out='/Users/insipx/.config/nix-darwin/home-manager/dotfiles/insipx-nvim/outputs/out'
 export out
 outputBin='out'
 outputDev='out'
@@ -180,7 +180,7 @@ preConfigurePhases=' updateAutotoolsGnuConfigScriptsPhase'
 declare -a preFixupHooks=('_moveToShare' '_multioutDocs' '_multioutDevs' )
 preferLocalBuild='1'
 export preferLocalBuild
-prefix='/Users/andrewplaza/.config/nix-darwin/home-manager/dotfiles/insipx-nvim/outputs/out'
+prefix='/Users/insipx/.config/nix-darwin/home-manager/dotfiles/insipx-nvim/outputs/out'
 declare -a propagatedBuildDepFiles=('propagated-build-build-deps' 'propagated-native-build-inputs' 'propagated-build-target-deps' )
 propagatedBuildInputs=''
 export propagatedBuildInputs

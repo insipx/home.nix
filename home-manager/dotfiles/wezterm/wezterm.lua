@@ -15,7 +15,7 @@ end
 -- For example, changing the color scheme:
 config.color_scheme = 'Ayu Mirage' -- https://gogh-co.github.io/Gogh/
 config.font = wezterm.font 'Monaspace Neon'
-
+config.default_prog = { '/run/current-system/sw/bin/fish', '-l'}
 
 -- and finally, return the configuration to wezterm
 return config
