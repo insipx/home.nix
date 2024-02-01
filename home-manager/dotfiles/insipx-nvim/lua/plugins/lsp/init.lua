@@ -59,7 +59,7 @@ return {
 			require("lsp-format").setup({})
 		end,
 	},
-	-- "github/copilot.vim",
+	"github/copilot.vim",
 	{
 		"glepnir/lspsaga.nvim",
 		event = "LspAttach",

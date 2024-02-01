@@ -10,7 +10,10 @@ return {
       ["rust_analyzer"] = {
         procMacro = {enable = false},
         diagnostics = {disabled = {"unresolved-proc-macro"}},
-        checkOnSave = {command = "clippy"}
+        checkOnSave = {command = "clippy"},
+        cargo = { features = {"all"} },
+        check = { features = {"all"} },
+        check = { command = "clippy" }
       }
     }
   }
