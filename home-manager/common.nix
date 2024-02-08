@@ -2,7 +2,7 @@
 let
   privateConfiguration = builtins.fetchGit {
     url = "git@github.com:insipx/home.private.nix.git";
-    rev = "903fe954960f7ffbc37f400ba0d823fbdb9d679a";
+    rev = "77a7772aa8cc6f32f9fc48822d142d380afda411";
     allRefs = true;
   };
 in {
