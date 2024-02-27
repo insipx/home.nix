@@ -39,6 +39,7 @@ in {
     duf # alternative to df, filesystem free space viewer
     websocat # Query websockets
     wget
+    neovide
 
     # Nix & General linting applicable to p. much everything related
     deadnix
