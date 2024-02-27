@@ -7,87 +7,37 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Other Sources
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager }:
+  # `...` allows defining additional inputs to the outputs 
+  # without changing the fn signature. It makes the flake more flexible.
+  outputs = { self, nix-darwin, nixpkgs, home-manager, ... }@inputs:
+
     let
-      configuration = { pkgs, config, ... }: {
-        # List packages installed in system profile. To search by name, run:
-        # $ nix-env -qaP | grep wget
-        environment.systemPackages = [ pkgs.vim ];
-        environment.variables = { MACHINE = "macbook"; };
+      inherit (nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
+      inherit (nix-darwin.lib) darwinSystem;
 
-        users.users.insipx = {
-          home = "/Users/insipx";
-          shell = pkgs.fish;
-        };
-
-        users.users.andrewplaza = {
-          home = "/Users/andrewplaza";
-          shell = pkgs.fish;
-        };
-
-        # Auto upgrade nix package and the daemon service.
-        services.nix-daemon.enable = true;
-        # nix.package = pkgs.nix;
-
-        # Necessary for using flakes on this system.
-        nix.settings.experimental-features = "nix-command flakes";
-        nix.settings.trusted-users = [ "root" "insipx" "andrewplaza" ];
-
-        # Create /etc/zshrc that loads the nix-darwin environment.
-        programs.zsh.enable = true; # default shell on catalina
-        programs.fish.enable = true;
-
-        # Set Git commit hash for darwin-version.
-        system.configurationRevision = self.rev or self.dirtyRev or null;
-
-        # Used for backwards compatibility, please read the changelog before changing.
-        # $ darwin-rebuild changelog
-        system.stateVersion = 4;
-
-        # The platform the configuration will be used on.
-        nixpkgs.hostPlatform = "aarch64-darwin";
-        nixpkgs.config.allowUnfree = true;
-
-        homebrew = {
-          enable = true;
-          brews = [
-            "gnu-sed"
-            "gnupg"
-            "yubikey-personalization"
-            "hopenpgp-tools"
-            "ykman"
-            "pinentry-mac"
-            "swiftformat"
-          ];
-          casks = [ "docker" ];
-        };
-        # launchd.user.agents = {
-        #   "lorri" = {
-        #     serviceConfig = {
-        #       WorkingDirectory = config.users.users.insipx.home;
-        #       EnvironmentVariables = { };
-        #       KeepAlive = true;
-        #       RunAtLoad = true;
-        #       StandardOutPath = "/var/tmp/lorri.log";
-        #       StandardErrorPath = "/var/tmp/lorri.log";
-        #     };
-        #     script = ''
-        #       source ${config.system.build.setEnvironment}
-        #       exec ${pkgs.lorri}/bin/lorri daemon
-        #     '';
-        #   };
-        # };
+      # the `self.overlays` in the `nixpkgsConfig`
+      nixpkgsConfig = {
+        config = { allowUnfree = true; };
+        overlays = attrValues self.overlays;
       };
+
+      options = (import ./options.nix { inherit self nixpkgs; });
+
     in {
       # Build darwin flake using:
       # $ darwin-rebuild build --flake .#cyllene
-      darwinConfigurations."cyllene" = nix-darwin.lib.darwinSystem {
+      darwinConfigurations."cyllene" = darwinSystem {
         modules = [
-          configuration
+          options
+          ./configuration.nix
           home-manager.darwinModules.home-manager
           {
+            nixpkgs = nixpkgsConfig;
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.insipx = import ./home-manager/home.nix;
@@ -95,9 +45,10 @@
         ];
       };
 
-      darwinConfigurations."kusanagi" = nix-darwin.lib.darwinSystem {
+      darwinConfigurations."kusanagi" = darwinSystem {
         modules = [
-          configuration
+          options
+          ./configuration.nix
           home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -109,5 +60,7 @@
 
       # Expose the package set, including overlays, for convenience.
       darwinPackages = self.darwinConfigurations."kusanagi".pkgs;
+
+      overlays = { neovim = inputs.neovim-nightly-overlay.overlay; };
     };
 }
