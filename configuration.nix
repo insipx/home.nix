@@ -37,6 +37,7 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
   nixpkgs.config.allowUnfree = true;
 
+  # https://daiderd.com/nix-darwin/manual/index.html
   homebrew = {
     enable = true;
     brews = [
@@ -50,5 +51,26 @@
     ];
     casks = [ "docker" ];
   };
+
+  services.yabai = {
+    enable = true;
+    package = pkgs.yabai;
+    # Requires SIP (Security Integrity Protection) to be disabled.
+    enableScriptingAddition = false;
+    config = {
+      top_padding = 20;
+      bottom_padding = 20;
+      left_padding = 20;
+      right_padding = 20;
+      window_gap = 20;
+    };
+    # extraConfig = "";
+  };
+
+  services.sketchybar = { enable = true; };
+
+  # services.skhd = {
+  #  enable = true;
+  # };
 }
 

@@ -2,8 +2,8 @@ require("../utils")
 
 -- Configuration for lua plugins plugins
 -- Will only load if plugins have loaded
-if isModuleAvailable("neon") then
-	vim.cmd("colorscheme neon")
+if isModuleAvailable("nightfox") then
+	vim.cmd("colorscheme carbonfox")
 end
 if isModuleAvailable("which-key") then
 	require("../keys/keybinds")

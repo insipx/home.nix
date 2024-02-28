@@ -53,6 +53,7 @@ in {
     gh # Github CLI tool
     ncdu
     atuin
+    mpv
 
     # Fun
     lolcat
