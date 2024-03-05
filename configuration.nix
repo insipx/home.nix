@@ -48,8 +48,10 @@
       "ykman"
       "pinentry-mac"
       "swiftformat"
+      "graphite"
     ];
     casks = [ "docker" ];
+    taps = [ "withgraphite/tap" ];
   };
 
   services.yabai = {
