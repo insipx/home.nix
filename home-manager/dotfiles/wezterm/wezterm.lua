@@ -25,37 +25,41 @@ config.default_prog = { '/run/current-system/sw/bin/fish', '-l'}
 
 -- config.debug_key_events = true
 config.leader = { key = " ", mods = "CTRL", timeout_milliseconds = 1000 }
+
+local act = wezterm.action
 config.keys = {
   {
     key = '|',
     mods = 'LEADER|SHIFT',
-    action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
+    action = act.SplitHorizontal { domain = 'CurrentPaneDomain' },
   },
   {
     key = '_',
     mods = 'LEADER|SHIFT',
-    action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
+    action = act.SplitVertical { domain = 'CurrentPaneDomain' },
   },
   {
     key = 'h',
     mods = 'LEADER',
-    action = wezterm.action.ActivatePaneDirection 'Left',
+    action = act.ActivatePaneDirection 'Left',
   },
   {
     key = 'j',
     mods = 'LEADER',
-    action = wezterm.action.ActivatePaneDirection 'Down',
+    action = act.ActivatePaneDirection 'Down',
   },
   {
     key = 'k',
     mods = 'LEADER',
-    action = wezterm.action.ActivatePaneDirection 'Up',
+    action = act.ActivatePaneDirection 'Up',
   },
   {
     key = 'l',
     mods = 'LEADER',
-    action = wezterm.action.ActivatePaneDirection 'Right',
+    action = act.ActivatePaneDirection 'Right',
   },
+  { key = '[', mods = 'LEADER', action = act.MoveTabRelative(-1) },
+  { key = ']', mods = 'LEADER', action = act.MoveTabRelative(1) },
 }
 
 -- and finally, return the configuration to wezterm

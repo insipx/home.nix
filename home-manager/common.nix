@@ -2,7 +2,7 @@
 let
   privateConfiguration = builtins.fetchGit {
     url = "git@github.com:insipx/home.private.nix.git";
-    rev = "77a7772aa8cc6f32f9fc48822d142d380afda411";
+    rev = "f4df03bac3812d9ff901f1e7822c8490a42c351b";
     allRefs = true;
   };
 in {
@@ -34,6 +34,7 @@ in {
     bat # Cat clone with syntax highlighting and git integration
     tokei
     erdtree
+    ncdu
     htop
     jq # Json format
     duf # alternative to df, filesystem free space viewer
@@ -51,7 +52,6 @@ in {
     nix-index # Run `nix-index` and then use `nix-locate` like the normal unix `locate`
     feh
     gh # Github CLI tool
-    ncdu
     atuin
     mpv
 
