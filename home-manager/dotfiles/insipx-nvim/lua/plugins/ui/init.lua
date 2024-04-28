@@ -25,14 +25,15 @@ return {
 	{ "dracula/vim", name = "dracula" }, -- DRACULA!
 	{
 		"EdenEast/nightfox.nvim",
+		branch = "main",
 		config = function()
 			require("nightfox").setup({
 				options = { styles = { comments = "italic,bold", functions = "italic", types = "italic,bold" } },
 			})
 		end,
 	}, -- NIGHTFOX! -- treesitter support
-	{ "rafamadriz/neon" }, -- NEON! -- treesitter support
-	"pineapplegiant/spaceduck", -- SPACDUCK!
+	-- { "rafamadriz/neon" }, -- NEON! -- treesitter support
+	-- "pineapplegiant/spaceduck", -- SPACDUCK!
 	{ -- eyecandy
 		"akinsho/bufferline.nvim",
 		version = "*",
