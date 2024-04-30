@@ -9,8 +9,8 @@ local opt = vim.opt
 local g = vim.g
 
 ------------------------ MAPPINGS ---------------------------------
-map("i", "jk", "<esc>") -- remap esc
-map("", "<leader>ic", "\"+y") -- Copy to clipboard in normal, visual, select and operator modes
+Utils:map("i", "jk", "<esc>") -- remap esc
+Utils:map("", "<leader>ic", "\"+y") -- Copy to clipboard in normal, visual, select and operator modes
 
 ----------------------- Tabs and Spaces ---------------------------
 opt.shiftwidth = 2
