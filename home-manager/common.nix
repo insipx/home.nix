@@ -54,6 +54,7 @@ in {
     gh # Github CLI tool
     atuin
     mpv
+    neovide
 
     # Fun
     lolcat
@@ -107,6 +108,8 @@ in {
       cat = "bat --theme zenburn";
       s = "kitty +kitten ssh";
       commit-ai = "aicommits -a --type conventional --generate 4";
+      # git = "echo 'use graphite'";
+
     };
     #   loginShellInit = ''
     #     eval (direnv hook fish)
