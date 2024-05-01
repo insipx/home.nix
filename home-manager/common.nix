@@ -23,6 +23,7 @@ in {
     # Fonts, Github's Font
     monaspace
 
+    ripgrep
     grc # Colorizer
     eza # replacement for ls
     du-dust # replacement for du
@@ -214,6 +215,25 @@ in {
 	    lua51Packages.luarocks
 	    lua51Packages.lua
       git
+      
+      # Formatters
+      dprint
+      stylua
+      deno
+      nixfmt
+      yamlfmt
+      rubyPackages.htmlbeautifier
+      # codespell
+      
+      # Linters 
+      dotenv-linter
+      gitlint
+      html-tidy
+      statix
+      deadnix
+      markdownlint-cli
+      shellcheck
+      golangci-lint
     ];
   };
 
