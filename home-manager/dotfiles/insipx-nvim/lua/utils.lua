@@ -1,4 +1,6 @@
-function map(mode, lhs, rhs, opts)
+Utils = {}
+
+function Utils:map(mode, lhs, rhs, opts)
 	local options = { noremap = true }
 	if opts then
 		options = vim.tbl_extend("force", options, opts)
@@ -8,12 +10,12 @@ end
 
 -- The function is called `t` for `termcodes`.
 -- You don't have to call it that, but I find the terseness convenient
-function t(str)
+function Utils:termcode(str)
 	-- Adjust boolean arguments as needed
 	return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
-function isModuleAvailable(name)
+function Utils:isModuleAvailable(name)
 	if package.loaded[name] then
 		return true
 	else
@@ -30,7 +32,7 @@ end
 
 -- returns the require for use in `config` parameter of lazy's use
 -- expects the name of the config file
-function get_setup(name)
+function Utils:get_setup(name)
 	return function()
 		require("setup.plugins." .. name)
 	end

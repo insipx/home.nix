@@ -51,6 +51,7 @@
           ./configuration.nix
           home-manager.darwinModules.home-manager
           {
+	    nixpkgs = nixpkgsConfig;
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.andrewplaza = import ./home-manager/home.nix;

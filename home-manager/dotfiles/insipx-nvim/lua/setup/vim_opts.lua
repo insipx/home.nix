@@ -1,4 +1,4 @@
-require("../utils")
+require "../utils"
 vim.g.mapleader = " "
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -9,8 +9,8 @@ local opt = vim.opt
 local g = vim.g
 
 ------------------------ MAPPINGS ---------------------------------
-map("i", "jk", "<esc>") -- remap esc
-map("", "<leader>ic", '"+y') -- Copy to clipboard in normal, visual, select and operator modes
+Utils:map("i", "jk", "<esc>") -- remap esc
+Utils:map("", "<leader>ic", "\"+y") -- Copy to clipboard in normal, visual, select and operator modes
 
 ----------------------- Tabs and Spaces ---------------------------
 opt.shiftwidth = 2
@@ -23,8 +23,8 @@ opt.number = true
 opt.relativenumber = true
 opt.hidden = true
 opt.hlsearch = true
-opt.backspace = { "indent", "eol", "start" }
-opt.guifont = "Monaspace Neon:h13"
+opt.backspace = {"indent", "eol", "start"}
+opt.guifont = "PragmataProMonoLiga Nerd Font:h15"
 opt.laststatus = 3
 opt.encoding = "utf-8"
 opt.showtabline = 1
@@ -32,7 +32,7 @@ opt.showmatch = true
 opt.list = true
 opt.signcolumn = "yes"
 -- opt.listchars:append "eol:↴"
-opt.listchars:append("space:⋅")
+opt.listchars:append "space:⋅"
 
 g.nocompatible = true
 -- Disable some unused built-in Neovim plugins

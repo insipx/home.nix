@@ -6,7 +6,7 @@ let
     allRefs = true;
   };
 in {
-  imports = [ (import privateConfiguration) ];
+  imports = [ (import privateConfiguration) (import ./configure-neovim.nix) ];
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -23,12 +23,11 @@ in {
     # Fonts, Github's Font
     monaspace
 
+    ripgrep
     grc # Colorizer
     eza # replacement for ls
     du-dust # replacement for du
     fd # find
-    ripgrep
-    tree-sitter
     glow
     git
     bat # Cat clone with syntax highlighting and git integration
@@ -40,6 +39,7 @@ in {
     duf # alternative to df, filesystem free space viewer
     websocat # Query websockets
     wget
+    neovide
 
     # Nix & General linting applicable to p. much everything related
     deadnix
@@ -204,15 +204,6 @@ in {
     '';
   };
 
-  programs.neovim = {
-    enable = true;
-    withPython3 = true;
-    withNodeJs = true;
-    withRuby = true;
-    defaultEditor = true;
-    extraPython3Packages = (ps: with ps; [ pynvim unidecode black isort ]);
-  };
-
   programs.git = {
     enable = true;
     userName = "Andrew Plaza";
@@ -238,17 +229,4 @@ in {
   };
 
   xdg.enable = true;
-  # xdg.configFile = {
-  #   "kitty" = {
-  #     source = ./dotfiles/kitty;
-  #     recursive = true;
-  #   };
-  # };
-
-  xdg.configFile = {
-    "nvim" = {
-      source = ./dotfiles/insipx-nvim;
-      recursive = true;
-    };
-  };
 }

@@ -28,13 +28,12 @@ return {
 			require("fidget").setup()
 		end,
 	}, -- nvim lsp progress
-	{
+	{ -- COULD NOT FIND
 		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
 		config = function()
 			require("lsp_lines").setup()
 		end,
 	},
-	"folke/lsp-colors.nvim",
 	{
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -61,72 +60,8 @@ return {
 				hover_actions = { auto_focus = true },
 			},
 			server = {
-
 				on_attach = function(client, bufnr)
-					local wk = require("which-key")
-					wk.register({
-						["<leader>"] = {
-							l = {
-								R = {
-									name = "Rust",
-									h = {
-										function()
-											vim.cmd.RustLsp({ "hover", "actions" })
-										end,
-										"Trigger actions on hover",
-									},
-									r = {
-										function()
-											vim.cmd.RustLsp("runnables")
-										end,
-										"List runnables in buffer",
-									},
-									c = {
-										function()
-											vim.cmd.RustLsp("openCargo")
-										end,
-										"Open the Cargo.toml for the current buffer project",
-									},
-									p = {
-										function()
-											vim.cmd.RustLsp("parentModule")
-										end,
-										"Go to the parent module",
-									},
-									s = {
-										function()
-											vim.cmd.RustLsp({ "ssr" })
-										end,
-										"Structural Search & Replace",
-									},
-									d = {
-										function()
-											vim.cmd.RustLsp("renderDiagnostic")
-										end,
-										"Render the diagnostic as in Cargo Build",
-									},
-									e = {
-										function()
-											vim.cmd.RustLsp("explainError")
-										end,
-										"Explain the error at the cursor",
-									},
-									a = {
-										function()
-											vim.cmd.RustLsp("codeAction")
-										end,
-										"Better Rust-Specific code actions",
-									},
-									t = {
-										function()
-											vim.cmd.RustLsp("testables")
-										end,
-										"Run testables in background",
-									},
-								},
-							},
-						},
-					})
+					Keys:rust_lsp()
 				end,
 				default_settings = {
 					["rust-analyzer"] = {
