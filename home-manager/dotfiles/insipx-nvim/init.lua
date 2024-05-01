@@ -6,9 +6,8 @@ else
 	if Utils:isModuleAvailable("impatient") then
 		require("impatient")
 	end
-  require("keybindings")
---	require("setup.plugin_opts")
---	require("setup.plugin_config")
+	require("setup.plugin_opts")
+	require("setup.plugin_config")
 
 	vim.g.bufExplorerShowTabBuffer = 1
 end

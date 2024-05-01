@@ -1,4 +1,4 @@
-  -- Eviline config for lualine
+-- Eviline config for lualine
   -- Modified to include lsp_progress
   -- Author: shadmansaleh
   -- Credit: glepnir
