@@ -9,55 +9,55 @@ function Keybindings:rust_lsp()
 					name = "rust",
 					h = {
 						function()
-							vim.cmd.rustlsp({ "hover", "actions" })
+							vim.cmd.RustLsp({ "hover", "actions" })
 						end,
 						"trigger actions on hover",
 					},
 					r = {
 						function()
-							vim.cmd.rustlsp("runnables")
+							vim.cmd.RustLsp("runnables")
 						end,
 						"list runnables in buffer",
 					},
 					c = {
 						function()
-							vim.cmd.rustlsp("opencargo")
+							vim.cmd.RustLsp("openCargo")
 						end,
 						"open the cargo.toml for the current buffer project",
 					},
 					p = {
 						function()
-							vim.cmd.rustlsp("parentmodule")
+							vim.cmd.RustLsp("parentModule")
 						end,
 						"go to the parent module",
 					},
 					s = {
 						function()
-							vim.cmd.rustlsp({ "ssr" })
+							vim.cmd.RustLsp({ "ssr" })
 						end,
 						"structural search & replace",
 					},
 					d = {
 						function()
-							vim.cmd.rustlsp("renderdiagnostic")
+							vim.cmd.RustLsp("renderDiagnostic")
 						end,
 						"render the diagnostic as in cargo build",
 					},
 					e = {
 						function()
-							vim.cmd.rustlsp("explainerror")
+							vim.cmd.RustLsp("explainError")
 						end,
 						"explain the error at the cursor",
 					},
 					a = {
 						function()
-							vim.cmd.rustlsp("codeaction")
+							vim.cmd.RustLsp("codeAction")
 						end,
 						"better rust-specific code actions",
 					},
 					t = {
 						function()
-							vim.cmd.rustlsp("testables")
+							vim.cmd.RustLsp("testables")
 						end,
 						"run testables in background",
 					},
