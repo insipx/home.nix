@@ -5,6 +5,7 @@ let
     rev = "f4df03bac3812d9ff901f1e7822c8490a42c351b";
     allRefs = true;
   };
+  nerdfonts = pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; };
 in {
   imports = [ (import privateConfiguration) (import ./configure-neovim.nix) ];
 
@@ -16,12 +17,12 @@ in {
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
   home.stateVersion = "23.05"; # Please read the comment before changing.
-
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
     # Fonts, Github's Font
     monaspace
+    nerdfonts
 
     ripgrep
     grc # Colorizer
@@ -79,6 +80,10 @@ in {
     '';
     ".config/wezterm" = {
       source = ./dotfiles/wezterm;
+      recursive = true;
+    };
+    ".config/neovide" = {
+      source = ./dotfiles/neovide;
       recursive = true;
     };
   };
