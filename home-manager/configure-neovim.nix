@@ -52,6 +52,7 @@ in {
     withRuby = true;
     defaultEditor = true;
     extraPython3Packages = (ps: with ps; [ pynvim unidecode black isort ]);
+    plugins = with pkgs.vimPlugins; [ coq_nvim ];
     extraPackages = with pkgs; [
       ripgrep
       tree-sitter
