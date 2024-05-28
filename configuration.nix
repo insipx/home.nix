@@ -49,7 +49,7 @@
       "pinentry-mac"
       "swiftformat"
     ];
-    casks = [ "docker" ];
+    casks = [ "docker" "whisky" ];
   };
 
   services.yabai = {
