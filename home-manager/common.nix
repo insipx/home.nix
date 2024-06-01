@@ -40,7 +40,7 @@ in {
     duf # alternative to df, filesystem free space viewer
     websocat # Query websockets
     wget
-    neovide
+    # neovide
 
     # Nix & General linting applicable to p. much everything related
     deadnix
@@ -55,7 +55,6 @@ in {
     gh # Github CLI tool
     atuin
     mpv
-    neovide
 
     # Fun
     lolcat
