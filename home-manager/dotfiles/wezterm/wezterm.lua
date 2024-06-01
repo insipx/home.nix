@@ -25,6 +25,8 @@ config.default_prog = { "/run/current-system/sw/bin/fish", "-l" }
 
 -- config.debug_key_events = true
 config.leader = { key = " ", mods = "CTRL", timeout_milliseconds = 1000 }
+config.max_fps = 144
+config.animation_fps = 60
 
 local act = wezterm.action
 config.keys = {
