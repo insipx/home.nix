@@ -46,7 +46,7 @@ in {
 
   programs.neovim = {
     enable = true;
-    package = pkgs.neovim-nightly;
+    package = pkgs.neovim;
     withPython3 = true;
     withNodeJs = true;
     withRuby = true;
@@ -56,6 +56,23 @@ in {
     extraPackages = with pkgs; [
       ripgrep
       tree-sitter
+      tree-sitter-grammars.tree-sitter-rust
+      tree-sitter-grammars.tree-sitter-go
+      tree-sitter-grammars.tree-sitter-javascript
+      tree-sitter-grammars.tree-sitter-zig
+      tree-sitter-grammars.tree-sitter-json
+      tree-sitter-grammars.tree-sitter-yaml
+      tree-sitter-grammars.tree-sitter-toml
+      tree-sitter-grammars.tree-sitter-sql
+      tree-sitter-grammars.tree-sitter-nix
+      tree-sitter-grammars.tree-sitter-lua
+      tree-sitter-grammars.tree-sitter-fish
+      tree-sitter-grammars.tree-sitter-bash
+      tree-sitter-grammars.tree-sitter-norg-meta
+      tree-sitter-grammars.tree-sitter-markdown
+      tree-sitter-grammars.tree-sitter-org-nvim
+      tree-sitter-grammars.tree-sitter-dockerfile
+
       lua51Packages.luarocks
       lua51Packages.lua
       git

@@ -51,7 +51,7 @@
           ./configuration.nix
           home-manager.darwinModules.home-manager
           {
-	    nixpkgs = nixpkgsConfig;
+            nixpkgs = nixpkgsConfig;
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.andrewplaza = import ./home-manager/home.nix;
@@ -62,6 +62,6 @@
       # Expose the package set, including overlays, for convenience.
       darwinPackages = self.darwinConfigurations."kusanagi".pkgs;
 
-      overlays = { neovim = inputs.neovim-nightly-overlay.overlay; };
+      overlays = { neovim = inputs.neovim-nightly-overlay.overlays.default; };
     };
 }

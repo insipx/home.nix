@@ -34,13 +34,12 @@ in {
     bat # Cat clone with syntax highlighting and git integration
     tokei
     erdtree
-    ncdu
+    # ncdu
     htop
     jq # Json format
     duf # alternative to df, filesystem free space viewer
     websocat # Query websockets
     wget
-    neovide
 
     # Nix & General linting applicable to p. much everything related
     deadnix
@@ -54,8 +53,8 @@ in {
     feh
     gh # Github CLI tool
     atuin
-    mpv
-    neovide
+    # mpv
+    # neovide
 
     # Fun
     lolcat
@@ -110,7 +109,7 @@ in {
       du = "dust";
       # hms = "home-manager switch";
       sw = "darwin-rebuild switch --flake ~/.config/nix-darwin/";
-      cat = "bat --theme zenburn";
+      cat = "bat --theme TwoDark";
       s = "kitty +kitten ssh";
       commit-ai = "aicommits -a --type conventional --generate 4";
       # git = "echo 'use graphite'";
