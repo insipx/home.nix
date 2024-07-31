@@ -1,4 +1,4 @@
-{ config, stdenv, pkgs, lib, ... }:
+{ config, stdenv, pkgs, lib, nixvim, ... }:
 let
   privateConfiguration = builtins.fetchGit {
     url = "git@github.com:insipx/home.private.nix.git";
@@ -6,8 +6,13 @@ let
     allRefs = true;
   };
   nerdfonts = pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; };
+  # nixvim = import "${pkgs.path}/nixvim" { inherit pkgs; };
 in {
-  imports = [ (import privateConfiguration) (import ./configure-neovim.nix) ];
+  imports = [
+    nixvim.homeManagerModules.nixvim
+    (import privateConfiguration)
+    (import ./configure-neovim.nix { inherit config pkgs; })
+  ];
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

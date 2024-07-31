@@ -1,10 +1,5 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, nixvim, ... }: {
   imports = [ ./common.nix ];
-
-  home.packages = with pkgs;
-    [
-      # (pkgs.callPackage mkalias { CoreFoundation = frameworks.CoreFoundation; })
-    ];
 
   home.file = {
     ".gnupg/gpg-agent.conf".text = ''
