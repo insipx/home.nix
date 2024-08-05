@@ -329,24 +329,47 @@ in {
       {
         group = "goto";
         __unkeyed-1 = {
-          __unkeyed-1 = "<leader>gp";
+          __unkeyed-1 = "gp";
           __unkeyed-2 = "<cmd>Lspsaga peek_definition<CR>";
           desc = "peek definition";
         };
         __unkeyed-2 = {
-          __unkeyed-1 = "<leader>gr";
+          __unkeyed-1 = "gr";
           __unkeyed-2 = "<cmd>Lspsaga rename ++project<CR>";
           desc = "rename occurrences of hovered word for selected files";
         };
         __unkeyed-3 = {
-          __unkeyed-1 = "<leader>gt";
+          __unkeyed-1 = "gt";
           __unkeyed-2 = "<cmd>Lspsaga peek_type_definition<CR>";
           desc = "Peek type definition in floating window";
         };
         __unkeyed-4 = {
-          __unkeyed-1 = "<leader>gh";
+          __unkeyed-1 = "gh";
           __unkeyed-2 = "<cmd>Lspsaga lsp_finder<CR>";
           desc = "find symbols definition";
+        };
+      }
+      {
+        group = "word navigation";
+        __unkeyed-1 = {
+          __unkeyed-1 = "\\\\w";
+          __unkeyed-2 = "<cmd>HopWord<CR>";
+          desc = "hop to a word";
+        };
+        __unkeyed-2 = {
+          __unkeyed-1 = "\\\\b";
+          __unkeyed-2 = "<cmd>HopWordBC<CR>";
+          desc = "hop word backwards";
+        };
+        __unkeyed-3 = {
+          __unkeyed-1 = "\\\\f";
+          __unkeyed-2 = "<cmd>HopWordAC<CR>";
+          desc = "hop word forwards";
+        };
+        __unkeyed-4 = {
+          __unkeyed-1 = "\\\\a";
+          __unkeyed-2 = "<cmd>HopAnywhere<CR>";
+          desc = "hop word anywhere";
         };
       }
     ] ++ telescope.config;

@@ -301,7 +301,11 @@
       };
       cursorline.enable = true;
       # like 'hop.nvim' but better featured and integrated with treesitter/nightfox
-      leap.enable = true;
+      # leap.enable = true;
+      hop = {
+        enable = true;
+        settings.keys = "etovxqpdygfblzhckisuran";
+      };
 
       bufdelete.enable = true;
 
