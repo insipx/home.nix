@@ -1,5 +1,4 @@
 { config, pkgs, ... }: {
-
   imports = [
     (import ./neovim-configuration/which-key.nix { inherit config pkgs; })
     #     (import ./neovim-configuration/lualine.nix { inherit config pkgs; })
@@ -79,8 +78,14 @@
       telescope-project-nvim
       neoconf-nvim
     ];
+
     plugins = {
-      lsp.enable = true;
+      lsp = {
+        enable = true;
+        preConfig = ''
+          require('neoconf').setup()
+        '';
+      };
       lsp-format.enable = true;
       fidget = {
         enable = true;
@@ -131,6 +136,7 @@
       rustaceanvim = {
         enable = true;
         settings.server = {
+          load_vscode_settings = true;
           tools = { test_executor = "toggleterm"; };
           default_settings = {
             rust-analyzer = {
@@ -154,6 +160,7 @@
                   "async-recursion" = [ "async_recursion" ];
                   "ctor" = [ "ctor" ];
                   "tokio" = [ "test" ];
+                  "async-stream" = ["stream", "try_stream"];
                 };
               };
             };
@@ -252,6 +259,7 @@
           tree-sitter-proto
           pkgs.vimPlugins.nvim-treesitter.builtGrammars.tree-sitter-norg
           pkgs.vimPlugins.nvim-treesitter.builtGrammars.tree-sitter-norg-meta
+          pkgs.vimPlugins.nvim-treesitter-parsers.jsonc
         ];
         nixGrammars = true;
 
