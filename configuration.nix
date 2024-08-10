@@ -36,6 +36,7 @@
   # The platform the configuration will be used on.
   nixpkgs.hostPlatform = "aarch64-darwin";
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowBroken = true;
 
   # https://daiderd.com/nix-darwin/manual/index.html
   homebrew = {
@@ -49,7 +50,7 @@
       "pinentry-mac"
       "swiftformat"
     ];
-    casks = [ "docker" "whisky" ];
+    casks = [ "docker" "google-chrome" ];
   };
 
   services.yabai = {
