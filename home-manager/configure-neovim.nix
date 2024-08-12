@@ -160,7 +160,7 @@
                   "async-recursion" = [ "async_recursion" ];
                   "ctor" = [ "ctor" ];
                   "tokio" = [ "test" ];
-                  "async-stream" = ["stream", "try_stream"];
+                  "async-stream" = [ "stream" "try_stream" ];
                 };
               };
             };

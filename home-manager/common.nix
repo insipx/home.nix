@@ -25,8 +25,10 @@ in {
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    # Fonts, Github's Font
+    # Fonts, Github's Font, minecraft font, minecraft font vectorized
     monaspace
+    monocraft
+    miracode
     nerdfonts
 
     ripgrep
