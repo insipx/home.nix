@@ -267,28 +267,31 @@
           auto_install = true;
           highlight = { enable = true; };
           indent = { enable = true; };
-          ensure_installed = [
-            "rust"
-            "toml"
-            "go"
-            "lua"
-            "bash"
-            "json"
-            "yaml"
-            "sql"
-            "nix"
-            "fish"
-            "norg-meta"
-            "markdown"
-            "org-nvim"
-            "dockerfile"
-            "javascript"
-            "zig"
-            "proto"
-          ];
+          #ensure_installed = [
+          #  "rust"
+          #  "toml"
+          #  "go"
+          #  "lua"
+          #  "bash"
+          #  "json"
+          #  "yaml"
+          #  "sql"
+          #  "nix"
+          #  "fish"
+          #  "norg-meta"
+          #  "markdown"
+          #  "org-nvim"
+          #  "dockerfile"
+          #  "javascript"
+          #  "zig"
+          #  "proto"
+          #];
         };
       };
       treesitter-textobjects.enable = true;
+      treesitter-context.enable = true;
+      treesitter-refactor.enable =
+        true; # can keymap bunch of cool stuff when want
       indent-blankline = {
         enable = true;
         settings = {

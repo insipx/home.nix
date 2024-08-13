@@ -15,7 +15,7 @@ end
 -- For example, changing the color scheme:
 -- config.color_scheme = 'Ayu Mirage' -- https://gogh-co.github.io/Gogh/
 config.color_scheme = "carbonfox"
-config.font = wezterm.font("Monocraft")
+config.font = wezterm.font("Miracode")
 config.font_size = 14.0
 config.colors = {
 	selection_bg = "rgba(50% 50% 50% 50%)",
