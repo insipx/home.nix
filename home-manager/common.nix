@@ -160,60 +160,6 @@ in {
     ];
   };
 
-  programs.kitty = {
-    enable = true;
-    shellIntegration.enableFishIntegration = true;
-    theme = "Spacedust";
-    font.name = "Miracode";
-    font.size = 13;
-    keybindings = {
-      "ctrl+shift+z" = "goto_layout stack";
-      "ctrl+shift+a" = "goto_layout tall";
-      "super+shift+[" = "previous_tab";
-      "super+shift+]" = "next_tab";
-      "super+shift+t" = "new_tab";
-      "alt+shift+ctrl+left" = "move_tab_backward"; # meh + left
-      "alt+shift+ctrl+right" = "move_tab_forward"; # meh + right
-
-      "ctrl+shift+enter" = "new_window";
-      "alt+shift+ctrl+1" = "first_window";
-      "alt+shift+ctrl+2" = "second_window";
-      "alt+shift+ctrl+3" = "third_window";
-      "alt+shift+ctrl+4" = "fourth_window";
-      "alt+shift+ctrl+5" = "fifth_window";
-      "alt+shift+ctrl+6" = "sixth_window";
-      "alt+shift+ctrl+7" = "seventh_window";
-      "alt+shift+ctrl+8" = "eight_window";
-      "alt+shift+ctrl+9" = "ninth_window";
-      "alt+shift+ctrl+0" = "tenth_window";
-      "alt+shift+ctrl+s" = "goto_layout stack";
-      "alt+shift+ctrl+t" = "goto_layout tall";
-      "alt+shift+ctrl+z" = "toggle_layout stack";
-      # Focus
-      "ctrl+l" = "neighboring_window right";
-      "ctrl+j" = "neighboring_window down";
-      "ctrl+k" = "neighboring_window up";
-      "ctrl+h" = "neighboring_window left";
-      "ctrl+alt+h" = "neighboring_window left";
-      "alt+shift+ctrl+super+r" = "set_tab_title";
-    };
-    extraConfig = ''
-      modify_font underline_position +2
-      modify_font underline_thickness 200%
-      modify_font strikethrough_position 2px
-      tab_bar_style powerline
-      tab_powerline_style round
-      tab_title_template "{title}"
-      draw_minimal_borders no
-      repaint_delay 8
-      window_border_width 1pt
-      # repaint_delay 6
-      # dim_opacity 0.9
-      # background_opacity 1.0
-      symbol_map U+23FB-U+23FE,U+2665,U+26A1,U+2B58,U+E000-U+E00A,U+E0A0-U+E0A3,U+E0B0-U+E0D4,U+E200-U+E2A9,U+E300-U+E3E3,U+E5FA-U+E6AA,U+E700-U+E7C5,U+EA60-U+EBEB,U+F000-U+F2E0,U+F300-U+F32F,U+F400-U+F4A9,U+F500-U+F8FF,U+F0001-U+F1AF0 Symbols Nerd Font Mono
-    '';
-  };
-
   programs.git = {
     enable = true;
     userName = "Andrew Plaza";
