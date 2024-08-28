@@ -95,11 +95,11 @@ in {
   };
 
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
     KEYID = "843D72A9EB79A8692C585B3AE7738A7A0F5CDB89";
     CACHEPOT_CACHE_SIZE = "50G";
   };
-
+  #programs.firefox = {}
   programs.wezterm = {
     enable = true;
     enableZshIntegration = false;
@@ -118,7 +118,6 @@ in {
       sw = "darwin-rebuild switch --flake ~/.config/nix-darwin/";
       cat = "bat --theme TwoDark";
       s = "kitty +kitten ssh";
-      commit-ai = "aicommits -a --type conventional --generate 4";
       # git = "echo 'use graphite'";
 
     };
@@ -165,7 +164,7 @@ in {
     enable = true;
     shellIntegration.enableFishIntegration = true;
     theme = "Spacedust";
-    font.name = "Input";
+    font.name = "Miracode";
     font.size = 13;
     keybindings = {
       "ctrl+shift+z" = "goto_layout stack";

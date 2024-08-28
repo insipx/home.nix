@@ -72,6 +72,11 @@
     extraConfigLua = ''
       -- vim.opt.listchars:append "eol:↴"
       vim.opt.listchars:append "space:⋅"
+      vim.api.nvim_create_autocmd("QuickFixCmdPost", {
+        callback = function()
+          vim.cmd([[Trouble qflist open]])
+        end,
+      })
     ''; # + builtins.readFile ./neovim-configuration/lua/lualine.lua;
 
     extraPlugins = with pkgs.vimPlugins; [
@@ -101,19 +106,21 @@
       lspsaga.enable = true;
       conform-nvim = {
         enable = true;
-        formattersByFt = {
-          toml = [ "dprint" ];
-          lua = [ "stylua" ];
-          javascript = [ "deno_fmt" ];
-          nix = [ "nixfmt" ];
-          yaml = [ "yamlfmt" ];
-          html = [ "htmlbeautifier" ];
-          markdown = [ "deno_fmt" ];
-          "*" = [ "codespell" ];
-        };
-        formatOnSave = {
-          lspFallback = true;
-          timeoutMs = 500;
+        settings = {
+          format_on_save = {
+            lspFallback = true;
+            timeoutMs = 500;
+          };
+          formatters_by_ft = {
+            toml = [ "dprint" ];
+            lua = [ "stylua" ];
+            javascript = [ "deno_fmt" ];
+            nix = [ "nixfmt" ];
+            yaml = [ "yamlfmt" ];
+            html = [ "htmlbeautifier" ];
+            markdown = [ "deno_fmt" ];
+            "*" = [ "codespell" ];
+          };
         };
       };
 
@@ -175,10 +182,14 @@
 
       bufferline = {
         enable = true;
-        mode = "buffers";
-        numbers = "ordinal";
-        indicator.style = "underline";
-        diagnostics = "nvim_lsp";
+        settings = {
+          options = {
+            mode = "buffers";
+            numbers = "ordinal";
+            indicator.style = "underline";
+            diagnostics = "nvim_lsp";
+          };
+        };
       };
       alpha = {
         enable = true;

@@ -16,10 +16,7 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mozilla = {
-      url = "github:mozilla/nixpkgs-mozilla";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    mozilla.url = "github:mozilla/nixpkgs-mozilla";
   };
 
   # `...` allows defining additional inputs to the outputs 
@@ -34,16 +31,15 @@
       # the `self.overlays` in the `nixpkgsConfig`
       nixpkgsConfig = {
         config = { allowUnfree = true; };
-        overlays = attrValues self.overlays
-          ++ [ neorg-overlay.overlays.default ]; # adds all overlays to list
+        overlays = attrValues self.overlays ++ [
+          neorg-overlay.overlays.default
+          mozilla.overlays.firefox
+        ]; # adds all overlays to list
       };
 
       options = (import ./options.nix { inherit self nixpkgs; });
     in {
-      overlays = {
-        neovim = inputs.neovim-nightly-overlay.overlays.default;
-        firefox = mozilla.overlays.firefox;
-      };
+      overlays = { neovim = inputs.neovim-nightly-overlay.overlays.default; };
 
       # Expose the package set, including verlays, for convenience.
       darwinPackages = self.darwinConfigurations."kusanagi".pkgs;

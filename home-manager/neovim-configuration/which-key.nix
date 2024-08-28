@@ -220,10 +220,9 @@ in {
         __unkeyed-1 = {
           group = "toggles";
           __unkeyed-1 = {
-            __unkeyed-1 = "<leader>lTl";
-            __unkeyed-2 = {
-              __raw = "function() require('lsp_lines').toggle() end";
-            };
+            __unkeyed-1 = "<leader>lbd";
+            __unkeyed-2 =
+              "<CMD>Trouble diagnostics toggle focus=false filter.buf=0<CR>";
             desc = "toggle lsp_lines virtual text";
           };
         };
