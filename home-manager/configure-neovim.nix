@@ -1,6 +1,8 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }: 
+let 
+  keybindings = (import ./keybindings { }; );
+in {
   imports = [
-    (import ./neovim-configuration/which-key.nix { inherit config pkgs; })
     #     (import ./neovim-configuration/lualine.nix { inherit config pkgs; })
   ];
 
@@ -12,6 +14,7 @@
       ripgrep
       lua51Packages.luarocks
       lua51Packages.lua
+      lua51Packages.cjson
       git
 
       # Formatters
@@ -69,40 +72,28 @@
       expandtab = true;
     };
 
+    keymaps = keybindings.all;
+
     extraConfigLua = ''
       -- vim.opt.listchars:append "eol:↴"
       vim.opt.listchars:append "space:⋅"
-      vim.api.nvim_create_autocmd("QuickFixCmdPost", {
-        callback = function()
-          vim.cmd([[Trouble qflist open]])
-        end,
-      })
     ''; # + builtins.readFile ./neovim-configuration/lua/lualine.lua;
 
-    extraPlugins = with pkgs.vimPlugins; [
-      telescope-project-nvim
-      neoconf-nvim
-    ];
+    extraConfigVim = ''
+      set exrc
+    '';
+
+    extraPlugins = with pkgs.vimPlugins; [ telescope-project-nvim ];
 
     plugins = {
-      lsp = {
-        enable = true;
-        preConfig = ''
-          require('neoconf').setup()
-        '';
-      };
+      lsp = { enable = true; };
       lsp-format.enable = true;
-      fidget = {
-        enable = true;
-        integration.nvim-tree.enable = true;
-      };
+      fidget.enable = true;
 
       coq-nvim = {
         enable = true;
         settings.auto_start = "shut-up";
       };
-
-      trouble.enable = true;
       lspsaga.enable = true;
       conform-nvim = {
         enable = true;
@@ -133,17 +124,11 @@
         };
       };
 
-      nvim-tree = {
-        enable = true;
-        diagnostics.enable = true;
-      };
-
       direnv.enable = true;
-
       rustaceanvim = {
         enable = true;
         settings.server = {
-          load_vscode_settings = true;
+          load_vscode_settings = false;
           tools = { test_executor = "toggleterm"; };
           default_settings = {
             rust-analyzer = {
@@ -196,6 +181,7 @@
         theme = "startify";
       };
       lualine = { enable = true; };
+      spectre.enable = true;
 
       neogit = {
         enable = true;
@@ -263,7 +249,7 @@
           tree-sitter-lua
           tree-sitter-fish
           tree-sitter-bash
-          tree-sitter-norg-meta
+          # tree-sitter-norg-meta
           tree-sitter-org-nvim
           tree-sitter-markdown
           tree-sitter-dockerfile
@@ -302,7 +288,7 @@
       treesitter-textobjects.enable = true;
       treesitter-context.enable = true;
       treesitter-refactor.enable =
-        true; # can keymap bunch of cool stuff when want
+        true; # TODO: can keymap bunch of cool stuff when want
       indent-blankline = {
         enable = true;
         settings = {
@@ -319,7 +305,12 @@
 
       mini = {
         enable = true;
-        modules = { animate = { }; };
+        modules = {
+          pairs = { };
+          notify = { lsp_progress.enable = false; };
+          bracketed = { };
+          bufremove = { };
+        };
       };
       cursorline.enable = true;
       # like 'hop.nvim' but better featured and integrated with treesitter/nightfox
@@ -329,16 +320,14 @@
         settings.keys = "etovxqpdygfblzhckisuran";
       };
 
-      bufdelete.enable = true;
+      # bufdelete.enable = true;
 
       toggleterm.enable = true;
 
       #scope.nvim
       #stabilize
-      #vim-rooter
       #vim-eunuch
       #vim easy-align
-      #move.nvim
 
     };
     colorschemes.nightfox = {
