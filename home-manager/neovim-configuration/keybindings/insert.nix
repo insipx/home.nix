@@ -1,4 +1,4 @@
-{ ... }: [
+[
   {
     mode = [ "n" "v" ];
     key = "<leader>ic";

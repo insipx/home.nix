@@ -1,4 +1,4 @@
-{ ... }: [{
+[{
   mode = "n";
   key = "<leader>lr";
   action.__raw = ''

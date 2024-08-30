@@ -1,6 +1,5 @@
-{ config, pkgs, ... }: 
-let 
-  keybindings = (import ./keybindings { }; );
+{ config, pkgs, ... }:
+let keybindings = import ./neovim-configuration/keybindings;
 in {
   imports = [
     #     (import ./neovim-configuration/lualine.nix { inherit config pkgs; })

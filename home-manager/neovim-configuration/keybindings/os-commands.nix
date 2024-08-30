@@ -1,4 +1,4 @@
-{ ... }: [{
+[{
   mode = "n";
   key = "<leader>cn";
   action = "<cmd>enew<CR>";

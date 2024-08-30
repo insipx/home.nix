@@ -1,4 +1,4 @@
-{ ... }: [{
+[{
   mode = "n";
   key = "<leader>ft";
   action = "<cmd>NvimTreeToggle<CR>";
