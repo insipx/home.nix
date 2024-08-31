@@ -1,116 +1,77 @@
 [
   {
     mode = "n";
-    key = "<leader>wh";
+    key = "<Leader>wh";
     action = "<C-W>h";
-    options = {
-      silent = true;
-      desc = "move to window on left";
-    };
+    options = { desc = "move to window on left"; };
   }
   {
     mode = "n";
-    key = "<leader>wl";
+    key = "<Leader>wl";
     action = "<C-W>l";
-    options = {
-      silent = true;
-      desc = "move to window on right";
-    };
+    options = { desc = "move to window on right"; };
   }
   {
     mode = "n";
-    key = "<leader>wj";
+    key = "<Leader>wj";
     action = "<C-W>j";
-    options = {
-      silent = true;
-      desc = "move to window below";
-    };
+    options = { desc = "move to window below"; };
   }
 
   {
     mode = "n";
-    key = "<leader>wk";
+    key = "<Leader>wk";
     action = "<C-W>k";
-    options = {
-      silent = true;
-      desc = "move to window above";
-    };
+    options = { desc = "move to window above"; };
   }
   {
     mode = "n";
-    key = "<leader>wv";
+    key = "<Leader>wv";
     action = "<C-w>v";
-    options = {
-      silent = true;
-      desc = "vertical split window";
-    };
+    options = { desc = "vertical split window"; };
   }
   {
     mode = "n";
-    key = "<leader>ws";
+    key = "<Leader>ws";
     action = "<C-w>s";
-    options = {
-      silent = true;
-      desc = "horizontal split window";
-    };
+    options = { desc = "horizontal split window"; };
   }
   {
     mode = "n";
-    key = "<leader>wq";
-    action.__raw = ''
-      -- possibly make this :q
-           require('mini.bufremove').unshow()
-    '';
-    options = {
-      silent = true;
-      desc = "move to window on left";
-    };
+    key = "<Leader>wq";
+    action = ":q";
+    options = { desc = "close window"; };
   }
 
   {
     mode = "n";
     key = "<leader>w=";
     action = "<C-w>=";
-    options = {
-      silent = true;
-      desc = "balance windows";
-    };
+    options = { desc = "balance windows"; };
   }
 
   {
     mode = "n";
     key = "<leader>wL";
     action = "<C-w>>2";
-    options = {
-      silent = true;
-      desc = "resize right";
-    };
+    options = { desc = "resize right"; };
   }
   {
     mode = "n";
     key = "<leader>wH";
     action = "<C-w><2";
-    options = {
-      silent = true;
-      desc = "resize left";
-    };
+    options = { desc = "resize left"; };
   }
   {
     mode = "n";
     key = "<leader>wJ";
     action = "<C-w>+2";
-    options = {
-      silent = true;
-      desc = "resize down";
-    };
+    options = { desc = "resize down"; };
   }
   {
     mode = "n";
     key = "<leader>wK";
     action = "<C-w>-2";
-    options = {
-      silent = true;
-      desc = "resize up";
-    };
+    options = { desc = "resize up"; };
   }
 ]

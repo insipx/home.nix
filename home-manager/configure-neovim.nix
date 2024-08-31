@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 let keybindings = import ./neovim-configuration/keybindings;
 in {
   imports = [
@@ -20,12 +20,12 @@ in {
       dprint
       stylua
       deno
-      nixfmt
+      nixfmt-rfc-style
       yamlfmt
       rubyPackages.htmlbeautifier
       # codespell
 
-      # Linters 
+      # Linters
       dotenv-linter
       gitlint
       html-tidy
@@ -34,13 +34,15 @@ in {
       markdownlint-cli
       shellcheck
       golangci-lint
+      nodePackages_latest.jsonlint
     ];
-    extraPython3Packages = (ps: with ps; [ pynvim unidecode black isort ]);
+    extraPython3Packages = ps: with ps; [ pynvim unidecode black isort ];
     withNodeJs = true;
     withRuby = true;
 
     globals = {
       mapleader = " ";
+      maplocalleader = ",";
       loaded_netrw = 1;
       loaded_netrwPlugin = 1;
       loaded_python_provider = 0;
@@ -71,7 +73,11 @@ in {
       expandtab = true;
     };
 
-    keymaps = keybindings.all;
+    keymaps = [{
+      key = "<Space>";
+      action = "<Nop>";
+      options.silent = true;
+    }] ++ keybindings.all ++ keybindings.desc;
 
     extraConfigLua = ''
       -- vim.opt.listchars:append "eol:↴"
@@ -85,7 +91,18 @@ in {
     extraPlugins = with pkgs.vimPlugins; [ telescope-project-nvim ];
 
     plugins = {
-      lsp = { enable = true; };
+      lsp = {
+        enable = true;
+        servers = {
+          nixd = {
+            enable = true;
+            settings.formatting.command = [ "nixpkgs-fmt" ];
+          };
+          biome = {
+            enable = true;
+          };
+        };
+      };
       lsp-format.enable = true;
       fidget.enable = true;
 
@@ -93,33 +110,37 @@ in {
         enable = true;
         settings.auto_start = "shut-up";
       };
+
       lspsaga.enable = true;
       conform-nvim = {
         enable = true;
         settings = {
           format_on_save = {
             lspFallback = true;
-            timeoutMs = 500;
+            timeoutMs = 350;
           };
           formatters_by_ft = {
             toml = [ "dprint" ];
             lua = [ "stylua" ];
             javascript = [ "deno_fmt" ];
-            nix = [ "nixfmt" ];
+            typescript = [ "deno_fmt" ];
+            nix = [ "nixfmt-rfc-style" ];
             yaml = [ "yamlfmt" ];
             html = [ "htmlbeautifier" ];
             markdown = [ "deno_fmt" ];
+            json = [ "deno_fmt" ];
             "*" = [ "codespell" ];
           };
         };
       };
 
       lint = {
-        enable = true; # nvim-lint
+        enable = true;
         lintersByFt = {
           nix = [ "nix" "statix" ];
           env = [ "dotenv_linter" ];
           git = [ "gitlint" ];
+          json = [ "jsonlint" ];
         };
       };
 
@@ -191,7 +212,6 @@ in {
           };
         };
       };
-
       gitsigns.enable = true;
       diffview.enable = true;
       octo.enable = true;
@@ -263,33 +283,20 @@ in {
           auto_install = true;
           highlight = { enable = true; };
           indent = { enable = true; };
-          #ensure_installed = [
-          #  "rust"
-          #  "toml"
-          #  "go"
-          #  "lua"
-          #  "bash"
-          #  "json"
-          #  "yaml"
-          #  "sql"
-          #  "nix"
-          #  "fish"
-          #  "norg-meta"
-          #  "markdown"
-          #  "org-nvim"
-          #  "dockerfile"
-          #  "javascript"
-          #  "zig"
-          #  "proto"
-          #];
         };
       };
       treesitter-textobjects.enable = true;
-      treesitter-context.enable = true;
+      treesitter-context = {
+        enable = true;
+        settings = {
+          max_lines = 2;
+        };
+      };
       treesitter-refactor.enable =
         true; # TODO: can keymap bunch of cool stuff when want
+
       indent-blankline = {
-        enable = true;
+        enable = false;
         settings = {
           scope = {
             enabled = true;
@@ -309,29 +316,67 @@ in {
           notify = { lsp_progress.enable = false; };
           bracketed = { };
           bufremove = { };
+          clue = {
+            triggers = [
+              {
+                mode = "n";
+                keys = "<Leader>";
+              }
+              {
+                mode = "x";
+                keys = "<Leader>";
+              }
+              {
+                mode = "v";
+                keys = "<Leader>";
+              }
+            ];
+            clues = [
+              "miniclue.gen_clues.builtin_completion()"
+              "miniclue.gen_clues.g()"
+              "miniclue.gen_clues.marks()"
+              "miniclue.gen_clues.registers()"
+              "miniclue.gen_clues.windows()"
+              "miniclue.gen_clues.z()"
+            ];
+            window.delay = 500;
+
+          };
+          trailspace = { };
+          basics = { };
+          align = { };
+          indentscope = { };
+          hipatterns = {
+            highlighters = {
+              fixme = { pattern = "FIXME"; group = "MiniHipatternsFixme"; };
+              hack = { pattern = "HACK"; group = "MiniHipatternsHack"; };
+              todo = { pattern = "TODO"; group = "MiniHipatternsTodo"; };
+              note = { pattern = "NOTE"; group = "MiniHipatternsNote"; };
+            };
+          };
         };
       };
+
       cursorline.enable = true;
-      # like 'hop.nvim' but better featured and integrated with treesitter/nightfox
-      # leap.enable = true;
+
       hop = {
         enable = true;
         settings.keys = "etovxqpdygfblzhckisuran";
       };
-
-      # bufdelete.enable = true;
 
       toggleterm.enable = true;
 
       #scope.nvim
       #stabilize
       #vim-eunuch
-      #vim easy-align
-
     };
     colorschemes.nightfox = {
       enable = true;
       flavor = "carbonfox";
+    };
+
+    performance = {
+      # byteCompileLua.enable = true;
     };
   };
 }

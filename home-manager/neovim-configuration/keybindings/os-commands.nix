@@ -1,6 +1,6 @@
 [{
   mode = "n";
-  key = "<leader>cn";
+  key = "<Leader>cn";
   action = "<cmd>enew<CR>";
   options = {
     silent = true;

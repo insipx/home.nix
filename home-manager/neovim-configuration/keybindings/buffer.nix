@@ -1,7 +1,7 @@
 [
   {
     mode = "n";
-    key = "<leader>bn";
+    key = "<Leader>bn";
     action = "<cmd>bnext<CR>";
     options = {
       silent = true;
@@ -10,7 +10,7 @@
   }
   {
     mode = "n";
-    key = "<leader>bp";
+    key = "<Leader>bp";
     action = "<cmd>bprev<CR>";
     options = {
       silent = true;
@@ -19,7 +19,7 @@
   }
   {
     mode = "n";
-    key = "<leader>bP";
+    key = "<Leader>bP";
     action = "<cmd>BufferLineTogglePin<CR>";
     options = {
       silent = true;
@@ -28,21 +28,24 @@
   }
   {
     mode = "n";
-    key = "<leader>bk";
-    action.__raw = "require('mini.bufremove').delete()";
+    key = "<Leader>bk";
+    action.__raw = "require('mini.bufremove').delete";
     options = {
       silent = true;
-      desc = "Pin buffer to start of bufferline";
+      desc = "delete buffer";
     };
   }
+
   {
     mode = "n";
-    key = "<leader>ba";
+    key = "<Leader>ba";
     action.__raw = ''
-      for i, buf_hndl in ipairs(vim.api.nvim_list_bufs()) do
-          if vim.api.nvim_buf_is_loaded(buf_hndl) then
-            require('mini.bufremove').delete(buf_hndl)
-          end
+       function()
+         for i, buf_hndl in ipairs(vim.api.nvim_list_bufs()) do
+             if vim.api.nvim_buf_is_loaded(buf_hndl) then
+               require('mini.bufremove').delete(buf_hndl)
+             end
+         end
       end
     '';
     options = {

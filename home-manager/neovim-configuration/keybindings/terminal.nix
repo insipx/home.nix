@@ -1,7 +1,7 @@
 [
   {
     mode = "n";
-    key = "<leader>tt";
+    key = "<Leader>tt";
     action = "<cmd>ToggleTerm size=20 dir=git_dir direction=horizontal<CR>";
     options = {
       silent = true;
@@ -10,7 +10,7 @@
   }
   {
     mode = "n";
-    key = "<leader>tf";
+    key = "<Leader>tf";
     action = "Telescope toggleterm<CR>";
     options = {
       silent = true;

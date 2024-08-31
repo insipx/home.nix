@@ -1,7 +1,7 @@
 [
   {
     mode = "n";
-    key = "<leader>qo";
+    key = "<Leader>qo";
     action = "<cmd>copen<CR>";
     options = {
       silent = true;
@@ -10,7 +10,7 @@
   }
   {
     mode = "n";
-    key = "<leader>qc";
+    key = "<Leader>qc";
     action = "<cmd>ccl<CR>";
     options = {
       silent = true;
@@ -19,7 +19,7 @@
   }
   {
     mode = "n";
-    key = "<leader>qn";
+    key = "<Leader>qn";
     action = "<cmd>cn<CR>";
     options = {
       silent = true;
@@ -28,7 +28,7 @@
   }
   {
     mode = "n";
-    key = "<leader>qp";
+    key = "<Leader>qp";
     action = "<cmd>cp<CR>";
     options = {
       silent = true;
@@ -37,7 +37,7 @@
   }
   {
     mode = "n";
-    key = "<leader>qs";
+    key = "<Leader>qs";
     action.__raw = ''
       function()
         require('spectre').open_visual({ select_word = true })

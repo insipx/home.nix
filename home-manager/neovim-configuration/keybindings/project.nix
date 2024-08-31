@@ -1,6 +1,6 @@
 [{
   mode = "n";
-  key = "<leader>ptt";
+  key = "<Leader>ptt";
   action = "<cmd>NvimTreeToggle<CR>";
   options = {
     silent = true;

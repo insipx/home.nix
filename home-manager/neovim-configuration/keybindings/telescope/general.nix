@@ -1,23 +1,20 @@
 [
   {
     mode = "n";
-    key = "<leader>ff";
+    key = "<Leader>ff";
     action.__raw = ''
       function() 
         require('telescope.builtin')
           .find_files(require('telescope.themes').get_ivy({})) 
       end
     '';
-    options = {
-      silent = true;
-      desc = "find files";
-    };
+    options = { desc = "find files"; };
 
   }
 
   {
     mode = "n";
-    key = "<leader>fr";
+    key = "<Leader>fr";
     action.__raw = ''
       function() 
         require('telescope.builtin')

@@ -19,13 +19,21 @@
     mozilla.url = "github:mozilla/nixpkgs-mozilla";
   };
 
-  # `...` allows defining additional inputs to the outputs 
+  # `...` allows defining additional inputs to the outputs
   # without changing the fn signature. It makes the flake more flexible.
-  outputs = { self, nix-darwin, nixpkgs, home-manager, nixvim, neorg-overlay
-    , mozilla, ... }@inputs:
+  outputs =
+    { self
+    , nix-darwin
+    , nixpkgs
+    , home-manager
+    , nixvim
+    , neorg-overlay
+    , mozilla
+    , ...
+    }@inputs:
 
     let
-      inherit (nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
+      inherit (nixpkgs.lib) attrValues;
       inherit (nix-darwin.lib) darwinSystem;
 
       # the `self.overlays` in the `nixpkgsConfig`
@@ -37,8 +45,9 @@
         ]; # adds all overlays to list
       };
 
-      options = (import ./options.nix { inherit self nixpkgs; });
-    in {
+      options = import ./options.nix { inherit self nixpkgs; };
+    in
+    {
       overlays = { neovim = inputs.neovim-nightly-overlay.overlays.default; };
 
       # Expose the package set, including verlays, for convenience.
@@ -54,10 +63,12 @@
           # nixvimpkg.homeManagerModules.nixvim
           {
             nixpkgs = nixpkgsConfig;
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.insipx = import ./home-manager/home.nix;
-            home-manager.extraSpecialArgs = { inherit nixvim; };
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.insipx = import ./home-manager/home.nix;
+              extraSpecialArgs = { inherit nixvim; };
+            };
           }
         ];
       };
@@ -70,9 +81,11 @@
           # nixvimpkg.homeManagerModules.nixvim
           {
             nixpkgs = nixpkgsConfig;
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.andrewplaza = import ./home-manager/home.nix;
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.andrewplaza = import ./home-manager/home.nix;
+            };
           }
         ];
       };

@@ -1,6 +1,6 @@
 [{
   mode = "n";
-  key = "<leader>ft";
+  key = "<Leader>ft";
   action = "<cmd>NvimTreeToggle<CR>";
   options = {
     silent = true;

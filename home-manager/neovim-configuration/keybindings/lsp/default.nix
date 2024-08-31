@@ -6,8 +6,8 @@ let
     (map (m: if builtins.isAttrs m then m.all else m) imports);
 
 in {
-  inherit (import ./goto.nix) goto;
-  inherit (import ./buffer.nix) buffer;
+  goto = (import ./goto.nix);
+  general = (import ./general.nix);
 
   inherit all;
 }

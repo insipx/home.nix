@@ -1,7 +1,7 @@
 [
   {
     mode = [ "n" "v" ];
-    key = "<leader>ic";
+    key = "<Leader>ic";
     action = ''"+y'';
     options = {
       silent = true;
@@ -10,7 +10,7 @@
   }
   {
     mode = "n";
-    key = "<leader>iy";
+    key = "<Leader>iy";
     action = ''"+p'';
     options = {
       silent = true;
@@ -19,7 +19,7 @@
   }
   {
     mode = "n";
-    key = "<leader>ir";
+    key = "<Leader>ir";
     action = "<cmd>Telescope registers<CR>";
     options = {
       silent = true;
