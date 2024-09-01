@@ -202,6 +202,7 @@ in {
       };
       lualine = { enable = true; };
       spectre.enable = true;
+      oil.enable = true;
 
       neogit = {
         enable = true;
@@ -213,6 +214,7 @@ in {
         };
       };
       gitsigns.enable = true;
+      git-blame.enable = true;
       diffview.enable = true;
       octo.enable = true;
 
@@ -358,7 +360,6 @@ in {
       };
 
       cursorline.enable = true;
-
       hop = {
         enable = true;
         settings.keys = "etovxqpdygfblzhckisuran";

@@ -1,9 +1,22 @@
 [{
   mode = "n";
   key = "<Leader>ft";
-  action = "<cmd>NvimTreeToggle<CR>";
+  action.__raw = ''
+    function()
+      require("oil").toggle_float()
+    end
+  '';
   options = {
     silent = true;
-    desc = "Toggle tree file browser";
+    desc = "toggle file browser";
   };
-}]
+}
+  {
+    mode = "n";
+    key = "<Leader>fth";
+    action.__raw = ''
+      function()
+        require("oil").toggle_hidden()
+      end
+    '';
+  }]
