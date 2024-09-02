@@ -1,6 +1,7 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }:
+let keybindings = import ./neovim-configuration/keybindings;
+in {
   imports = [
-    (import ./neovim-configuration/which-key.nix { inherit config pkgs; })
     #     (import ./neovim-configuration/lualine.nix { inherit config pkgs; })
   ];
 
@@ -12,18 +13,19 @@
       ripgrep
       lua51Packages.luarocks
       lua51Packages.lua
+      lua51Packages.cjson
       git
 
       # Formatters
       dprint
       stylua
       deno
-      nixfmt
+      nixfmt-rfc-style
       yamlfmt
       rubyPackages.htmlbeautifier
       # codespell
 
-      # Linters 
+      # Linters
       dotenv-linter
       gitlint
       html-tidy
@@ -32,13 +34,15 @@
       markdownlint-cli
       shellcheck
       golangci-lint
+      nodePackages_latest.jsonlint
     ];
-    extraPython3Packages = (ps: with ps; [ pynvim unidecode black isort ]);
+    extraPython3Packages = ps: with ps; [ pynvim unidecode black isort ];
     withNodeJs = true;
     withRuby = true;
 
     globals = {
       mapleader = " ";
+      maplocalleader = ",";
       loaded_netrw = 1;
       loaded_netrwPlugin = 1;
       loaded_python_provider = 0;
@@ -69,74 +73,82 @@
       expandtab = true;
     };
 
+    keymaps = [{
+      key = "<Space>";
+      action = "<Nop>";
+      options.silent = true;
+    }] ++ keybindings.all ++ keybindings.desc;
+
     extraConfigLua = ''
       -- vim.opt.listchars:append "eol:↴"
       vim.opt.listchars:append "space:⋅"
     ''; # + builtins.readFile ./neovim-configuration/lua/lualine.lua;
 
-    extraPlugins = with pkgs.vimPlugins; [
-      telescope-project-nvim
-      neoconf-nvim
-    ];
+    extraConfigVim = ''
+      set exrc
+    '';
+
+    extraPlugins = with pkgs.vimPlugins; [ telescope-project-nvim ];
 
     plugins = {
       lsp = {
         enable = true;
-        preConfig = ''
-          require('neoconf').setup()
-        '';
+        servers = {
+          nixd = {
+            enable = true;
+            settings.formatting.command = [ "nixpkgs-fmt" ];
+          };
+          biome = {
+            enable = true;
+          };
+        };
       };
       lsp-format.enable = true;
-      fidget = {
-        enable = true;
-        integration.nvim-tree.enable = true;
-      };
+      fidget.enable = true;
 
       coq-nvim = {
         enable = true;
         settings.auto_start = "shut-up";
       };
 
-      trouble.enable = true;
       lspsaga.enable = true;
       conform-nvim = {
         enable = true;
-        formattersByFt = {
-          toml = [ "dprint" ];
-          lua = [ "stylua" ];
-          javascript = [ "deno_fmt" ];
-          nix = [ "nixfmt" ];
-          yaml = [ "yamlfmt" ];
-          html = [ "htmlbeautifier" ];
-          markdown = [ "deno_fmt" ];
-          "*" = [ "codespell" ];
-        };
-        formatOnSave = {
-          lspFallback = true;
-          timeoutMs = 500;
+        settings = {
+          format_on_save = {
+            lspFallback = true;
+            timeoutMs = 350;
+          };
+          formatters_by_ft = {
+            toml = [ "dprint" ];
+            lua = [ "stylua" ];
+            javascript = [ "deno_fmt" ];
+            typescript = [ "deno_fmt" ];
+            nix = [ "nixfmt-rfc-style" ];
+            yaml = [ "yamlfmt" ];
+            html = [ "htmlbeautifier" ];
+            markdown = [ "deno_fmt" ];
+            json = [ "deno_fmt" ];
+            "*" = [ "codespell" ];
+          };
         };
       };
 
       lint = {
-        enable = true; # nvim-lint
+        enable = true;
         lintersByFt = {
           nix = [ "nix" "statix" ];
           env = [ "dotenv_linter" ];
           git = [ "gitlint" ];
+          json = [ "jsonlint" ];
         };
       };
 
-      nvim-tree = {
-        enable = true;
-        diagnostics.enable = true;
-      };
-
       direnv.enable = true;
-
       rustaceanvim = {
         enable = true;
         settings.server = {
-          load_vscode_settings = true;
+          load_vscode_settings = false;
           tools = { test_executor = "toggleterm"; };
           default_settings = {
             rust-analyzer = {
@@ -160,7 +172,7 @@
                   "async-recursion" = [ "async_recursion" ];
                   "ctor" = [ "ctor" ];
                   "tokio" = [ "test" ];
-                  "async-stream" = ["stream", "try_stream"];
+                  "async-stream" = [ "stream" "try_stream" ];
                 };
               };
             };
@@ -175,16 +187,22 @@
 
       bufferline = {
         enable = true;
-        mode = "buffers";
-        numbers = "ordinal";
-        indicator.style = "underline";
-        diagnostics = "nvim_lsp";
+        settings = {
+          options = {
+            mode = "buffers";
+            numbers = "ordinal";
+            indicator.style = "underline";
+            diagnostics = "nvim_lsp";
+          };
+        };
       };
       alpha = {
         enable = true;
         theme = "startify";
       };
       lualine = { enable = true; };
+      spectre.enable = true;
+      oil.enable = true;
 
       neogit = {
         enable = true;
@@ -195,8 +213,8 @@
           };
         };
       };
-
       gitsigns.enable = true;
+      gitblame.enable = true;
       diffview.enable = true;
       octo.enable = true;
 
@@ -252,7 +270,7 @@
           tree-sitter-lua
           tree-sitter-fish
           tree-sitter-bash
-          tree-sitter-norg-meta
+          # tree-sitter-norg-meta
           tree-sitter-org-nvim
           tree-sitter-markdown
           tree-sitter-dockerfile
@@ -267,30 +285,20 @@
           auto_install = true;
           highlight = { enable = true; };
           indent = { enable = true; };
-          ensure_installed = [
-            "rust"
-            "toml"
-            "go"
-            "lua"
-            "bash"
-            "json"
-            "yaml"
-            "sql"
-            "nix"
-            "fish"
-            "norg-meta"
-            "markdown"
-            "org-nvim"
-            "dockerfile"
-            "javascript"
-            "zig"
-            "proto"
-          ];
         };
       };
       treesitter-textobjects.enable = true;
-      indent-blankline = {
+      treesitter-context = {
         enable = true;
+        settings = {
+          max_lines = 2;
+        };
+      };
+      treesitter-refactor.enable =
+        true; # TODO: can keymap bunch of cool stuff when want
+
+      indent-blankline = {
+        enable = false;
         settings = {
           scope = {
             enabled = true;
@@ -305,31 +313,71 @@
 
       mini = {
         enable = true;
-        modules = { animate = { }; };
+        modules = {
+          pairs = { };
+          notify = { lsp_progress.enable = false; };
+          bracketed = { };
+          bufremove = { };
+          clue = {
+            triggers = [
+              {
+                mode = "n";
+                keys = "<Leader>";
+              }
+              {
+                mode = "x";
+                keys = "<Leader>";
+              }
+              {
+                mode = "v";
+                keys = "<Leader>";
+              }
+            ];
+            clues = [
+              "miniclue.gen_clues.builtin_completion()"
+              "miniclue.gen_clues.g()"
+              "miniclue.gen_clues.marks()"
+              "miniclue.gen_clues.registers()"
+              "miniclue.gen_clues.windows()"
+              "miniclue.gen_clues.z()"
+            ];
+            window.delay = 500;
+
+          };
+          trailspace = { };
+          basics = { };
+          align = { };
+          indentscope = { };
+          hipatterns = {
+            highlighters = {
+              fixme = { pattern = "FIXME"; group = "MiniHipatternsFixme"; };
+              hack = { pattern = "HACK"; group = "MiniHipatternsHack"; };
+              todo = { pattern = "TODO"; group = "MiniHipatternsTodo"; };
+              note = { pattern = "NOTE"; group = "MiniHipatternsNote"; };
+            };
+          };
+        };
       };
+
       cursorline.enable = true;
-      # like 'hop.nvim' but better featured and integrated with treesitter/nightfox
-      # leap.enable = true;
       hop = {
         enable = true;
         settings.keys = "etovxqpdygfblzhckisuran";
       };
 
-      bufdelete.enable = true;
-
       toggleterm.enable = true;
 
       #scope.nvim
       #stabilize
-      #vim-rooter
       #vim-eunuch
-      #vim easy-align
-      #move.nvim
-
     };
     colorschemes.nightfox = {
       enable = true;
       flavor = "carbonfox";
+    };
+
+    performance = {
+      # byteCompileLua.enable = true;
     };
   };
 }
