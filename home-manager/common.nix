@@ -1,16 +1,16 @@
 { config, stdenv, pkgs, lib, nixvim, ... }:
 let
-# privateConfiguration = builtins.fetchGit {
-#   url = "git@github.com:insipx/home.private.nix.git";
-#   rev = "f4df03bac3812d9ff901f1e7822c8490a42c351b";
-#   allRefs = true;
-# };
+ privateConfiguration = builtins.fetchGit {
+   url = "git@github.com:insipx/home.private.nix.git";
+   rev = "f4df03bac3812d9ff901f1e7822c8490a42c351b";
+   allRefs = true;
+ };
   nerdfonts = pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; };
   # nixvim = import "${pkgs.path}/nixvim" { inherit pkgs; };
 in {
   imports = [
     nixvim.homeManagerModules.nixvim
-#    (import privateConfiguration)
+    (import privateConfiguration)
     (import ./configure-neovim.nix { inherit config pkgs; })
   ];
   home = {
