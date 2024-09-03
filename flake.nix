@@ -60,7 +60,6 @@
           options
           ./configuration.nix
           home-manager.darwinModules.home-manager
-          # nixvimpkg.homeManagerModules.nixvim
           {
             nixpkgs = nixpkgsConfig;
             home-manager = {
@@ -78,13 +77,13 @@
           options
           ./configuration.nix
           home-manager.darwinModules.home-manager
-          # nixvimpkg.homeManagerModules.nixvim
           {
             nixpkgs = nixpkgsConfig;
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
               users.andrewplaza = import ./home-manager/home.nix;
+              extraSpecialArgs = { inherit nixvim; };
             };
           }
         ];
