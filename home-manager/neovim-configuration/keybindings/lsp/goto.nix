@@ -1,7 +1,7 @@
 [
   {
     mode = "n";
-    key = "<leader>gp";
+    key = "gp";
     action = "<cmd>Lspsaga peek_definition<CR>";
     options = {
       silent = true;
@@ -10,7 +10,7 @@
   }
   {
     mode = "n";
-    key = "<leader>gt";
+    key = "gt";
     action = "<cmd>Lspsaga peek_type_definition<CR>";
     options = {
       silent = true;
@@ -19,7 +19,7 @@
   }
   {
     mode = "n";
-    key = "<leader>gh";
+    key = "gh";
     action = "<cmd>Lspsaga lsp_finder<CR>";
     options = {
       silent = true;
@@ -28,7 +28,7 @@
   }
   {
     mode = "n";
-    key = "<leader>gr";
+    key = "gr";
     action = "<cmd>Lspsaga rename ++project<CR>";
     options = {
       silent = true;

@@ -45,7 +45,7 @@ in
       options.desc = "files";
     }
     {
-      key = "<Leader>g";
+      key = "g";
       action = "";
       options.desc = "lsp goto";
     }
@@ -78,6 +78,11 @@ in
       key = "<Leader>w";
       action = "";
       options.desc = "window";
+    }
+    {
+      key = "<Leader>u";
+      action = "";
+      options.desc = "ui elements";
     }
     {
       key = "<Leader><Tab>";

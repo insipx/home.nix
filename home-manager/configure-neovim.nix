@@ -356,6 +356,8 @@ in {
               note = { pattern = "NOTE"; group = "MiniHipatternsNote"; };
             };
           };
+          map = { };
+          misc = { };
         };
       };
 
@@ -366,8 +368,8 @@ in {
       };
 
       toggleterm.enable = true;
+      scope.enable = true;
 
-      #scope.nvim
       #stabilize
       #vim-eunuch
     };
@@ -377,7 +379,13 @@ in {
     };
 
     performance = {
-      # byteCompileLua.enable = true;
+      byteCompileLua = {
+        enable = true;
+        configs = true;
+        initLua = true;
+        nvimRuntime = true;
+        plugins = true;
+      };
     };
   };
 }
