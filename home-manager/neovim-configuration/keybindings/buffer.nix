@@ -53,4 +53,12 @@
       desc = "Delete all open buffers";
     };
   }
+  {
+    mode = "n";
+    key = "<Leader>bz";
+    action.__raw = ''
+      require("mini.misc").zoom
+    '';
+    options.desc = "zoom in on current buffer in full-size floating window";
+  }
 ]
