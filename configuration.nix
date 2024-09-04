@@ -44,6 +44,7 @@
     brews = [
       "gnu-sed"
       "gnupg"
+      "gpgme"
       "yubikey-personalization"
       "hopenpgp-tools"
       "ykman"

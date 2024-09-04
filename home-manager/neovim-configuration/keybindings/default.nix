@@ -46,7 +46,7 @@ in
     }
     {
       key = "g";
-      action = "";
+      action = "g";
       options.desc = "lsp goto";
     }
     {
