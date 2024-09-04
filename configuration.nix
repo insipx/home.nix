@@ -16,11 +16,12 @@
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
-  # nix.package = pkgs.nix;
 
-  # Necessary for using flakes on this system.
-  nix.settings.experimental-features = "nix-command flakes";
-  nix.settings.trusted-users = [ "root" "insipx" "andrewplaza" ];
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = "nix-command flakes";
+    settings.trusted-users = [ "root" "insipx" "andrewplaza" ];
+  };
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true; # default shell on catalina
@@ -34,9 +35,13 @@
   system.stateVersion = 4;
 
   # The platform the configuration will be used on.
-  nixpkgs.hostPlatform = "aarch64-darwin";
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowBroken = true;
+  nixpkgs = {
+    hostPlatform = "aarch64-darwin";
+    config = {
+      allowUnfree = true;
+      allowBroken = true;
+    };
+  };
 
   # https://daiderd.com/nix-darwin/manual/index.html
   homebrew = {
@@ -54,22 +59,22 @@
     casks = [ "docker" "google-chrome" ];
   };
 
-  services.yabai = {
-    enable = true;
-    package = pkgs.yabai;
-    # Requires SIP (Security Integrity Protection) to be disabled.
-    enableScriptingAddition = false;
-    config = {
-      top_padding = 20;
-      bottom_padding = 20;
-      left_padding = 20;
-      right_padding = 20;
-      window_gap = 20;
-    };
-    # extraConfig = "";
-  };
+  # services.yabai = {
+  #   enable = true;
+  #   package = pkgs.yabai;
+  #   # Requires SIP (Security Integrity Protection) to be disabled.
+  #   enableScriptingAddition = false;
+  #   config = {
+  #     top_padding = 20;
+  #     bottom_padding = 20;
+  #     left_padding = 20;
+  #     right_padding = 20;
+  #     window_gap = 20;
+  #   };
+  #   # extraConfig = "";
+  # };
 
-  services.sketchybar = { enable = true; };
+  # services.sketchybar = { enable = true; };
 
   # services.skhd = {
   #  enable = true;
