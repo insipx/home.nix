@@ -260,6 +260,8 @@ in {
         grammarPackages = with pkgs.tree-sitter-grammars; [
           tree-sitter-rust
           tree-sitter-go
+          tree-sitter-gomod
+          tree-sitter-gowork
           tree-sitter-javascript
           tree-sitter-zig
           tree-sitter-json
@@ -283,7 +285,7 @@ in {
 
         settings = {
           auto_install = true;
-          highlight = { enable = true; };
+          highlight = { enable = false; };
           indent = { enable = true; };
         };
       };
@@ -358,7 +360,9 @@ in {
           };
           map = { };
           misc = { };
+          icons = { };
         };
+        mockDevIcons = true;
       };
 
       cursorline.enable = true;
