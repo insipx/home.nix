@@ -276,7 +276,7 @@ in {
           tree-sitter-dockerfile
           tree-sitter-proto
           pkgs.vimPlugins.nvim-treesitter.builtGrammars.tree-sitter-norg
-          pkgs.vimPlugins.nvim-treesitter.builtGrammars.tree-sitter-norg-meta
+          # pkgs.vimPlugins.nvim-treesitter.builtGrammars.tree-sitter-norg-meta
           pkgs.vimPlugins.nvim-treesitter-parsers.jsonc
         ];
         nixGrammars = true;

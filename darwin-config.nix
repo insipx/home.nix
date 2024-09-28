@@ -1,8 +1,21 @@
 { pkgs, config, ... }: {
+
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = [ pkgs.vim ];
-  environment.variables = { MACHINE = "macbook"; };
+
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = "nix-command flakes";
+    settings.trusted-users = [ "root" "insipx" "andrewplaza" ];
+  };
+
+
+  # Set Git commit hash for darwin-version.
+  system.configurationRevision = config.system.flakeRevision;
+
+  programs.zsh.enable = true; # default shell on catalina
+  programs.fish.enable = true;
 
   users.users.insipx = {
     home = "/Users/insipx";
@@ -14,26 +27,6 @@
     shell = pkgs.fish;
   };
 
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-
-  nix = {
-    package = pkgs.nix;
-    settings.experimental-features = "nix-command flakes";
-    settings.trusted-users = [ "root" "insipx" "andrewplaza" ];
-  };
-
-  # Create /etc/zshrc that loads the nix-darwin environment.
-  programs.zsh.enable = true; # default shell on catalina
-  programs.fish.enable = true;
-
-  # Set Git commit hash for darwin-version.
-  system.configurationRevision = config.system.flakeRevision;
-
-  # Used for backwards compatibility, please read the changelog before changing.
-  # $ darwin-rebuild changelog
-  system.stateVersion = 4;
-
   # The platform the configuration will be used on.
   nixpkgs = {
     hostPlatform = "aarch64-darwin";
@@ -42,6 +35,9 @@
       allowBroken = true;
     };
   };
+
+  # Auto upgrade nix package and the daemon service.
+  services.nix-daemon.enable = true;
 
   # https://daiderd.com/nix-darwin/manual/index.html
   homebrew = {
@@ -79,5 +75,9 @@
   # services.skhd = {
   #  enable = true;
   # };
-}
 
+  # Used for backwards compatibility, please read the changelog before changing.
+  # $ darwin-rebuild changelog
+  system.stateVersion = 4;
+
+}

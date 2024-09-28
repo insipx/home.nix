@@ -15,13 +15,14 @@ end
 -- For example, changing the color scheme:
 -- config.color_scheme = 'Ayu Mirage' -- https://gogh-co.github.io/Gogh/
 config.color_scheme = "carbonfox"
-config.font = wezterm.font("Miracode")
-config.font_size = 14.0
+config.font = wezterm.font("Monaspace Neon")
+config.font_size = 12.0
 config.colors = {
 	selection_bg = "rgba(50% 50% 50% 50%)",
 }
 config.enable_kitty_keyboard = true
-config.default_prog = { "/run/current-system/sw/bin/fish", "-l" }
+config.default_prog = { "fish", "-l" }
+-- config.enable_wayland = true
 
 -- config.debug_key_events = true
 config.leader = { key = " ", mods = "CTRL", timeout_milliseconds = 1000 }
