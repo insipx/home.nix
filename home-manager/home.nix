@@ -109,7 +109,7 @@ in
   };
   programs = {
     wezterm = {
-      enable = false;
+      enable = true;
       enableZshIntegration = false;
       enableBashIntegration = false;
     };
@@ -146,6 +146,7 @@ in
             set -gx PATH "$HOME/.scripts" $PATH
             if test (uname) = Darwin
               fish_add_path --prepend --global "$HOME/.nix-profile/bin" /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
+              fish_add_path --prepend --global "$HOME/.foundry/bin"
             end
       '';
       plugins = [

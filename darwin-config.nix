@@ -51,8 +51,9 @@
       "ykman"
       "pinentry-mac"
       "swiftformat"
+      "cxreiff/tap/ttysvr"
     ];
-    casks = [ "docker" "google-chrome" ];
+    casks = [ "docker" ];
   };
 
   # services.yabai = {
