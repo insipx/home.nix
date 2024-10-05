@@ -260,6 +260,8 @@ in {
         grammarPackages = with pkgs.tree-sitter-grammars; [
           tree-sitter-rust
           tree-sitter-go
+          tree-sitter-gomod
+          tree-sitter-gowork
           tree-sitter-javascript
           tree-sitter-zig
           tree-sitter-json
@@ -276,14 +278,14 @@ in {
           tree-sitter-dockerfile
           tree-sitter-proto
           pkgs.vimPlugins.nvim-treesitter.builtGrammars.tree-sitter-norg
-          pkgs.vimPlugins.nvim-treesitter.builtGrammars.tree-sitter-norg-meta
+          # pkgs.vimPlugins.nvim-treesitter.builtGrammars.tree-sitter-norg-meta
           pkgs.vimPlugins.nvim-treesitter-parsers.jsonc
         ];
         nixGrammars = true;
 
         settings = {
           auto_install = true;
-          highlight = { enable = true; };
+          highlight = { enable = false; };
           indent = { enable = true; };
         };
       };
@@ -358,7 +360,9 @@ in {
           };
           map = { };
           misc = { };
+          icons = { };
         };
+        mockDevIcons = true;
       };
 
       cursorline.enable = true;

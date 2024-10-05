@@ -16,6 +16,7 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # nixgl.url = "github:nix-community/nixGL";
     mozilla.url = "github:mozilla/nixpkgs-mozilla";
   };
 
@@ -29,6 +30,7 @@
     , nixvim
     , neorg-overlay
     , mozilla
+      # , nixgl
     , ...
     }@inputs:
 
@@ -50,15 +52,35 @@
     {
       overlays = { neovim = inputs.neovim-nightly-overlay.overlays.default; };
 
-      # Expose the package set, including verlays, for convenience.
+      # Expose the package set, including overlays, for convenience.
       darwinPackages = self.darwinConfigurations."kusanagi".pkgs;
+
+
+      homeConfigurations."tanjiro" = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          inherit (nixpkgsConfig) config;
+          system = "x86_64-linux";
+          inherit (nixpkgsConfig) overlays; # ++ [ nixgl.overlay ];
+        };
+        modules = [
+          ./home-manager/home.nix
+          ./linux-config.nix
+          {
+            home = {
+              username = "insipx";
+              homeDirectory = "/home/insipx";
+            };
+          }
+        ];
+        extraSpecialArgs = { inherit nixvim; };
+      };
 
       # Build darwin flake using:
       # $ darwin-rebuild build --flake .#cyllene
       darwinConfigurations."cyllene" = darwinSystem {
         modules = [
           options
-          ./configuration.nix
+          ./darwin-config.nix
           home-manager.darwinModules.home-manager
           {
             nixpkgs = nixpkgsConfig;
@@ -75,7 +97,7 @@
       darwinConfigurations."kusanagi" = darwinSystem {
         modules = [
           options
-          ./configuration.nix
+          ./darwin-conf.nix
           home-manager.darwinModules.home-manager
           {
             nixpkgs = nixpkgsConfig;
