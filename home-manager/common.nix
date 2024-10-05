@@ -36,6 +36,7 @@ in {
       eza # replacement for ls
       du-dust # replacement for du
       fd # find
+      macchina
       glow
       git
       bat # Cat clone with syntax highlighting and git integration
@@ -126,6 +127,7 @@ in {
       #   '';
       interactiveShellInit = ''
         set fish_greeting # Disable greeting
+        macchina
         fish_add_path /opt/homebrew/bin
         set -x GPG_TTY (tty)
         set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
