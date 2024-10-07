@@ -100,6 +100,11 @@ in
         source = ./dotfiles/neovide;
         recursive = true;
       };
+      ".ssh/config" = {
+        text = ''
+          Match host * exec "gpg-connect-agent UPDATESTARTUPTTY /bye"
+        '';
+      };
     };
 
     sessionVariables = {
@@ -123,7 +128,7 @@ in
         vim = "nvim";
         ls = "eza";
         du = "dust";
-        # sw = "darwin-rebuild switch --flake ~/.config/nix-darwin/";
+        ssh = "GPG_TTY=$(tty) ssh";
         cat = "bat --theme TwoDark";
         # s = "kitty +kitten ssh";
         jq = "xq";
@@ -185,14 +190,14 @@ in
       nix-direnv.enable = true;
     };
 
-    vscode = {
-      enable = true;
-      extensions = with pkgs.vscode-extensions; [
-        rust-lang.rust-analyzer
-        asvetliakov.vscode-neovim
-        serayuzgur.crates
-      ];
-    };
+  # vscode = {
+  #   enable = true;
+  #   extensions = with pkgs.vscode-extensions; [
+  #     rust-lang.rust-analyzer
+  #     asvetliakov.vscode-neovim
+  #     serayuzgur.crates
+  #   ];
+  # };
   };
 
   xdg.enable = true;
