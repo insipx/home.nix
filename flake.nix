@@ -35,7 +35,7 @@
     }@inputs:
 
     let
-      inherit (nixpkgs.lib) attrValues;
+      inherit (nixpkgs.lib) attrValues mkMerge;
       inherit (nix-darwin.lib) darwinSystem;
 
       # the `self.overlays` in the `nixpkgsConfig`
@@ -87,7 +87,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.insipx = import ./home-manager/home.nix;
+              users.insipx = mkMerge [ (import ./home-manager/home.nix) (import ./home-manager/mac.nix) ];
               extraSpecialArgs = { inherit nixvim; };
             };
           }
@@ -104,7 +104,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.andrewplaza = import ./home-manager/home.nix;
+              users.andrewplaza = mkMerge [ (import ./home-manager/home.nix) (import ./home-manager/mac.nix) ];
               extraSpecialArgs = { inherit nixvim; };
             };
           }
