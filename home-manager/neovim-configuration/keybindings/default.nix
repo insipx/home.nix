@@ -10,6 +10,7 @@ let
     ./syntax-nav.nix
     ./workspaces.nix
     ./telescope
+    ./ui.nix
   ];
 
   imports = map import modules;
@@ -21,6 +22,7 @@ in
   file = import ./file.nix;
   buffer = import ./buffer.nix;
   search = import ./search.nix;
+  ui = import ./ui.nix;
   window = import ./window.nix;
   insert = import ./insert.nix;
   terminal = import ./terminal.nix;
