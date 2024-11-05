@@ -50,7 +50,6 @@
       "hopenpgp-tools"
       "ykman"
       "pinentry-mac"
-      "swiftformat"
       "cxreiff/tap/ttysvr"
     ];
     casks = [ "docker" ];

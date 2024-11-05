@@ -43,7 +43,7 @@ in
       bat # Cat clone with syntax highlighting and git integration
       tokei
       erdtree
-      # ncdu
+      ncdu
       htop
       xq # Json format
       duf # alternative to df, filesystem free space viewer
@@ -182,6 +182,12 @@ in
       signing = {
         key = "843D72A9EB79A8692C585B3AE7738A7A0F5CDB89";
         signByDefault = true;
+      };
+      extraConfig = {
+        rerere.enabled = true;
+        pull = {
+          rebase = true;
+        };
       };
     };
 

@@ -20,6 +20,7 @@ in {
       dprint
       stylua
       deno
+      nodePackages.prettier
       nixfmt-rfc-style
       yamlfmt
       rubyPackages.htmlbeautifier
@@ -88,8 +89,6 @@ in {
       set exrc
     '';
 
-    extraPlugins = with pkgs.vimPlugins; [ telescope-project-nvim ];
-
     plugins = {
       lsp = {
         enable = true;
@@ -122,8 +121,8 @@ in {
           formatters_by_ft = {
             toml = [ "dprint" ];
             lua = [ "stylua" ];
-            javascript = [ "deno_fmt" ];
-            typescript = [ "deno_fmt" ];
+            javascript = [ "prettier" ];
+            typescript = [ "prettier" ];
             nix = [ "nixfmt-rfc-style" ];
             yaml = [ "yamlfmt" ];
             html = [ "htmlbeautifier" ];
@@ -148,7 +147,7 @@ in {
       rustaceanvim = {
         enable = true;
         settings.server = {
-          load_vscode_settings = false;
+          load_vscode_settings = true;
           tools = { test_executor = "toggleterm"; };
           default_settings = {
             rust-analyzer = {
@@ -175,6 +174,11 @@ in {
                   "async-stream" = [ "stream" "try_stream" ];
                 };
               };
+              diagnostics.disabled = [
+                "unlinked-file"
+                "unresolved-macro-call"
+                "unresolved-proc-macro"
+              ];
             };
           };
         };
@@ -220,7 +224,7 @@ in {
 
       telescope = {
         enable = true;
-        enabledExtensions = [ "project" ];
+        # enabledExtensions = [ "project" ];
         extensions = {
           file-browser.enable = true;
           ui-select.enable = true;

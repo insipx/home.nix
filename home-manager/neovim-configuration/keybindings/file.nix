@@ -21,11 +21,4 @@
     '';
     options.desc = "toggle hidden files";
   }
-  {
-    mode = "n";
-    key = "<Leader>fa";
-    action.__raw = ''
-      require("mini.misc").setup_auto_root
-    '';
-    options.desc = "Setup auto root";
-  }]
+]
