@@ -97,7 +97,7 @@
       darwinConfigurations."kusanagi" = darwinSystem {
         modules = [
           options
-          ./darwin-conf.nix
+          ./darwin-config.nix
           home-manager.darwinModules.home-manager
           {
             nixpkgs = nixpkgsConfig;

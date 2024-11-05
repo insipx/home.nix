@@ -185,14 +185,14 @@ in
       nix-direnv.enable = true;
     };
 
-    vscode = {
-      enable = true;
-      extensions = with pkgs.vscode-extensions; [
-        rust-lang.rust-analyzer
-        asvetliakov.vscode-neovim
-        serayuzgur.crates
-      ];
-    };
+    #   vscode = {
+    #     enable = true;
+    #     extensions = with pkgs.vscode-extensions; [
+    #       rust-lang.rust-analyzer
+    #       asvetliakov.vscode-neovim
+    #       serayuzgur.crates
+    #     ];
+    #   };
   };
 
   xdg.enable = true;
