@@ -1,12 +1,14 @@
-{ config, pkgs, nixvim, ... }:
-let
-  #privateConfiguration = builtins.fetchGit {
-  #  url = "git@github.com:insipx/home.private.nix.git";
-  #  rev = "f4df03bac3812d9ff901f1e7822c8490a42c351b";
-  #  allRefs = true;
-  #};
-  nerdfonts = pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; };
-in
+{
+  config,
+  pkgs,
+  nixvim,
+  ...
+}:
+#privateConfiguration = builtins.fetchGit {
+#  url = "git@github.com:insipx/home.private.nix.git";
+#  rev = "f4df03bac3812d9ff901f1e7822c8490a42c351b";
+#  allRefs = true;
+#};
 {
   inherit (pkgs) lib;
   imports = [
@@ -25,61 +27,64 @@ in
     stateVersion = "23.05"; # Please read the comment before changing.
     # The home.packages option allows you to install Nix packages into your
     # environment.
-    packages = with pkgs; [
-      # Fonts, Github's Font, minecraft font, minecraft font vectorized
-      monaspace
-      monocraft
-      miracode
-      nerdfonts
+    packages =
+      with pkgs;
+      [
+        # Fonts, Github's Font, minecraft font, minecraft font vectorized
+        monaspace
+        monocraft
+        miracode
+        nerd-fonts.symbols-only
 
-      ripgrep
-      grc # Colorizer
-      eza # replacement for ls
-      du-dust # replacement for du
-      fd # find
-      macchina
-      glow
-      git
-      bat # Cat clone with syntax highlighting and git integration
-      tokei
-      erdtree
-      ncdu
-      htop
-      xq # Json format
-      duf # alternative to df, filesystem free space viewer
-      websocat # Query websockets
-      wget
-      spotifyd
+        ripgrep
+        grc # Colorizer
+        eza # replacement for ls
+        du-dust # replacement for du
+        fd # find
+        macchina
+        glow
+        git
+        bat # Cat clone with syntax highlighting and git integration
+        tokei
+        erdtree
+        # ncdu
+        htop
+        xq # Json format
+        duf # alternative to df, filesystem free space viewer
+        websocat # Query websockets
+        wget
+        spotifyd
 
-      # Nix & General linting applicable to p. much everything related
-      deadnix
-      nixfmt
-      statix
-      # Git
-      gitlint
+        # Nix & General linting applicable to p. much everything related
+        deadnix
+        nixfmt
+        statix
+        # Git
+        gitlint
 
-      # General usability
-      nix-index # Run `nix-index` and then use `nix-locate` like the normal unix `locate`
-      feh
-      gh # Github CLI tool
-      atuin
-      # mpv
-      # neovide
+        # General usability
+        nix-index # Run `nix-index` and then use `nix-locate` like the normal unix `locate`
+        feh
+        gh # Github CLI tool
+        atuin
+        # mpv
+        # neovide
 
-      # Fun
-      lolcat
-      cowsay
-      chafa
+        # Fun
+        lolcat
+        cowsay
+        chafa
 
-      # Networking
-      nmap
-      rustscan
-    ] ++ lib.optionals pkgs.stdenv.isLinux [
-      fish
-      # pkgs.nixgl.auto.nixGLDefault
-      # gnupg
-      yubikey-personalization
-    ];
+        # Networking
+        nmap
+        rustscan
+      ]
+      ++ lib.optionals pkgs.stdenv.isLinux [
+        fish
+        # pkgs.nixgl.auto.nixGLDefault
+        # gnupg
+        yubikey-personalization
+      ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
     # plain files is through 'home.file'.
@@ -119,6 +124,10 @@ in
       enableZshIntegration = false;
       enableBashIntegration = false;
     };
+    atuin = {
+      enable = true;
+      enableFishIntegration = true;
+    };
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
     fish = {
@@ -128,10 +137,10 @@ in
         vim = "nvim";
         ls = "eza";
         du = "dust";
-        ssh = "GPG_TTY=$(tty) ssh";
+        # ssh = "GPG_TTY=$(tty) ssh";
         cat = "bat --theme TwoDark";
-        # s = "kitty +kitten ssh";
         jq = "xq";
+        nix = "nix --log-format bar";
       };
       #   loginShellInit = ''
       #     eval (direnv hook fish)
@@ -145,7 +154,6 @@ in
             set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
             gpgconf --launch gpg-agent
             fish_vi_key_bindings
-            atuin init fish | source
 
             #  set -gx VOLTA_HOME "$HOME/.volta"
             # set -gx PATH "$VOLTA_HOME/bin" $PATH
@@ -153,6 +161,12 @@ in
             if test (uname) = Darwin
               fish_add_path --prepend --global "$HOME/.nix-profile/bin" /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
               fish_add_path --prepend --global "$HOME/.foundry/bin"
+            end
+
+            function ssh --wraps ssh
+              set --function --export GPG_TTY $(tty)
+              echo $GPG_TTY
+              command ssh $argv
             end
       '';
       plugins = [
@@ -195,15 +209,6 @@ in
       enable = true;
       nix-direnv.enable = true;
     };
-
-  # vscode = {
-  #   enable = true;
-  #   extensions = with pkgs.vscode-extensions; [
-  #     rust-lang.rust-analyzer
-  #     asvetliakov.vscode-neovim
-  #     serayuzgur.crates
-  #   ];
-  # };
   };
 
   xdg.enable = true;

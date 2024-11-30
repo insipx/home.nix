@@ -28,7 +28,6 @@
     , nixpkgs
     , home-manager
     , nixvim
-    , neorg-overlay
     , mozilla
       # , nixgl
     , ...
@@ -42,7 +41,7 @@
       nixpkgsConfig = {
         config = { allowUnfree = true; };
         overlays = attrValues self.overlays ++ [
-          neorg-overlay.overlays.default
+          # neorg-overlay.overlays.default
           mozilla.overlays.firefox
         ]; # adds all overlays to list
       };
@@ -57,11 +56,9 @@
 
 
       homeConfigurations."tanjiro" = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          inherit (nixpkgsConfig) config;
+        pkgs = import nixpkgs ({
           system = "x86_64-linux";
-          inherit (nixpkgsConfig) overlays; # ++ [ nixgl.overlay ];
-        };
+        } // nixpkgsConfig);
         modules = [
           ./home-manager/home.nix
           ./linux-config.nix
