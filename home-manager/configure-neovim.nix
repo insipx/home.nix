@@ -1,6 +1,8 @@
 { pkgs, ... }:
-let keybindings = import ./neovim-configuration/keybindings;
-in {
+let
+  keybindings = import ./neovim-configuration/keybindings;
+in
+{
   imports = [
     #     (import ./neovim-configuration/lualine.nix { inherit config pkgs; })
   ];
@@ -37,7 +39,13 @@ in {
       golangci-lint
       nodePackages_latest.jsonlint
     ];
-    extraPython3Packages = ps: with ps; [ pynvim unidecode black isort ];
+    extraPython3Packages =
+      ps: with ps; [
+        pynvim
+        unidecode
+        black
+        isort
+      ];
     withNodeJs = true;
     withRuby = true;
 
@@ -54,7 +62,9 @@ in {
       loaded_tarPlugin = false;
       loaded-2html_plugin = false;
       loaded_remote_plugins = false;
-      coq_settings = { auto_start = "shut-up"; };
+      coq_settings = {
+        auto_start = "shut-up";
+      };
     };
 
     opts = {
@@ -62,7 +72,11 @@ in {
       number = true;
       hidden = true;
       hlsearch = true;
-      backspace = [ "indent" "eol" "start" ];
+      backspace = [
+        "indent"
+        "eol"
+        "start"
+      ];
       laststatus = 3; # laststatus = 3 means a statusline per-window in neovim
       encoding = "utf-8";
       showtabline = 1;
@@ -74,11 +88,13 @@ in {
       expandtab = true;
     };
 
-    keymaps = [{
-      key = "<Space>";
-      action = "<Nop>";
-      options.silent = true;
-    }] ++ keybindings.all ++ keybindings.desc;
+    keymaps = [
+      {
+        key = "<Space>";
+        action = "<Nop>";
+        options.silent = true;
+      }
+    ] ++ keybindings.all ++ keybindings.desc;
 
     extraConfigLua = ''
       -- vim.opt.listchars:append "eol:↴"
@@ -98,6 +114,9 @@ in {
             settings.formatting.command = [ "nixpkgs-fmt" ];
           };
           biome = {
+            enable = true;
+          };
+          gopls = {
             enable = true;
           };
         };
@@ -136,7 +155,10 @@ in {
       lint = {
         enable = true;
         lintersByFt = {
-          nix = [ "nix" "statix" ];
+          nix = [
+            "nix"
+            "statix"
+          ];
           env = [ "dotenv_linter" ];
           git = [ "gitlint" ];
           json = [ "jsonlint" ];
@@ -148,7 +170,9 @@ in {
         enable = true;
         settings.server = {
           load_vscode_settings = true;
-          tools = { test_executor = "toggleterm"; };
+          tools = {
+            test_executor = "toggleterm";
+          };
           default_settings = {
             rust-analyzer = {
               cargo = {
@@ -158,7 +182,7 @@ in {
               };
               checkOnSave = true;
               check = {
-                command = "clippy";
+                command = "check";
                 extraArgs = [ "--no-deps" ];
                 features = "all";
               };
@@ -171,7 +195,10 @@ in {
                   "async-recursion" = [ "async_recursion" ];
                   "ctor" = [ "ctor" ];
                   "tokio" = [ "test" ];
-                  "async-stream" = [ "stream" "try_stream" ];
+                  "async-stream" = [
+                    "stream"
+                    "try_stream"
+                  ];
                 };
               };
               diagnostics.disabled = [
@@ -186,7 +213,13 @@ in {
 
       crates-nvim = {
         enable = true;
-        extraOptions = { src = { coq = { enabled = true; }; }; };
+        extraOptions = {
+          src = {
+            coq = {
+              enabled = true;
+            };
+          };
+        };
       };
 
       bufferline = {
@@ -204,7 +237,9 @@ in {
         enable = true;
         theme = "startify";
       };
-      lualine = { enable = true; };
+      lualine = {
+        enable = true;
+      };
       spectre.enable = true;
       oil.enable = true;
 
@@ -237,8 +272,14 @@ in {
         enable = true;
         lazyLoading = true;
         modules = {
-          "core.defaults" = { __empty = null; };
-          "core.concealer" = { config = { icon_preset = "diamond"; }; };
+          "core.defaults" = {
+            __empty = null;
+          };
+          "core.concealer" = {
+            config = {
+              icon_preset = "diamond";
+            };
+          };
           "core.dirman" = {
             config = {
               workspaces = {
@@ -254,43 +295,30 @@ in {
               neorg_leader = "<Space>";
             };
           };
-          "core.export" = { __empty = null; };
-          "core.export.markdown" = { config = { extensions = "all"; }; };
+          "core.export" = {
+            __empty = null;
+          };
+          "core.export.markdown" = {
+            config = {
+              extensions = "all";
+            };
+          };
         };
       };
 
       treesitter = {
         enable = true;
-        grammarPackages = with pkgs.tree-sitter-grammars; [
-          tree-sitter-rust
-          tree-sitter-go
-          tree-sitter-gomod
-          tree-sitter-gowork
-          tree-sitter-javascript
-          tree-sitter-zig
-          tree-sitter-json
-          tree-sitter-yaml
-          tree-sitter-toml
-          tree-sitter-sql
-          tree-sitter-nix
-          tree-sitter-lua
-          tree-sitter-fish
-          tree-sitter-bash
-          # tree-sitter-norg-meta
-          tree-sitter-org-nvim
-          tree-sitter-markdown
-          tree-sitter-dockerfile
-          tree-sitter-proto
-          pkgs.vimPlugins.nvim-treesitter.builtGrammars.tree-sitter-norg
-          # pkgs.vimPlugins.nvim-treesitter.builtGrammars.tree-sitter-norg-meta
-          pkgs.vimPlugins.nvim-treesitter-parsers.jsonc
-        ];
+        #grammarPackages = pkgs.vimPlugins.nvim-treesitter.passthru.allGrammars;
         nixGrammars = true;
 
         settings = {
           auto_install = true;
-          highlight = { enable = false; };
-          indent = { enable = true; };
+          highlight = {
+            enable = false;
+          };
+          indent = {
+            enable = true;
+          };
         };
       };
       treesitter-textobjects.enable = true;
@@ -300,8 +328,7 @@ in {
           max_lines = 2;
         };
       };
-      treesitter-refactor.enable =
-        true; # TODO: can keymap bunch of cool stuff when want
+      treesitter-refactor.enable = true; # TODO: can keymap bunch of cool stuff when want
 
       indent-blankline = {
         enable = false;
@@ -321,7 +348,9 @@ in {
         enable = true;
         modules = {
           pairs = { };
-          notify = { lsp_progress.enable = false; };
+          notify = {
+            lsp_progress.enable = false;
+          };
           bracketed = { };
           bufremove = { };
           clue = {
@@ -356,10 +385,22 @@ in {
           indentscope = { };
           hipatterns = {
             highlighters = {
-              fixme = { pattern = "FIXME"; group = "MiniHipatternsFixme"; };
-              hack = { pattern = "HACK"; group = "MiniHipatternsHack"; };
-              todo = { pattern = "TODO"; group = "MiniHipatternsTodo"; };
-              note = { pattern = "NOTE"; group = "MiniHipatternsNote"; };
+              fixme = {
+                pattern = "FIXME";
+                group = "MiniHipatternsFixme";
+              };
+              hack = {
+                pattern = "HACK";
+                group = "MiniHipatternsHack";
+              };
+              todo = {
+                pattern = "TODO";
+                group = "MiniHipatternsTodo";
+              };
+              note = {
+                pattern = "NOTE";
+                group = "MiniHipatternsNote";
+              };
             };
           };
           map = { };
