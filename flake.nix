@@ -9,7 +9,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # Other Sources
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay?rev=d3963249e534e247041862b8162fb738c8604d3a";
 
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     nixvim = {

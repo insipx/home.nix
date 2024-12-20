@@ -11,6 +11,7 @@ let
     ./workspaces.nix
     ./telescope
     ./ui.nix
+    ./git.nix
   ];
 
   imports = map import modules;
@@ -23,6 +24,7 @@ in
   buffer = import ./buffer.nix;
   search = import ./search.nix;
   ui = import ./ui.nix;
+  git = import ./git.nix;
   window = import ./window.nix;
   insert = import ./insert.nix;
   terminal = import ./terminal.nix;
@@ -85,6 +87,11 @@ in
       key = "<Leader>u";
       action = "";
       options.desc = "ui elements";
+    }
+    {
+      key = "<Leader>g";
+      action = "";
+      options.desc = "git";
     }
     {
       key = "<Leader><Tab>";

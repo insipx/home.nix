@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  nixvim,
-  ...
+{ config
+, pkgs
+, nixvim
+, ...
 }:
 #privateConfiguration = builtins.fetchGit {
 #  url = "git@github.com:insipx/home.private.nix.git";
@@ -13,7 +12,7 @@
   inherit (pkgs) lib;
   imports = [
     nixvim.homeManagerModules.nixvim
-    (import ./configure-neovim.nix { inherit config pkgs; })
+    (import ./neovim-configuration { inherit config pkgs; })
     # (import privateConfiguration)
   ];
   home = {

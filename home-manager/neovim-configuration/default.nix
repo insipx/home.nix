@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  keybindings = import ./neovim-configuration/keybindings;
+  keybindings = import ./keybindings;
 in
 {
   imports = [
