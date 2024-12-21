@@ -310,11 +310,12 @@ in
         enable = true;
         #grammarPackages = pkgs.vimPlugins.nvim-treesitter.passthru.allGrammars;
         nixGrammars = true;
+        languageRegister = { };
 
         settings = {
           auto_install = true;
           highlight = {
-            enable = false;
+            enable = true;
           };
           indent = {
             enable = true;
