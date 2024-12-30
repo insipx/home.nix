@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  nixvim,
-  ...
+{ config
+, pkgs
+, nixvim
+, ...
 }:
 #privateConfiguration = builtins.fetchGit {
 #  url = "git@github.com:insipx/home.private.nix.git";
@@ -35,6 +34,7 @@
         monocraft
         miracode
         nerd-fonts.symbols-only
+        # ghostty not packaged for darwin yet
 
         ripgrep
         grc # Colorizer

@@ -52,7 +52,7 @@
       "pinentry-mac"
       "cxreiff/tap/ttysvr"
     ];
-    casks = [ "docker" ];
+    casks = [ "docker" "ghostty" ];
   };
 
   # services.yabai = {

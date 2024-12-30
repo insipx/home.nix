@@ -10,13 +10,13 @@
 
     # Other Sources
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    ghostty.url = "github:ghostty-org/ghostty";
 
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # nixgl.url = "github:nix-community/nixGL";
     mozilla.url = "github:mozilla/nixpkgs-mozilla";
   };
 
@@ -29,7 +29,7 @@
     , home-manager
     , nixvim
     , mozilla
-      # , nixgl
+    , ghostty
     , ...
     }@inputs:
 
@@ -49,7 +49,9 @@
       options = import ./options.nix { inherit self nixpkgs; };
     in
     {
-      overlays = { neovim = inputs.neovim-nightly-overlay.overlays.default; };
+      overlays = {
+        neovim = inputs.neovim-nightly-overlay.overlays.default;
+      };
 
       # Expose the package set, including overlays, for convenience.
       darwinPackages = self.darwinConfigurations."kusanagi".pkgs;
@@ -58,6 +60,7 @@
       homeConfigurations."tanjiro" = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs ({
           system = "x86_64-linux";
+          overlays = nixpkgsConfig.overlays ++ [ ghostty.overlays.default ]; # ghostty packaged for linux
         } // nixpkgsConfig);
         modules = [
           ./home-manager/home.nix
