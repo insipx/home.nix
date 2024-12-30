@@ -6,8 +6,11 @@
 
   nix = {
     package = pkgs.nix;
-    settings.experimental-features = "nix-command flakes";
-    settings.trusted-users = [ "root" "insipx" "andrewplaza" ];
+    settings = {
+      experimental-features = "nix-command flakes";
+      trusted-users = [ "root" "insipx" "andrewplaza" ];
+      sandbox = false;
+    };
   };
 
 
