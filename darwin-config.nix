@@ -52,10 +52,13 @@
       "yubikey-personalization"
       "hopenpgp-tools"
       "ykman"
-      "pinentry-mac"
-      "cxreiff/tap/ttysvr"
+      # "cxreiff/tap/ttysvr"
     ];
     casks = [ "docker" "ghostty" ];
+    onActivation = {
+      autoUpdate = true;
+      cleanup = "uninstall";
+    };
   };
 
   # services.yabai = {
@@ -78,6 +81,26 @@
   # services.skhd = {
   #  enable = true;
   # };
+
+  services.aerospace = {
+    enable = true;
+    settings = {
+      gaps = {
+        outer = {
+          left = 8;
+          bottom = 8;
+          top = 8;
+          right = 8;
+        };
+      };
+      mode.main.binding = {
+        alt-h = "focus left";
+        alt-j = "focus down";
+        alt-k = "focus up";
+        alt-l = "focus right";
+      };
+    };
+  };
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
