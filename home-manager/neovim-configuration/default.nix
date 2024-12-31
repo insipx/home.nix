@@ -113,9 +113,6 @@ in
             enable = true;
             settings.formatting.command = [ "nixpkgs-fmt" ];
           };
-          biome = {
-            enable = true;
-          };
           gopls = {
             enable = true;
           };
@@ -123,13 +120,19 @@ in
       };
       lsp-format.enable = true;
       fidget.enable = true;
-
+      lspsaga.enable = true;
+      #trouble = {
+      #  enable = true;
+      #  settings = {
+      #    auto_refresh = true;
+      #
+      #  };
+      #};
       coq-nvim = {
         enable = true;
         settings.auto_start = "shut-up";
       };
 
-      lspsaga.enable = true;
       conform-nvim = {
         enable = true;
         settings = {
@@ -211,9 +214,9 @@ in
         };
       };
 
-      crates-nvim = {
+      crates = {
         enable = true;
-        extraOptions = {
+        settings = {
           src = {
             coq = {
               enabled = true;
@@ -270,37 +273,39 @@ in
 
       neorg = {
         enable = true;
-        lazyLoading = true;
-        modules = {
-          "core.defaults" = {
-            __empty = null;
-          };
-          "core.concealer" = {
-            config = {
-              icon_preset = "diamond";
+        settings = {
+          lazy_load = true;
+          load = {
+            "core.defaults" = {
+              __empty = null;
             };
-          };
-          "core.dirman" = {
-            config = {
-              workspaces = {
-                work = "~/.notes/work";
-                home = "~/.notes/home";
-                xmtp = "~/.notes/xmtp";
+            "core.concealer" = {
+              config = {
+                icon_preset = "diamond";
               };
             };
-          };
-          "core.keybinds" = {
-            config = {
-              default_keybindings = true;
-              neorg_leader = "<Space>";
+            "core.dirman" = {
+              config = {
+                workspaces = {
+                  work = "~/.notes/work";
+                  home = "~/.notes/home";
+                  xmtp = "~/.notes/xmtp";
+                };
+              };
             };
-          };
-          "core.export" = {
-            __empty = null;
-          };
-          "core.export.markdown" = {
-            config = {
-              extensions = "all";
+            "core.keybinds" = {
+              config = {
+                default_keybindings = true;
+                neorg_leader = "<Space>";
+              };
+            };
+            "core.export" = {
+              __empty = null;
+            };
+            "core.export.markdown" = {
+              config = {
+                extensions = "all";
+              };
             };
           };
         };
@@ -320,6 +325,15 @@ in
           indent = {
             enable = true;
           };
+          #ensure_installed = [
+          #  "rust"
+          #  "javascript"
+          #  "typescript"
+          #  "sql"
+          #  "c"
+          #  "go"
+          #  "protobuf"
+          #];
         };
       };
       treesitter-textobjects.enable = true;
@@ -349,9 +363,6 @@ in
         enable = true;
         modules = {
           pairs = { };
-          notify = {
-            lsp_progress.enable = false;
-          };
           bracketed = { };
           bufremove = { };
           clue = {
@@ -423,9 +434,23 @@ in
       #stabilize
       #vim-eunuch
     };
-    colorschemes.nightfox = {
+    #colorschemes.nightfox = {
+    #  enable = true;
+    #  flavor = "carbonfox";
+    #};
+    colorschemes.catppuccin = {
       enable = true;
-      flavor = "carbonfox";
+      settings = {
+        flavour = "mocha";
+        integrations = {
+          treesitter = true;
+          notify = true;
+          mini = {
+            enabled = true;
+            indentscope_color = "";
+          };
+        };
+      };
     };
 
     performance = {

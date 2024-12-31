@@ -1,6 +1,7 @@
 { config
 , pkgs
 , nixvim
+, catppuccin
 , ...
 }:
 #privateConfiguration = builtins.fetchGit {
@@ -12,9 +13,11 @@
   inherit (pkgs) lib;
   imports = [
     nixvim.homeManagerModules.nixvim
+    catppuccin.homeManagerModules.catppuccin
     (import ./neovim-configuration { inherit config pkgs; })
     # (import privateConfiguration)
   ];
+  catppuccin.enable = true;
   home = {
     # This value determines the Home Manager release that your configuration is
     # compatible with. This helps avoid breakage when a new Home Manager release
@@ -31,7 +34,6 @@
       [
         # Fonts, Github's Font, minecraft font, minecraft font vectorized
         monaspace
-        monocraft
         miracode
         nerd-fonts.symbols-only
         # ghostty not packaged for darwin yet
@@ -185,6 +187,10 @@
         {
           name = "pure";
           inherit (pkgs.fishPlugins.pure) src;
+        }
+        {
+          name = "forgit";
+          inherit (pkgs.fishPlugins.forgit) src;
         }
       ];
     };

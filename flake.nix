@@ -19,6 +19,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     mozilla.url = "github:mozilla/nixpkgs-mozilla";
+    catppuccin.url = "github:catppuccin/nix";
   };
 
   # `...` allows defining additional inputs to the outputs
@@ -31,6 +32,7 @@
     , nixvim
     , mozilla
     , ghostty
+    , catppuccin
     , ...
     }@inputs:
 
@@ -73,7 +75,7 @@
             };
           }
         ];
-        extraSpecialArgs = { inherit nixvim; };
+        extraSpecialArgs = { inherit nixvim catppuccin; };
       };
 
       # Build darwin flake using:
@@ -89,7 +91,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               users.insipx = mkMerge [ (import ./home-manager/home.nix) (import ./home-manager/mac.nix) ];
-              extraSpecialArgs = { inherit nixvim; };
+              extraSpecialArgs = { inherit nixvim catppuccin; };
             };
           }
         ];
@@ -106,7 +108,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               users.andrewplaza = mkMerge [ (import ./home-manager/home.nix) (import ./home-manager/mac.nix) ];
-              extraSpecialArgs = { inherit nixvim; };
+              extraSpecialArgs = { inherit nixvim catppuccin; };
             };
           }
         ];

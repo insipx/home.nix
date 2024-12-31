@@ -21,4 +21,13 @@
     '';
     options.desc = "toggle hidden files";
   }
-]
+  {
+    mode = "n";
+    key = "<Leader>fw";
+    action.__raw = ''
+      function()
+        require("mini.trailspace").trim()
+      end
+    '';
+    options.desc = "trim whitespace";
+  }]
