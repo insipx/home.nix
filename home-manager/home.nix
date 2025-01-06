@@ -40,13 +40,11 @@
 
         ripgrep
         grc # Colorizer
-        eza # replacement for ls
         du-dust # replacement for du
         fd # find
         macchina
         glow
         git
-        bat # Cat clone with syntax highlighting and git integration
         tokei
         erdtree
         # ncdu
@@ -56,6 +54,7 @@
         websocat # Query websockets
         wget
         spotifyd
+        fzf
 
         # Nix & General linting applicable to p. much everything related
         deadnix
@@ -68,7 +67,7 @@
         nix-index # Run `nix-index` and then use `nix-locate` like the normal unix `locate`
         feh
         gh # Github CLI tool
-        atuin
+        graphite-cli
         # mpv
         # neovide
 
@@ -99,10 +98,6 @@
         [codespell]
         ignore-words-list = create
       '';
-      ".config/wezterm" = {
-        source = ./dotfiles/wezterm;
-        recursive = true;
-      };
       ".config/neovide" = {
         source = ./dotfiles/neovide;
         recursive = true;
@@ -121,17 +116,52 @@
     };
   };
   programs = {
-    wezterm = {
-      enable = true;
-      enableZshIntegration = false;
-      enableBashIntegration = false;
-    };
     atuin = {
       enable = true;
       enableFishIntegration = true;
     };
+    bat = {
+      enable = true;
+      themes = {
+        catppuccin = {
+          src = pkgs.fetchFromGitHub {
+            owner = "catppuccin";
+            repo = "bat";
+            rev = "699f60fc8ec434574ca7451b444b880430319941";
+            sha256 = "sha256-6fWoCH90IGumAMc4buLRWL0N61op+AuMNN9CAR9/OdI=";
+          };
+        };
+        file = "themes/Catppuccin Mocha.tmTheme";
+      };
+      config = {
+        theme = "Catppuccin Mocha";
+      };
+      extraPackages = with pkgs.bat-extras; [
+        prettybat
+        batwatch
+        batpipe
+        batman
+        batgrep
+        batdiff
+      ];
+    };
+    eza = {
+      enable = true;
+      enableFishIntegration = true;
+      git = true;
+      icons = "always";
+    };
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
+    #ghostty = { does not work on macos yet
+    #  enable = true;
+    #  enableFishIntegration = true;
+    #  settings = {
+    #    font-family = "Berekely Mono";
+    #    theme = "catppuccin-mocha";
+    #    font-size = "16";
+    #  };
+    #};
     fish = {
       enable = true;
       shellAliases = {
@@ -139,8 +169,14 @@
         vim = "nvim";
         ls = "eza";
         du = "dust";
+        pretty = "prettybat";
+        diff = "batdiff";
+        less = "batpipe";
+        man = "batman";
+        rg = "batgrep";
+        grep = "batgrep";
         # ssh = "GPG_TTY=$(tty) ssh";
-        cat = "bat --theme TwoDark";
+        cat = "bat";
         jq = "xq";
         nix = "nix --log-format bar";
       };
@@ -148,28 +184,39 @@
       #     eval (direnv hook fish)
       #   '';
       interactiveShellInit = ''
-            set fish_greeting # Disable greeting
-            if test (uname) = Darwin
-        	    fish_add_path /opt/homebrew/bin
-            end
-            set -x GPG_TTY (tty)
-            set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-            gpgconf --launch gpg-agent
-            fish_vi_key_bindings
+                    macchina
+                    set fish_greeting # Disable greeting
+                    if test (uname) = Darwin
+                	    fish_add_path /opt/homebrew/bin
+                    end
+                    set -x GPG_TTY (tty)
+                    set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+                    gpgconf --launch gpg-agent
+                    fish_vi_key_bindings
 
-            #  set -gx VOLTA_HOME "$HOME/.volta"
-            # set -gx PATH "$VOLTA_HOME/bin" $PATH
-            set -gx PATH "$HOME/.scripts" $PATH
-            if test (uname) = Darwin
-              fish_add_path --prepend --global "$HOME/.nix-profile/bin" /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
-              fish_add_path --prepend --global "$HOME/.foundry/bin"
-            end
+                    # Batpipe setup
+                    set -x LESSOPEN "|${pkgs.bat-extras.batpipe}/bin/.batpipe-wrapped %s";
+                    # set -x LESSOPEN "|/nix/store/v7zvasvq0dfdzli6ya7q220lv9qhxps7-batpipe-2024.07.10/bin/.batpipe-wrapped %s";
+                    set -e LESSCLOSE;
 
-            function ssh --wraps ssh
-              set --function --export GPG_TTY $(tty)
-              echo $GPG_TTY
-              command ssh $argv
-            end
+        # The following will enable colors when using batpipe with less:
+                    set -x LESS "$LESS -R";
+                    set -x BATPIPE "color";
+
+
+                    #  set -gx VOLTA_HOME "$HOME/.volta"
+                    # set -gx PATH "$VOLTA_HOME/bin" $PATH
+                    set -gx PATH "$HOME/.scripts" $PATH
+                    if test (uname) = Darwin
+                      fish_add_path --prepend --global "$HOME/.nix-profile/bin" /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
+                      fish_add_path --prepend --global "$HOME/.foundry/bin"
+                    end
+
+                    function ssh --wraps ssh
+                      set --function --export GPG_TTY $(tty)
+                      echo $GPG_TTY
+                      command ssh $argv
+                    end
       '';
       plugins = [
         {

@@ -1,7 +1,4 @@
-{ pkgs, config, ... }:
-let
-  # nixGLDefault = pkgs.nixgl.auto.nixGLDefault;
-in
+{ pkgs, ... }:
 {
   imports = [
     #   (builtins.fetchurl {
@@ -32,7 +29,8 @@ in
     };
     systemd.enable = true;
   };
-
+  # should enable the nightly using mozilla overlay on linux platform
+  programs.firefox.enable = true;
   services.gpg-agent = {
     enable = false;
     enableScDaemon = true;

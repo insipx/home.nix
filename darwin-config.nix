@@ -55,7 +55,7 @@
       "pinentry"
       # "cxreiff/tap/ttysvr"
     ];
-    casks = [ "docker" "ghostty" ];
+    casks = [ "docker" "firefox@nightly" "ghostty" "raycast" ];
     onActivation = {
       autoUpdate = true;
       cleanup = "uninstall";
