@@ -55,7 +55,7 @@
       "pinentry"
       # "cxreiff/tap/ttysvr"
     ];
-    casks = [ "docker" "ghostty" ];
+    casks = [ "docker" "ghostty" "google-chrome" ];
     onActivation = {
       autoUpdate = true;
       cleanup = "uninstall";
