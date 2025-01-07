@@ -338,7 +338,7 @@ in
       };
       treesitter-textobjects.enable = true;
       treesitter-context = {
-        enable = false;
+        enable = true;
         settings = {
           max_lines = 2;
         };
