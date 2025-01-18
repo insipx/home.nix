@@ -119,7 +119,19 @@ in
         };
       };
       lsp-format.enable = true;
-      fidget.enable = true;
+      #notify = {
+      #  enable = true;
+      #  fps = 60;
+      #  render = "compact";
+      #};
+      fidget = {
+        enable = true;
+        settings = {
+          notification = {
+            override_vim_notify = true;
+          };
+        };
+      };
       lspsaga.enable = true;
       #trouble = {
       #  enable = true;
