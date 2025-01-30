@@ -1,6 +1,8 @@
 { pkgs, ... }:
-let keybindings = import ./neovim-configuration/keybindings;
-in {
+let
+  keybindings = import ./keybindings;
+in
+{
   imports = [
     #     (import ./neovim-configuration/lualine.nix { inherit config pkgs; })
   ];
@@ -20,6 +22,7 @@ in {
       dprint
       stylua
       deno
+      nodePackages.prettier
       nixfmt-rfc-style
       yamlfmt
       rubyPackages.htmlbeautifier
@@ -36,7 +39,13 @@ in {
       golangci-lint
       nodePackages_latest.jsonlint
     ];
-    extraPython3Packages = ps: with ps; [ pynvim unidecode black isort ];
+    extraPython3Packages =
+      ps: with ps; [
+        pynvim
+        unidecode
+        black
+        isort
+      ];
     withNodeJs = true;
     withRuby = true;
 
@@ -53,7 +62,9 @@ in {
       loaded_tarPlugin = false;
       loaded-2html_plugin = false;
       loaded_remote_plugins = false;
-      coq_settings = { auto_start = "shut-up"; };
+      coq_settings = {
+        auto_start = "shut-up";
+      };
     };
 
     opts = {
@@ -61,7 +72,11 @@ in {
       number = true;
       hidden = true;
       hlsearch = true;
-      backspace = [ "indent" "eol" "start" ];
+      backspace = [
+        "indent"
+        "eol"
+        "start"
+      ];
       laststatus = 3; # laststatus = 3 means a statusline per-window in neovim
       encoding = "utf-8";
       showtabline = 1;
@@ -73,11 +88,13 @@ in {
       expandtab = true;
     };
 
-    keymaps = [{
-      key = "<Space>";
-      action = "<Nop>";
-      options.silent = true;
-    }] ++ keybindings.all ++ keybindings.desc;
+    keymaps = [
+      {
+        key = "<Space>";
+        action = "<Nop>";
+        options.silent = true;
+      }
+    ] ++ keybindings.all ++ keybindings.desc;
 
     extraConfigLua = ''
       -- vim.opt.listchars:append "eol:↴"
@@ -88,30 +105,55 @@ in {
       set exrc
     '';
 
-    extraPlugins = with pkgs.vimPlugins; [ telescope-project-nvim ];
-
+    diagnostics = {
+      severity_sort = true;
+      virtual_lines = {
+        only_current_line = true;
+      };
+      virtual_text = true;
+    };
     plugins = {
       lsp = {
         enable = true;
         servers = {
           nixd = {
             enable = true;
+            filetypes = [ "nix" ];
             settings.formatting.command = [ "nixpkgs-fmt" ];
           };
-          biome = {
+          gopls = {
             enable = true;
+            filetypes = [ "go" ];
           };
         };
       };
       lsp-format.enable = true;
-      fidget.enable = true;
-
+      #notify = {
+      #  enable = true;
+      #  fps = 60;
+      #  render = "compact";
+      #};
+      fidget = {
+        enable = true;
+        settings = {
+          notification = {
+            override_vim_notify = true;
+          };
+        };
+      };
+      lspsaga.enable = true;
+      #trouble = {
+      #  enable = true;
+      #  settings = {
+      #    auto_refresh = true;
+      #
+      #  };
+      #};
       coq-nvim = {
         enable = true;
         settings.auto_start = "shut-up";
       };
 
-      lspsaga.enable = true;
       conform-nvim = {
         enable = true;
         settings = {
@@ -122,8 +164,8 @@ in {
           formatters_by_ft = {
             toml = [ "dprint" ];
             lua = [ "stylua" ];
-            javascript = [ "deno_fmt" ];
-            typescript = [ "deno_fmt" ];
+            javascript = [ "prettier" ];
+            typescript = [ "prettier" ];
             nix = [ "nixfmt-rfc-style" ];
             yaml = [ "yamlfmt" ];
             html = [ "htmlbeautifier" ];
@@ -137,7 +179,10 @@ in {
       lint = {
         enable = true;
         lintersByFt = {
-          nix = [ "nix" "statix" ];
+          nix = [
+            "nix"
+            "statix"
+          ];
           env = [ "dotenv_linter" ];
           git = [ "gitlint" ];
           json = [ "jsonlint" ];
@@ -147,19 +192,21 @@ in {
       direnv.enable = true;
       rustaceanvim = {
         enable = true;
+        # Use fenix nightly rust-analalyzer
+        rustAnalyzerPackage = pkgs.rust-analyzer-nightly;
         settings.server = {
-          load_vscode_settings = false;
-          tools = { test_executor = "toggleterm"; };
+          load_vscode_settings = true;
+          standalone = false;
           default_settings = {
             rust-analyzer = {
               cargo = {
-                allTargets = true;
+                allTargets = false;
                 buildScripts.enable = true;
-                features = "all";
+                # features = "all";
               };
               checkOnSave = true;
               check = {
-                command = "clippy";
+                command = "check";
                 extraArgs = [ "--no-deps" ];
                 features = "all";
               };
@@ -172,17 +219,35 @@ in {
                   "async-recursion" = [ "async_recursion" ];
                   "ctor" = [ "ctor" ];
                   "tokio" = [ "test" ];
-                  "async-stream" = [ "stream" "try_stream" ];
                 };
               };
+              diagnostics.disabled = [
+                "unlinked-file"
+                "unresolved-macro-call"
+                "unresolved-proc-macro"
+                "proc-macro-disabled"
+                "proc-macro-expansion-error"
+              ];
             };
           };
         };
+        settings.tools = {
+          enable_clippy = true;
+          enable_nextest = true;
+          executor = "toggleterm";
+          test_executor = "toggleterm";
+        };
       };
 
-      crates-nvim = {
+      crates = {
         enable = true;
-        extraOptions = { src = { coq = { enabled = true; }; }; };
+        settings = {
+          src = {
+            coq = {
+              enabled = true;
+            };
+          };
+        };
       };
 
       bufferline = {
@@ -200,7 +265,9 @@ in {
         enable = true;
         theme = "startify";
       };
-      lualine = { enable = true; };
+      lualine = {
+        enable = true;
+      };
       spectre.enable = true;
       oil.enable = true;
 
@@ -220,7 +287,7 @@ in {
 
       telescope = {
         enable = true;
-        enabledExtensions = [ "project" ];
+        # enabledExtensions = [ "project" ];
         extensions = {
           file-browser.enable = true;
           ui-select.enable = true;
@@ -231,73 +298,77 @@ in {
 
       neorg = {
         enable = true;
-        lazyLoading = true;
-        modules = {
-          "core.defaults" = { __empty = null; };
-          "core.concealer" = { config = { icon_preset = "diamond"; }; };
-          "core.dirman" = {
-            config = {
-              workspaces = {
-                work = "~/.notes/work";
-                home = "~/.notes/home";
-                xmtp = "~/.notes/xmtp";
+        settings = {
+          lazy_load = true;
+          load = {
+            "core.defaults" = {
+              __empty = null;
+            };
+            "core.concealer" = {
+              config = {
+                icon_preset = "diamond";
+              };
+            };
+            "core.dirman" = {
+              config = {
+                workspaces = {
+                  work = "~/.notes/work";
+                  home = "~/.notes/home";
+                  xmtp = "~/.notes/xmtp";
+                };
+              };
+            };
+            "core.keybinds" = {
+              config = {
+                default_keybindings = true;
+                neorg_leader = "<Space>";
+              };
+            };
+            "core.export" = {
+              __empty = null;
+            };
+            "core.export.markdown" = {
+              config = {
+                extensions = "all";
               };
             };
           };
-          "core.keybinds" = {
-            config = {
-              default_keybindings = true;
-              neorg_leader = "<Space>";
-            };
-          };
-          "core.export" = { __empty = null; };
-          "core.export.markdown" = { config = { extensions = "all"; }; };
         };
       };
 
       treesitter = {
         enable = true;
-        grammarPackages = with pkgs.tree-sitter-grammars; [
-          tree-sitter-rust
-          tree-sitter-go
-          tree-sitter-gomod
-          tree-sitter-gowork
-          tree-sitter-javascript
-          tree-sitter-zig
-          tree-sitter-json
-          tree-sitter-yaml
-          tree-sitter-toml
-          tree-sitter-sql
-          tree-sitter-nix
-          tree-sitter-lua
-          tree-sitter-fish
-          tree-sitter-bash
-          # tree-sitter-norg-meta
-          tree-sitter-org-nvim
-          tree-sitter-markdown
-          tree-sitter-dockerfile
-          tree-sitter-proto
-          pkgs.vimPlugins.nvim-treesitter.builtGrammars.tree-sitter-norg
-          # pkgs.vimPlugins.nvim-treesitter.builtGrammars.tree-sitter-norg-meta
-          pkgs.vimPlugins.nvim-treesitter-parsers.jsonc
-        ];
+        #grammarPackages = pkgs.vimPlugins.nvim-treesitter.passthru.allGrammars;
         nixGrammars = true;
+        languageRegister = { };
 
         settings = {
           auto_install = true;
-          highlight = { enable = false; };
-          indent = { enable = true; };
+          highlight = {
+            enable = true;
+          };
+          indent = {
+            enable = true;
+          };
+          #ensure_installed = [
+          #  "rust"
+          #  "javascript"
+          #  "typescript"
+          #  "sql"
+          #  "c"
+          #  "go"
+          #  "protobuf"
+          #];
         };
       };
       treesitter-textobjects.enable = true;
       treesitter-context = {
-        enable = false;
+        enable = true;
         settings = {
           max_lines = 2;
         };
       };
-      treesitter-refactor.enable =
-        true; # TODO: can keymap bunch of cool stuff when want
+      treesitter-refactor.enable = true; # TODO: can keymap bunch of cool stuff when want
 
       indent-blankline = {
         enable = false;
@@ -317,7 +388,6 @@ in {
         enable = true;
         modules = {
           pairs = { };
-          notify = { lsp_progress.enable = false; };
           bracketed = { };
           bufremove = { };
           clue = {
@@ -352,10 +422,22 @@ in {
           indentscope = { };
           hipatterns = {
             highlighters = {
-              fixme = { pattern = "FIXME"; group = "MiniHipatternsFixme"; };
-              hack = { pattern = "HACK"; group = "MiniHipatternsHack"; };
-              todo = { pattern = "TODO"; group = "MiniHipatternsTodo"; };
-              note = { pattern = "NOTE"; group = "MiniHipatternsNote"; };
+              fixme = {
+                pattern = "FIXME";
+                group = "MiniHipatternsFixme";
+              };
+              hack = {
+                pattern = "HACK";
+                group = "MiniHipatternsHack";
+              };
+              todo = {
+                pattern = "TODO";
+                group = "MiniHipatternsTodo";
+              };
+              note = {
+                pattern = "NOTE";
+                group = "MiniHipatternsNote";
+              };
             };
           };
           map = { };
@@ -377,9 +459,23 @@ in {
       #stabilize
       #vim-eunuch
     };
-    colorschemes.nightfox = {
+    #colorschemes.nightfox = {
+    #  enable = true;
+    #  flavor = "carbonfox";
+    #};
+    colorschemes.catppuccin = {
       enable = true;
-      flavor = "carbonfox";
+      settings = {
+        flavour = "mocha";
+        integrations = {
+          treesitter = true;
+          notify = true;
+          mini = {
+            enabled = true;
+            indentscope_color = "";
+          };
+        };
+      };
     };
 
     performance = {

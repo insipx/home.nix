@@ -10,6 +10,8 @@
 
     # Other Sources
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    ghostty.url = "github:ghostty-org/ghostty";
+    # neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay?rev=d3963249e534e247041862b8162fb738c8604d3a";
 
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     nixvim = {
@@ -19,6 +21,8 @@
     # nixgl.url = "github:nix-community/nixGL";
     mozilla.url = "github:mozilla/nixpkgs-mozilla";
     swww.url = "github:LGFae/swww";
+    catppuccin.url = "github:catppuccin/nix";
+    fenix.url = "github:nix-community/fenix";
   };
 
   # `...` allows defining additional inputs to the outputs
@@ -32,38 +36,41 @@
     , neorg-overlay
     , mozilla
     , swww
-      # , nixgl
+    , ghostty
+    , catppuccin
     , ...
     }@inputs:
 
     let
-      inherit (nixpkgs.lib) attrValues;
+      inherit (nixpkgs.lib) attrValues mkMerge;
       inherit (nix-darwin.lib) darwinSystem;
 
       # the `self.overlays` in the `nixpkgsConfig`
       nixpkgsConfig = {
         config = { allowUnfree = true; };
         overlays = attrValues self.overlays ++ [
-          neorg-overlay.overlays.default
-          mozilla.overlays.firefox
+          # neorg-overlay.overlays.default
+          # inputs.mozilla.overlays.firefox
+          inputs.fenix.overlays.default
         ]; # adds all overlays to list
       };
 
       options = import ./options.nix { inherit self nixpkgs; };
     in
     {
-      overlays = { neovim = inputs.neovim-nightly-overlay.overlays.default; };
+      overlays = {
+        neovim = inputs.neovim-nightly-overlay.overlays.default;
+      };
 
       # Expose the package set, including overlays, for convenience.
       darwinPackages = self.darwinConfigurations."kusanagi".pkgs;
 
 
       homeConfigurations."tanjiro" = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          inherit (nixpkgsConfig) config;
+        pkgs = import nixpkgs ({
           system = "x86_64-linux";
-          inherit (nixpkgsConfig) overlays; # ++ [ nixgl.overlay ];
-        };
+          overlays = nixpkgsConfig.overlays ++ [ ghostty.overlays.default ];
+        } // nixpkgsConfig);
         modules = [
           ./home-manager/home.nix
           ./linux-config.nix
@@ -74,7 +81,7 @@
             };
           }
         ];
-        extraSpecialArgs = { inherit nixvim swww; };
+        extraSpecialArgs = { inherit nixvim catppuccin swww; };
       };
 
       # Build darwin flake using:
@@ -89,8 +96,8 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.insipx = import ./home-manager/home.nix;
-              extraSpecialArgs = { inherit nixvim; };
+              users.insipx = mkMerge [ (import ./home-manager/home.nix) (import ./home-manager/mac.nix) ];
+              extraSpecialArgs = { inherit nixvim catppuccin; };
             };
           }
         ];
@@ -99,15 +106,15 @@
       darwinConfigurations."kusanagi" = darwinSystem {
         modules = [
           options
-          ./darwin-conf.nix
+          ./darwin-config.nix
           home-manager.darwinModules.home-manager
           {
             nixpkgs = nixpkgsConfig;
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.andrewplaza = import ./home-manager/home.nix;
-              extraSpecialArgs = { inherit nixvim; };
+              users.andrewplaza = mkMerge [ (import ./home-manager/home.nix) (import ./home-manager/mac.nix) ];
+              extraSpecialArgs = { inherit nixvim catppuccin; };
             };
           }
         ];

@@ -23,9 +23,11 @@
   }
   {
     mode = "n";
-    key = "<Leader>fa";
+    key = "<Leader>fw";
     action.__raw = ''
-      require("mini.misc").setup_auto_root
+      function()
+        require("mini.trailspace").trim()
+      end
     '';
-    options.desc = "Setup auto root";
+    options.desc = "trim whitespace";
   }]

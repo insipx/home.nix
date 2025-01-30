@@ -1,6 +1,14 @@
 -- Pull in the wezterm API
 local wezterm = require("wezterm")
 
+function getHostname()
+	local f = io.popen("/bin/hostname")
+	local hostname = f:read("*a") or ""
+	f:close()
+	hostname = string.gsub(hostname, "\n$", "")
+	return hostname
+end
+
 -- This table will hold the configuration.
 local config = {}
 
@@ -16,12 +24,27 @@ end
 -- config.color_scheme = 'Ayu Mirage' -- https://gogh-co.github.io/Gogh/
 config.color_scheme = "carbonfox"
 config.font = wezterm.font("Monaspace Neon")
-config.font_size = 12.0
+
+-- change font depending on machine
+local hostname = getHostname()
+if string.find(hostname, "tanjiro") then
+	config.font_size = 12.0
+elseif string.find(hostname, "cyllene") or string.find(hostname, "kusanagi") then
+	config.font_size = 13.0
+else
+	config.font_size = 14.0
+end
+
 config.colors = {
 	selection_bg = "rgba(50% 50% 50% 50%)",
 }
 config.enable_kitty_keyboard = true
-config.default_prog = { "fish", "-l" }
+print("HOSTNAME " .. hostname)
+if string.find(hostname, "cyllene") or string.find(hostname, "kusanagi") then
+	config.default_prog = { "/run/current-system/sw/bin/fish", "-l" }
+else
+	config.default_prog = { "fish", "-l" }
+end
 -- config.enable_wayland = true
 
 -- config.debug_key_events = true
@@ -64,6 +87,8 @@ config.keys = {
 	{ key = "[", mods = "LEADER", action = act.MoveTabRelative(-1) },
 	{ key = "]", mods = "LEADER", action = act.MoveTabRelative(1) },
 }
+
+config.front_end = "WebGpu"
 
 -- and finally, return the configuration to wezterm
 return config
