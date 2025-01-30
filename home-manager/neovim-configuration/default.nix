@@ -105,16 +105,25 @@ in
       set exrc
     '';
 
+    diagnostics = {
+      severity_sort = true;
+      virtual_lines = {
+        only_current_line = true;
+      };
+      virtual_text = true;
+    };
     plugins = {
       lsp = {
         enable = true;
         servers = {
           nixd = {
             enable = true;
+            filetypes = [ "nix" ];
             settings.formatting.command = [ "nixpkgs-fmt" ];
           };
           gopls = {
             enable = true;
+            filetypes = [ "go" ];
           };
         };
       };
@@ -183,17 +192,17 @@ in
       direnv.enable = true;
       rustaceanvim = {
         enable = true;
+        # Use fenix nightly rust-analalyzer
+        rustAnalyzerPackage = pkgs.rust-analyzer-nightly;
         settings.server = {
           load_vscode_settings = true;
-          tools = {
-            test_executor = "toggleterm";
-          };
+          standalone = false;
           default_settings = {
             rust-analyzer = {
               cargo = {
-                allTargets = true;
+                allTargets = false;
                 buildScripts.enable = true;
-                features = "all";
+                # features = "all";
               };
               checkOnSave = true;
               check = {
@@ -210,19 +219,23 @@ in
                   "async-recursion" = [ "async_recursion" ];
                   "ctor" = [ "ctor" ];
                   "tokio" = [ "test" ];
-                  "async-stream" = [
-                    "stream"
-                    "try_stream"
-                  ];
                 };
               };
               diagnostics.disabled = [
                 "unlinked-file"
                 "unresolved-macro-call"
                 "unresolved-proc-macro"
+                "proc-macro-disabled"
+                "proc-macro-expansion-error"
               ];
             };
           };
+        };
+        settings.tools = {
+          enable_clippy = true;
+          enable_nextest = true;
+          executor = "toggleterm";
+          test_executor = "toggleterm";
         };
       };
 

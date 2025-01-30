@@ -35,7 +35,7 @@
     hostPlatform = "aarch64-darwin";
     config = {
       allowUnfree = true;
-      allowBroken = true;
+      allowBroken = false;
     };
   };
 

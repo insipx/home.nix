@@ -18,8 +18,9 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mozilla.url = "github:mozilla/nixpkgs-mozilla";
+    # mozilla.url = "github:mozilla/nixpkgs-mozilla";
     catppuccin.url = "github:catppuccin/nix";
+    fenix.url = "github:nix-community/fenix";
   };
 
   # `...` allows defining additional inputs to the outputs
@@ -30,7 +31,6 @@
     , nixpkgs
     , home-manager
     , nixvim
-    , mozilla
     , ghostty
     , catppuccin
     , ...
@@ -45,7 +45,8 @@
         config = { allowUnfree = true; };
         overlays = attrValues self.overlays ++ [
           # neorg-overlay.overlays.default
-          mozilla.overlays.firefox
+          # inputs.mozilla.overlays.firefox
+          inputs.fenix.overlays.default
         ]; # adds all overlays to list
       };
 
