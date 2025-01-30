@@ -30,7 +30,7 @@ in
       monaspace
       monocraft
       miracode
-      nerdfonts
+      nerd-fonts.symbols-only
 
       ripgrep
       grc # Colorizer
@@ -74,7 +74,6 @@ in
       nmap
       rustscan
     ] ++ lib.optionals pkgs.stdenv.isLinux [
-      fish
       # pkgs.nixgl.auto.nixGLDefault
       # gnupg
       yubikey-personalization
@@ -142,6 +141,7 @@ in
             gpgconf --launch gpg-agent
             fish_vi_key_bindings
             atuin init fish | source
+            set -x KEYID "843D72A9EB79A8692C585B3AE7738A7A0F5CDB89"
 
             #  set -gx VOLTA_HOME "$HOME/.volta"
             # set -gx PATH "$VOLTA_HOME/bin" $PATH
