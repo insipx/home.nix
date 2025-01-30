@@ -1,4 +1,4 @@
-{ config, pkgs, nixvim, ... }:
+{ config, pkgs, nixvim, swww, ... }:
 let
   #privateConfiguration = builtins.fetchGit {
   #  url = "git@github.com:insipx/home.private.nix.git";
@@ -78,6 +78,8 @@ in
       # pkgs.nixgl.auto.nixGLDefault
       # gnupg
       yubikey-personalization
+      cachix
+      swww.packages.${pkgs.system}.swww
     ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage

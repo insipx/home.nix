@@ -12,8 +12,13 @@ in
 
   nix = {
     package = pkgs.nix;
-    settings.experimental-features = "nix-command flakes";
-    settings.trusted-users = [ "root" "insipx" "andrewplaza" ];
+    settings = {
+      experimental-features = "nix-command flakes";
+      trusted-users = [ "root" "insipx" "andrewplaza" ];
+      extra-substituters = "https://devenv.cachix.org";
+      extra-trusted-public-keys =
+      "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
+    };
   };
 
   wayland.windowManager.hyprland = {

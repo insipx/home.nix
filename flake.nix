@@ -18,6 +18,7 @@
     };
     # nixgl.url = "github:nix-community/nixGL";
     mozilla.url = "github:mozilla/nixpkgs-mozilla";
+    swww.url = "github:LGFae/swww";
   };
 
   # `...` allows defining additional inputs to the outputs
@@ -30,6 +31,7 @@
     , nixvim
     , neorg-overlay
     , mozilla
+    , swww
       # , nixgl
     , ...
     }@inputs:
@@ -72,7 +74,7 @@
             };
           }
         ];
-        extraSpecialArgs = { inherit nixvim; };
+        extraSpecialArgs = { inherit nixvim swww; };
       };
 
       # Build darwin flake using:
