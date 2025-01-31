@@ -23,6 +23,17 @@
     swww.url = "github:LGFae/swww";
     catppuccin.url = "github:catppuccin/nix";
     fenix.url = "github:nix-community/fenix";
+
+    # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    # where {version} is the hyprland release version
+    # or "github:hyprwm/Hyprland?submodules=1" to follow the development branch
+
+    #hy3 = {
+    #  url = "github:outfoxxed/hy3?ref=hl{version}"; # where {version} is the hyprland release version
+    #  # or "github:outfoxxed/hy3" to follow the development branch.
+    #  # (you may encounter issues if you dont do the same for hyprland)
+    #  inputs.hyprland.follows = "hyprland";
+    #};
   };
 
   # `...` allows defining additional inputs to the outputs
@@ -33,11 +44,10 @@
     , nixpkgs
     , home-manager
     , nixvim
-    , neorg-overlay
-    , mozilla
     , swww
     , ghostty
     , catppuccin
+      # , hy3
     , ...
     }@inputs:
 
@@ -74,6 +84,7 @@
         modules = [
           ./home-manager/home.nix
           ./linux-config.nix
+          # inputs.hyprland.homeManagerModules.default
           {
             home = {
               username = "insipx";
