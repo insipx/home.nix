@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, hy3, system, ... }:
 {
   imports = [
     #   (builtins.fetchurl {
@@ -14,12 +14,13 @@
       trusted-users = [ "root" "insipx" "andrewplaza" ];
       extra-substituters = "https://devenv.cachix.org";
       extra-trusted-public-keys =
-      "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
+        "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
     };
   };
 
   wayland.windowManager.hyprland = {
     enable = false;
+    plugins = [ hy3.packages.${system}.hy3 ];
     settings = {
       env = [
         "LIBVA_DRIVER_NAME,nvidia"

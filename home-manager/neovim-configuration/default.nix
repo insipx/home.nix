@@ -19,7 +19,7 @@ in
       git
 
       # Formatters
-      dprint
+      taplo
       stylua
       deno
       nodePackages.prettier
@@ -125,6 +125,10 @@ in
             enable = true;
             filetypes = [ "go" ];
           };
+          taplo = {
+            enable = true;
+            tiletypes = [ "toml" ];
+          };
         };
       };
       lsp-format.enable = true;
@@ -162,7 +166,7 @@ in
             timeoutMs = 350;
           };
           formatters_by_ft = {
-            toml = [ "dprint" ];
+            toml = [ "taplo" ];
             lua = [ "stylua" ];
             javascript = [ "prettier" ];
             typescript = [ "prettier" ];

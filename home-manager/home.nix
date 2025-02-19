@@ -5,11 +5,14 @@
 , swww
 , ...
 }:
-#privateConfiguration = builtins.fetchGit {
-#  url = "git@github.com:insipx/home.private.nix.git";
-#  rev = "f4df03bac3812d9ff901f1e7822c8490a42c351b";
-#  allRefs = true;
-#};
+#let
+#  #privateConfiguration = builtins.fetchGit {
+#  #  url = "git@github.com:insipx/home.private.nix.git";
+#  #  rev = "8c2905e8453f88e9279cd232f1a629cfa624f3c9";
+#  #  allRefs = true;
+#  #};
+#  # berkeley-mono = pkgs.callPackage "${privateConfiguration}/BerkeleyMono" { };
+#in
 {
   inherit (pkgs) lib;
   imports = [
@@ -37,6 +40,7 @@
         monaspace
         miracode
         nerd-fonts.symbols-only
+        # berkeley-mono
         # ghostty not packaged for darwin yet
 
         ripgrep
@@ -109,6 +113,10 @@
         text = ''
           Match host * exec "gpg-connect-agent UPDATESTARTUPTTY /bye"
         '';
+      };
+      ".config/ghostty" = {
+        source = ./dotfiles/ghostty;
+        recursive = true;
       };
     };
 
