@@ -44,6 +44,7 @@
   homebrew = {
     enable = true;
     brews = [
+      "neovide"
       "gnu-sed"
       "gnupg"
       "gpgme"

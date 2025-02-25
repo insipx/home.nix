@@ -127,7 +127,7 @@ in
           };
           taplo = {
             enable = true;
-            tiletypes = [ "toml" ];
+            filetypes = [ "toml" ];
           };
         };
       };
