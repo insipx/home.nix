@@ -23,7 +23,7 @@
     swww.url = "github:LGFae/swww";
     catppuccin.url = "github:catppuccin/nix";
     fenix.url = "github:nix-community/fenix";
-
+    nix-gl-host.url = "github:numtide/nix-gl-host";
     # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     # where {version} is the hyprland release version
     # or "github:hyprwm/Hyprland?submodules=1" to follow the development branch
@@ -92,7 +92,7 @@
             };
           }
         ];
-        extraSpecialArgs = { inherit nixvim catppuccin swww; };
+        extraSpecialArgs = { inherit nixvim catppuccin swww; nix-gl-host = inputs.nix-gl-host.defaultPackage.x86_64-linux; };
       };
 
       # Build darwin flake using:

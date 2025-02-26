@@ -2,9 +2,9 @@
   mode = "n";
   key = "<leader>lr";
   action.__raw = ''
-    function() 
+    function()
       require('telescope.builtin')
-        .lsp_references(require('telescope.themes').get_ivy({})) 
+        .lsp_references(require('telescope.themes').get_ivy({}))
     end
   '';
   options = {

@@ -38,6 +38,8 @@ in
       shellcheck
       golangci-lint
       nodePackages_latest.jsonlint
+      # Other
+      htop
     ];
     extraPython3Packages =
       ps: with ps; [
@@ -62,9 +64,6 @@ in
       loaded_tarPlugin = false;
       loaded-2html_plugin = false;
       loaded_remote_plugins = false;
-      coq_settings = {
-        auto_start = "shut-up";
-      };
     };
 
     opts = {
@@ -100,7 +99,6 @@ in
       -- vim.opt.listchars:append "eol:↴"
       vim.opt.listchars:append "space:⋅"
     ''; # + builtins.readFile ./neovim-configuration/lua/lualine.lua;
-
     extraConfigVim = ''
       set exrc
     '';
@@ -127,7 +125,7 @@ in
           };
           taplo = {
             enable = true;
-            tiletypes = [ "toml" ];
+            filetypes = [ "toml" ];
           };
         };
       };
@@ -156,6 +154,7 @@ in
       coq-nvim = {
         enable = true;
         settings.auto_start = "shut-up";
+        installArtifacts = true;
       };
 
       conform-nvim = {
@@ -457,7 +456,41 @@ in
         settings.keys = "etovxqpdygfblzhckisuran";
       };
 
-      toggleterm.enable = true;
+      toggleterm = {
+        enable = true;
+        settings = {
+          autochdir = true;
+          auto_scroll = true;
+          shade_filetypes = [
+            "none"
+          ];
+          start_in_insert = true;
+        };
+        luaConfig.post = ''
+          local Terminal = require('toggleterm.terminal').Terminal
+          local float_general = Terminal:new({
+            hidden = true,
+            name = "general",
+            auto_scroll = true,
+            direction = "float",
+            dir = git_dir
+          })
+          local htop = Terminal:new({
+            cmd = "htop",
+            hidden = true,
+            name = "htop",
+            auto_scroll = false,
+            direction = "float",
+            dir = git_dir
+          })
+          function _toggle_float_general()
+            float_general:toggle()
+          end
+          function _toggle_htop()
+            htop:toggle()
+          end
+        '';
+      };
       scope.enable = true;
 
       #stabilize

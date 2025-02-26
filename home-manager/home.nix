@@ -4,7 +4,7 @@
 , catppuccin
 , swww
 , ...
-}:
+}@inputs:
 #let
 #  #privateConfiguration = builtins.fetchGit {
 #  #  url = "git@github.com:insipx/home.private.nix.git";
@@ -92,6 +92,7 @@
           yubikey-personalization
           cachix
           swww.packages.${pkgs.system}.swww
+          inputs.nix-gl-host
         ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -105,10 +106,10 @@
         [codespell]
         ignore-words-list = create
       '';
-      ".config/neovide" = {
-        source = ./dotfiles/neovide;
-        recursive = true;
-      };
+      #".config/neovide" = {
+      #  source = ./dotfiles/neovide;
+      #  recursive = true;
+      #};
       ".ssh/config" = {
         text = ''
           Match host * exec "gpg-connect-agent UPDATESTARTUPTTY /bye"
@@ -127,6 +128,16 @@
     };
   };
   programs = {
+    neovide = {
+      enable = true;
+      settings = {
+        vsync = true;
+        font = {
+          normal = [ "Berkeley Mono" "Symbols Nerd Font" ];
+          size = 14;
+        };
+      };
+    };
     atuin = {
       enable = true;
       enableFishIntegration = true;
