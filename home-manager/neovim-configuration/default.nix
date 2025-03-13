@@ -9,8 +9,8 @@ in
 
   programs.nixvim = {
     enable = true;
-    package = pkgs.neovim;
-
+    # package = pkgs.neovim;
+    # nixpkgs.useGlobalPackages = false;
     extraPackages = with pkgs; [
       ripgrep
       lua51Packages.luarocks
@@ -39,6 +39,7 @@ in
       golangci-lint
       nodePackages_latest.jsonlint
     ];
+    extraPlugins = [ ];
     extraPython3Packages =
       ps: with ps; [
         pynvim
@@ -303,7 +304,6 @@ in
       neorg = {
         enable = true;
         settings = {
-          lazy_load = true;
           load = {
             "core.defaults" = {
               __empty = null;
@@ -469,15 +469,12 @@ in
     #};
     colorschemes.catppuccin = {
       enable = true;
+      autoLoad = true;
       settings = {
         flavour = "mocha";
         integrations = {
           treesitter = true;
           notify = true;
-          mini = {
-            enabled = true;
-            indentscope_color = "";
-          };
         };
       };
     };

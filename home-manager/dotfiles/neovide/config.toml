@@ -1,7 +1,5 @@
 vsync = false
 
 [font]
-normal = ["Monaspace Neon", "Symbols Nerd Font Mono"]
+normal = ["Berkeley Mono", "Symbols Nerd Font Mono"]
 size = 14
-
-

@@ -5,14 +5,15 @@
 , swww
 , ...
 }:
-#let
-#  #privateConfiguration = builtins.fetchGit {
-#  #  url = "git@github.com:insipx/home.private.nix.git";
-#  #  rev = "8c2905e8453f88e9279cd232f1a629cfa624f3c9";
-#  #  allRefs = true;
-#  #};
-#  # berkeley-mono = pkgs.callPackage "${privateConfiguration}/BerkeleyMono" { };
-#in
+let
+  #  #privateConfiguration = builtins.fetchGit {
+  #  #  url = "git@github.com:insipx/home.private.nix.git";
+  #  #  rev = "8c2905e8453f88e9279cd232f1a629cfa624f3c9";
+  #  #  allRefs = true;
+  #  #};
+  #  # berkeley-mono = pkgs.callPackage "${privateConfiguration}/BerkeleyMono" { };
+  # nerdfonts = pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; };
+in
 {
   inherit (pkgs) lib;
   imports = [
@@ -39,6 +40,7 @@
         # Fonts, Github's Font, minecraft font, minecraft font vectorized
         monaspace
         miracode
+        # nerdfonts
         nerd-fonts.symbols-only
         # berkeley-mono
         # ghostty not packaged for darwin yet
@@ -74,7 +76,6 @@
         gh # Github CLI tool
         graphite-cli
         # mpv
-        # neovide
 
         # Fun
         lolcat
@@ -105,10 +106,6 @@
         [codespell]
         ignore-words-list = create
       '';
-      ".config/neovide" = {
-        source = ./dotfiles/neovide;
-        recursive = true;
-      };
       ".ssh/config" = {
         text = ''
           Match host * exec "gpg-connect-agent UPDATESTARTUPTTY /bye"
@@ -127,6 +124,16 @@
     };
   };
   programs = {
+    neovide = {
+      enable = true;
+      settings = {
+        vsync = true;
+        font = {
+          normal = [ "Berkeley Mono" "Symbols Nerd Font Mono" ];
+          size = 16;
+        };
+      };
+    };
     atuin = {
       enable = true;
       enableFishIntegration = true;

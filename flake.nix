@@ -4,25 +4,27 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # Other Sources
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    # neovim-nightly.url = "github:nix-community/neovim-nightly-overlay?rev=1b313b2d3fafd50aaf06733cc8753660068ec19b";
     ghostty.url = "github:ghostty-org/ghostty";
     # neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay?rev=d3963249e534e247041862b8162fb738c8604d3a";
 
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
+    neorg-overlay.inputs.nixpkgs.follows = "nixpkgs";
+
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     # nixgl.url = "github:nix-community/nixGL";
     mozilla.url = "github:mozilla/nixpkgs-mozilla";
     swww.url = "github:LGFae/swww";
     catppuccin.url = "github:catppuccin/nix";
+    catppuccin.inputs.nixpkgs.follows = "nixpkgs";
     fenix.url = "github:nix-community/fenix";
+    fenix.inputs.nixpkgs.follows = "nixpkgs";
 
     # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     # where {version} is the hyprland release version
@@ -69,7 +71,7 @@
     in
     {
       overlays = {
-        neovim = inputs.neovim-nightly-overlay.overlays.default;
+        # neovim = inputs.neovim-nightly.overlays.default;
       };
 
       # Expose the package set, including overlays, for convenience.
