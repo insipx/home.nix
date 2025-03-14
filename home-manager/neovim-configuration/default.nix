@@ -243,7 +243,7 @@ in
       };
 
       crates = {
-        enable = true;
+        enable = false;
         settings = {
           src = {
             coq = {

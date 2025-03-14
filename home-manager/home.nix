@@ -37,8 +37,8 @@
       with pkgs;
       [
         # Fonts, Github's Font, minecraft font, minecraft font vectorized
-        monaspace
-        miracode
+        # monaspace
+        # miracode
         nerd-fonts.symbols-only
         # berkeley-mono
         # ghostty not packaged for darwin yet
@@ -106,10 +106,10 @@
         [codespell]
         ignore-words-list = create
       '';
-      #".config/neovide" = {
-      #  source = ./dotfiles/neovide;
-      #  recursive = true;
-      #};
+      ".config/neovide" = {
+        source = ./dotfiles/neovide;
+        recursive = true;
+      };
       ".ssh/config" = {
         text = ''
           Match host * exec "gpg-connect-agent UPDATESTARTUPTTY /bye"
@@ -127,13 +127,16 @@
       CACHEPOT_CACHE_SIZE = "50G";
     };
   };
+  # allows apps to find fonts
+  # NOTE: I SYMLINKED /usr/share/fonts/* to .nix-profile/fonts dir
+  fonts.fontconfig.enable = true;
   programs = {
     neovide = {
-      enable = true;
+      enable = false;
       settings = {
         vsync = true;
         font = {
-          normal = [ "Berkeley Mono" "Symbols Nerd Font" ];
+          normal = [ "Berkeley Mono" "Symbols Nerd Font Mono" ];
           size = 14;
         };
       };
@@ -229,6 +232,7 @@
             #  set -gx VOLTA_HOME "$HOME/.volta"
             # set -gx PATH "$VOLTA_HOME/bin" $PATH
             set -gx PATH "$HOME/.scripts" $PATH
+            fish_add_path --prepend --global /usr/lib/emscripten
             if test (uname) = Darwin
               fish_add_path --prepend --global "$HOME/.nix-profile/bin" /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
               fish_add_path --prepend --global "$HOME/.foundry/bin"
