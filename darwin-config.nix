@@ -3,6 +3,7 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = [ pkgs.vim ];
+  ids.gids.nixbld = 350;
 
   nix = {
     package = pkgs.nix;
@@ -39,13 +40,11 @@
     };
   };
 
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-
   # https://daiderd.com/nix-darwin/manual/index.html
   homebrew = {
     enable = true;
     brews = [
+      "neovide"
       "gnu-sed"
       "gnupg"
       "gpgme"
@@ -63,7 +62,7 @@
   };
 
   services.aerospace = {
-    enable = true;
+    enable = false;
     settings = {
       gaps = {
         outer = {
