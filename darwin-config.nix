@@ -3,6 +3,7 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = [ pkgs.vim ];
+  ids.gids.nixbld = 350;
 
   nix = {
     package = pkgs.nix;
@@ -35,7 +36,7 @@
     hostPlatform = "aarch64-darwin";
     config = {
       allowUnfree = true;
-      allowBroken = true;
+      allowBroken = false;
     };
   };
 
@@ -43,6 +44,7 @@
   homebrew = {
     enable = true;
     brews = [
+      "neovide"
       "gnu-sed"
       "gnupg"
       "gpgme"
@@ -53,7 +55,7 @@
       "pinentry-mac"
       # "cxreiff/tap/ttysvr"
     ];
-    casks = [ "docker" "ghostty" "google-chrome" ];
+    casks = [ "docker" "firefox@nightly" "ghostty" "raycast" ];
     onActivation = {
       autoUpdate = true;
       cleanup = "uninstall";

@@ -1,7 +1,4 @@
-{ pkgs, config, ... }:
-let
-  # nixGLDefault = pkgs.nixgl.auto.nixGLDefault;
-in
+{ pkgs, hy3, system, ... }:
 {
   imports = [
     #   (builtins.fetchurl {
@@ -12,12 +9,18 @@ in
 
   nix = {
     package = pkgs.nix;
-    settings.experimental-features = "nix-command flakes";
-    settings.trusted-users = [ "root" "insipx" "andrewplaza" ];
+    settings = {
+      experimental-features = "nix-command flakes";
+      trusted-users = [ "root" "insipx" "andrewplaza" ];
+      extra-substituters = "https://nix-community.cachix.org";
+      extra-trusted-public-keys =
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
+    };
   };
 
   wayland.windowManager.hyprland = {
     enable = false;
+    plugins = [ hy3.packages.${system}.hy3 ];
     settings = {
       env = [
         "LIBVA_DRIVER_NAME,nvidia"
@@ -32,7 +35,8 @@ in
     };
     systemd.enable = true;
   };
-
+  # should enable the nightly using mozilla overlay on linux platform
+  programs.firefox.enable = true;
   services.gpg-agent = {
     enable = false;
     enableScDaemon = true;

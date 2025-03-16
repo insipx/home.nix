@@ -19,7 +19,7 @@ in
       git
 
       # Formatters
-      dprint
+      taplo
       stylua
       deno
       nodePackages.prettier
@@ -38,6 +38,8 @@ in
       shellcheck
       golangci-lint
       nodePackages_latest.jsonlint
+      # Other
+      htop
     ];
     extraPython3Packages =
       ps: with ps; [
@@ -62,9 +64,6 @@ in
       loaded_tarPlugin = false;
       loaded-2html_plugin = false;
       loaded_remote_plugins = false;
-      coq_settings = {
-        auto_start = "shut-up";
-      };
     };
 
     opts = {
@@ -100,26 +99,50 @@ in
       -- vim.opt.listchars:append "eol:↴"
       vim.opt.listchars:append "space:⋅"
     ''; # + builtins.readFile ./neovim-configuration/lua/lualine.lua;
-
     extraConfigVim = ''
       set exrc
     '';
 
+    diagnostics = {
+      severity_sort = true;
+      virtual_lines = {
+        only_current_line = true;
+      };
+      virtual_text = true;
+    };
     plugins = {
       lsp = {
         enable = true;
         servers = {
           nixd = {
             enable = true;
+            filetypes = [ "nix" ];
             settings.formatting.command = [ "nixpkgs-fmt" ];
           };
           gopls = {
             enable = true;
+            filetypes = [ "go" ];
+          };
+          taplo = {
+            enable = true;
+            filetypes = [ "toml" ];
           };
         };
       };
       lsp-format.enable = true;
-      fidget.enable = true;
+      #notify = {
+      #  enable = true;
+      #  fps = 60;
+      #  render = "compact";
+      #};
+      fidget = {
+        enable = true;
+        settings = {
+          notification = {
+            override_vim_notify = true;
+          };
+        };
+      };
       lspsaga.enable = true;
       #trouble = {
       #  enable = true;
@@ -131,6 +154,7 @@ in
       coq-nvim = {
         enable = true;
         settings.auto_start = "shut-up";
+        installArtifacts = true;
       };
 
       conform-nvim = {
@@ -141,7 +165,7 @@ in
             timeoutMs = 350;
           };
           formatters_by_ft = {
-            toml = [ "dprint" ];
+            toml = [ "taplo" ];
             lua = [ "stylua" ];
             javascript = [ "prettier" ];
             typescript = [ "prettier" ];
@@ -171,17 +195,17 @@ in
       direnv.enable = true;
       rustaceanvim = {
         enable = true;
+        # Use fenix nightly rust-analalyzer
+        rustAnalyzerPackage = pkgs.rust-analyzer-nightly;
         settings.server = {
           load_vscode_settings = true;
-          tools = {
-            test_executor = "toggleterm";
-          };
+          standalone = false;
           default_settings = {
             rust-analyzer = {
               cargo = {
-                allTargets = true;
+                allTargets = false;
                 buildScripts.enable = true;
-                features = "all";
+                # features = "all";
               };
               checkOnSave = true;
               check = {
@@ -198,24 +222,28 @@ in
                   "async-recursion" = [ "async_recursion" ];
                   "ctor" = [ "ctor" ];
                   "tokio" = [ "test" ];
-                  "async-stream" = [
-                    "stream"
-                    "try_stream"
-                  ];
                 };
               };
               diagnostics.disabled = [
                 "unlinked-file"
                 "unresolved-macro-call"
                 "unresolved-proc-macro"
+                "proc-macro-disabled"
+                "proc-macro-expansion-error"
               ];
             };
           };
         };
+        settings.tools = {
+          enable_clippy = true;
+          enable_nextest = true;
+          executor = "toggleterm";
+          test_executor = "toggleterm";
+        };
       };
 
       crates = {
-        enable = true;
+        enable = false;
         settings = {
           src = {
             coq = {
@@ -338,7 +366,7 @@ in
       };
       treesitter-textobjects.enable = true;
       treesitter-context = {
-        enable = false;
+        enable = true;
         settings = {
           max_lines = 2;
         };
@@ -428,7 +456,41 @@ in
         settings.keys = "etovxqpdygfblzhckisuran";
       };
 
-      toggleterm.enable = true;
+      toggleterm = {
+        enable = true;
+        settings = {
+          autochdir = true;
+          auto_scroll = true;
+          shade_filetypes = [
+            "none"
+          ];
+          start_in_insert = true;
+        };
+        luaConfig.post = ''
+          local Terminal = require('toggleterm.terminal').Terminal
+          local float_general = Terminal:new({
+            hidden = true,
+            name = "general",
+            auto_scroll = true,
+            direction = "float",
+            dir = git_dir
+          })
+          local htop = Terminal:new({
+            cmd = "htop",
+            hidden = true,
+            name = "htop",
+            auto_scroll = false,
+            direction = "float",
+            dir = git_dir
+          })
+          function _toggle_float_general()
+            float_general:toggle()
+          end
+          function _toggle_htop()
+            htop:toggle()
+          end
+        '';
+      };
       scope.enable = true;
 
       #stabilize

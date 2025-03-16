@@ -11,15 +11,28 @@
     # Other Sources
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     ghostty.url = "github:ghostty-org/ghostty";
-    # neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay?rev=d3963249e534e247041862b8162fb738c8604d3a";
 
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # nixgl.url = "github:nix-community/nixGL";
     mozilla.url = "github:mozilla/nixpkgs-mozilla";
+    swww.url = "github:LGFae/swww";
     catppuccin.url = "github:catppuccin/nix";
+    fenix.url = "github:nix-community/fenix";
+    nix-gl-host.url = "github:numtide/nix-gl-host";
+    # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    # where {version} is the hyprland release version
+    # or "github:hyprwm/Hyprland?submodules=1" to follow the development branch
+
+    #hy3 = {
+    #  url = "github:outfoxxed/hy3?ref=hl{version}"; # where {version} is the hyprland release version
+    #  # or "github:outfoxxed/hy3" to follow the development branch.
+    #  # (you may encounter issues if you dont do the same for hyprland)
+    #  inputs.hyprland.follows = "hyprland";
+    #};
   };
 
   # `...` allows defining additional inputs to the outputs
@@ -30,9 +43,10 @@
     , nixpkgs
     , home-manager
     , nixvim
-    , mozilla
+    , swww
     , ghostty
     , catppuccin
+      # , hy3
     , ...
     }@inputs:
 
@@ -45,7 +59,8 @@
         config = { allowUnfree = true; };
         overlays = attrValues self.overlays ++ [
           # neorg-overlay.overlays.default
-          mozilla.overlays.firefox
+          # inputs.mozilla.overlays.firefox
+          inputs.fenix.overlays.default
         ]; # adds all overlays to list
       };
 
@@ -63,11 +78,12 @@
       homeConfigurations."tanjiro" = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs ({
           system = "x86_64-linux";
-          overlays = nixpkgsConfig.overlays ++ [ ghostty.overlays.default ]; # ghostty packaged for linux
+          overlays = nixpkgsConfig.overlays ++ [ ghostty.overlays.default ];
         } // nixpkgsConfig);
         modules = [
           ./home-manager/home.nix
           ./linux-config.nix
+          # inputs.hyprland.homeManagerModules.default
           {
             home = {
               username = "insipx";
@@ -75,7 +91,7 @@
             };
           }
         ];
-        extraSpecialArgs = { inherit nixvim catppuccin; };
+        extraSpecialArgs = { inherit nixvim catppuccin swww; nix-gl-host = inputs.nix-gl-host.defaultPackage.x86_64-linux; };
       };
 
       # Build darwin flake using:

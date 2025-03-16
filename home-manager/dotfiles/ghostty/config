@@ -1,0 +1,13 @@
+font-family = "Berkeley Mono"
+theme = catppuccin-mocha
+font-size = 14
+keybind = ctrl+space>shift+-=new_split:down
+keybind = ctrl+space>shift+\=new_split:right
+keybind = ctrl+space>h=goto_split:left
+keybind = ctrl+space>j=goto_split:bottom
+keybind = ctrl+space>k=goto_split:top
+keybind = ctrl+space>l=goto_split:right
+
+
+keybind = super+plus=increase_font_size:1
+keybind = super+minus=decrease_font_size:1
