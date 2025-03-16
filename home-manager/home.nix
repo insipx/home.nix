@@ -4,18 +4,20 @@
 , catppuccin
 , ...
 }:
-#privateConfiguration = builtins.fetchGit {
-#  url = "git@github.com:insipx/home.private.nix.git";
-#  rev = "f4df03bac3812d9ff901f1e7822c8490a42c351b";
-#  allRefs = true;
-#};
+let
+  privateConfiguration = builtins.fetchGit {
+    url = "git@github.com:insipx/home.private.nix.git";
+    rev = "98f0c6cbf66d7b80607be566546fd2ddb43ad611";
+    allRefs = true;
+  };
+in
 {
   inherit (pkgs) lib;
   imports = [
     nixvim.homeManagerModules.nixvim
     catppuccin.homeManagerModules.catppuccin
     (import ./neovim-configuration { inherit config pkgs; })
-    # (import privateConfiguration)
+    (import privateConfiguration)
   ];
   catppuccin.enable = true;
   home = {
@@ -33,8 +35,6 @@
       with pkgs;
       [
         # Fonts, Github's Font, minecraft font, minecraft font vectorized
-        monaspace
-        miracode
         nerd-fonts.symbols-only
         # ghostty not packaged for darwin yet
 

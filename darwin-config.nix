@@ -39,9 +39,6 @@
     };
   };
 
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-
   # https://daiderd.com/nix-darwin/manual/index.html
   homebrew = {
     enable = true;
@@ -53,6 +50,7 @@
       "hopenpgp-tools"
       "ykman"
       "pinentry"
+      "pinentry-mac"
       # "cxreiff/tap/ttysvr"
     ];
     casks = [ "docker" "ghostty" "google-chrome" ];
@@ -63,7 +61,7 @@
   };
 
   services.aerospace = {
-    enable = true;
+    enable = false;
     settings = {
       gaps = {
         outer = {
