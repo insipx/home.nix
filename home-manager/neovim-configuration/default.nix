@@ -245,7 +245,7 @@ in
       };
 
       crates = {
-        enable = true;
+        enable = false;
         settings = {
           src = {
             coq = {
@@ -457,7 +457,12 @@ in
         settings.keys = "etovxqpdygfblzhckisuran";
       };
 
-      toggleterm.enable = true;
+      toggleterm = {
+        enable = true;
+        settings = {
+          shade_terminals = false;
+        };
+      };
       scope.enable = true;
 
       #stabilize
