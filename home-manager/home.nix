@@ -38,8 +38,8 @@ in
       with pkgs;
       [
         # Fonts, Github's Font, minecraft font, minecraft font vectorized
-        monaspace
-        miracode
+        # monaspace
+        # miracode
         # nerdfonts
         nerd-fonts.symbols-only
         # berkeley-mono

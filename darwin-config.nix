@@ -6,6 +6,7 @@
   ids.gids.nixbld = 350;
 
   nix = {
+    enable = false;
     package = pkgs.nix;
     settings = {
       experimental-features = "nix-command flakes";
@@ -53,7 +54,7 @@
       "pinentry"
       # "cxreiff/tap/ttysvr"
     ];
-    casks = [ "docker" "firefox@nightly" "ghostty" "raycast" ];
+    casks = [ "firefox@nightly" "ghostty" "raycast" "orbstack" ];
     onActivation = {
       autoUpdate = true;
       cleanup = "uninstall";

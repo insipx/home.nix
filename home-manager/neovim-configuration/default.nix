@@ -198,7 +198,7 @@ in
       rustaceanvim = {
         enable = true;
         # Use fenix nightly rust-analalyzer
-        rustAnalyzerPackage = pkgs.rust-analyzer-nightly;
+        # rustAnalyzerPackage = pkgs.rust-analyzer-nightly;
         settings.server = {
           load_vscode_settings = true;
           standalone = false;
@@ -206,7 +206,7 @@ in
             rust-analyzer = {
               cargo = {
                 allTargets = false;
-                buildScripts.enable = true;
+                buildScripts.enable = false;
                 # features = "all";
               };
               checkOnSave = true;
