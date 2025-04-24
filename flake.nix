@@ -11,7 +11,6 @@
     # Other Sources
     # neovim-nightly.url = "github:nix-community/neovim-nightly-overlay?rev=1b313b2d3fafd50aaf06733cc8753660068ec19b";
     ghostty.url = "github:ghostty-org/ghostty";
-    # neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay?rev=d3963249e534e247041862b8162fb738c8604d3a";
 
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     neorg-overlay.inputs.nixpkgs.follows = "nixpkgs";
@@ -27,6 +26,7 @@
     fenix.url = "github:nix-community/fenix";
     fenix.inputs.nixpkgs.follows = "nixpkgs";
 
+    nix-gl-host.url = "github:numtide/nix-gl-host";
     # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     # where {version} is the hyprland release version
     # or "github:hyprwm/Hyprland?submodules=1" to follow the development branch
@@ -95,7 +95,7 @@
             };
           }
         ];
-        extraSpecialArgs = { inherit nixvim catppuccin swww; };
+        extraSpecialArgs = { inherit nixvim catppuccin swww; nix-gl-host = inputs.nix-gl-host.defaultPackage.x86_64-linux; };
       };
 
       # Build darwin flake using:

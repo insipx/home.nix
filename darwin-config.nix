@@ -52,6 +52,7 @@
       "hopenpgp-tools"
       "ykman"
       "pinentry"
+      "pinentry-mac"
       # "cxreiff/tap/ttysvr"
     ];
     casks = [ "firefox@nightly" "ghostty" "raycast" "orbstack" ];

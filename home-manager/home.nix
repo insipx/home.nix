@@ -4,15 +4,13 @@
 , catppuccin
 , swww
 , ...
-}:
+}@inputs:
 let
-  #  #privateConfiguration = builtins.fetchGit {
-  #  #  url = "git@github.com:insipx/home.private.nix.git";
-  #  #  rev = "8c2905e8453f88e9279cd232f1a629cfa624f3c9";
-  #  #  allRefs = true;
-  #  #};
-  #  # berkeley-mono = pkgs.callPackage "${privateConfiguration}/BerkeleyMono" { };
-  # nerdfonts = pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; };
+  privateConfiguration = builtins.fetchGit {
+    url = "git@github.com:insipx/home.private.nix.git";
+    rev = "98f0c6cbf66d7b80607be566546fd2ddb43ad611";
+    allRefs = true;
+  };
 in
 {
   inherit (pkgs) lib;
@@ -20,7 +18,7 @@ in
     nixvim.homeManagerModules.nixvim
     catppuccin.homeManagerModules.catppuccin
     (import ./neovim-configuration { inherit config pkgs; })
-    # (import privateConfiguration)
+    (import privateConfiguration)
   ];
   catppuccin.enable = true;
   home = {
@@ -38,9 +36,6 @@ in
       with pkgs;
       [
         # Fonts, Github's Font, minecraft font, minecraft font vectorized
-        # monaspace
-        # miracode
-        # nerdfonts
         nerd-fonts.symbols-only
         # berkeley-mono
         # ghostty not packaged for darwin yet
@@ -93,6 +88,7 @@ in
           yubikey-personalization
           cachix
           swww.packages.${pkgs.system}.swww
+          inputs.nix-gl-host
         ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -123,14 +119,17 @@ in
       CACHEPOT_CACHE_SIZE = "50G";
     };
   };
+  # allows apps to find fonts
+  # NOTE: I SYMLINKED /usr/share/fonts/* to .nix-profile/fonts dir
+  fonts.fontconfig.enable = true;
   programs = {
     neovide = {
-      enable = true;
+      enable = false;
       settings = {
         vsync = true;
         font = {
           normal = [ "Berkeley Mono" "Symbols Nerd Font Mono" ];
-          size = 16;
+          size = 14;
         };
       };
     };
@@ -225,6 +224,7 @@ in
             #  set -gx VOLTA_HOME "$HOME/.volta"
             # set -gx PATH "$VOLTA_HOME/bin" $PATH
             set -gx PATH "$HOME/.scripts" $PATH
+            fish_add_path --prepend --global /usr/lib/emscripten
             if test (uname) = Darwin
               fish_add_path --prepend --global "$HOME/.nix-profile/bin" /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
               fish_add_path --prepend --global "$HOME/.foundry/bin"

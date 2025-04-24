@@ -38,6 +38,8 @@ in
       shellcheck
       golangci-lint
       nodePackages_latest.jsonlint
+      # Other
+      htop
     ];
     extraPlugins = [ ];
     extraPython3Packages =
@@ -63,9 +65,6 @@ in
       loaded_tarPlugin = false;
       loaded-2html_plugin = false;
       loaded_remote_plugins = false;
-      coq_settings = {
-        auto_start = "shut-up";
-      };
     };
 
     opts = {
@@ -101,7 +100,6 @@ in
       -- vim.opt.listchars:append "eol:↴"
       vim.opt.listchars:append "space:⋅"
     ''; # + builtins.readFile ./neovim-configuration/lua/lualine.lua;
-
     extraConfigVim = ''
       set exrc
     '';
@@ -157,6 +155,7 @@ in
       coq-nvim = {
         enable = true;
         settings.auto_start = "shut-up";
+        installArtifacts = true;
       };
 
       conform-nvim = {
@@ -462,36 +461,67 @@ in
         settings = {
           shade_terminals = false;
         };
+        autochdir = true;
+        auto_scroll = true;
+        shade_filetypes = [
+          "none"
+        ];
+        start_in_insert = true;
       };
-      scope.enable = true;
-
-      #stabilize
-      #vim-eunuch
+      luaConfig.post = ''
+        local Terminal = require('toggleterm.terminal').Terminal
+        local float_general = Terminal:new({
+          hidden = true,
+          name = "general",
+          auto_scroll = true,
+          direction = "float",
+          dir = git_dir
+        })
+        local htop = Terminal:new({
+          cmd = "htop",
+          hidden = true,
+          name = "htop",
+          auto_scroll = false,
+          direction = "float",
+          dir = git_dir
+        })
+        function _toggle_float_general()
+          float_general:toggle()
+        end
+        function _toggle_htop()
+          htop:toggle()
+        end
+      '';
     };
-    #colorschemes.nightfox = {
-    #  enable = true;
-    #  flavor = "carbonfox";
-    #};
-    colorschemes.catppuccin = {
-      enable = true;
-      autoLoad = true;
-      settings = {
-        flavour = "mocha";
-        integrations = {
-          treesitter = true;
-          notify = true;
-        };
-      };
-    };
+    scope.enable = true;
 
-    performance = {
-      byteCompileLua = {
-        enable = true;
-        configs = true;
-        initLua = true;
-        nvimRuntime = true;
-        plugins = true;
+    #stabilize
+    #vim-eunuch
+  };
+  #colorschemes.nightfox = {
+  #  enable = true;
+  #  flavor = "carbonfox";
+  #};
+  colorschemes.catppuccin = {
+    enable = true;
+    autoLoad = true;
+    settings = {
+      flavour = "mocha";
+      integrations = {
+        treesitter = true;
+        notify = true;
       };
     };
   };
+
+  performance = {
+    byteCompileLua = {
+      enable = true;
+      configs = true;
+      initLua = true;
+      nvimRuntime = true;
+      plugins = true;
+    };
+  };
+};
 }
