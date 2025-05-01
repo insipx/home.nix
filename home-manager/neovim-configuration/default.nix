@@ -460,68 +460,66 @@ in
         enable = true;
         settings = {
           shade_terminals = false;
+          auto_scroll = true;
+          autochdir = true;
+          shade_filetypes = [
+            "none"
+          ];
+          start_in_insert = true;
         };
-        autochdir = true;
-        auto_scroll = true;
-        shade_filetypes = [
-          "none"
-        ];
-        start_in_insert = true;
+        luaConfig.post = ''
+          local Terminal = require('toggleterm.terminal').Terminal
+          local float_general = Terminal:new({
+            hidden = true,
+            name = "general",
+            auto_scroll = true,
+            direction = "float",
+            dir = git_dir
+          })
+          local htop = Terminal:new({
+            cmd = "htop",
+            hidden = true,
+            name = "htop",
+            auto_scroll = false,
+            direction = "float",
+            dir = git_dir
+          })
+          function _toggle_float_general()
+            float_general:toggle()
+          end
+          function _toggle_htop()
+            htop:toggle()
+          end
+        '';
       };
-      luaConfig.post = ''
-        local Terminal = require('toggleterm.terminal').Terminal
-        local float_general = Terminal:new({
-          hidden = true,
-          name = "general",
-          auto_scroll = true,
-          direction = "float",
-          dir = git_dir
-        })
-        local htop = Terminal:new({
-          cmd = "htop",
-          hidden = true,
-          name = "htop",
-          auto_scroll = false,
-          direction = "float",
-          dir = git_dir
-        })
-        function _toggle_float_general()
-          float_general:toggle()
-        end
-        function _toggle_htop()
-          htop:toggle()
-        end
-      '';
+      scope.enable = true;
     };
-    scope.enable = true;
-
     #stabilize
     #vim-eunuch
-  };
-  #colorschemes.nightfox = {
-  #  enable = true;
-  #  flavor = "carbonfox";
-  #};
-  colorschemes.catppuccin = {
-    enable = true;
-    autoLoad = true;
-    settings = {
-      flavour = "mocha";
-      integrations = {
-        treesitter = true;
-        notify = true;
+    #colorschemes.nightfox = {
+    #  enable = true;
+    #  flavor = "carbonfox";
+    #};
+    colorschemes.catppuccin = {
+      enable = true;
+      autoLoad = true;
+      settings = {
+        flavour = "mocha";
+        integrations = {
+          treesitter = true;
+          notify = true;
+        };
+      };
+    };
+
+    performance = {
+      byteCompileLua = {
+        enable = true;
+        configs = true;
+        initLua = true;
+        nvimRuntime = true;
+        plugins = true;
       };
     };
   };
-
-  performance = {
-    byteCompileLua = {
-      enable = true;
-      configs = true;
-      initLua = true;
-      nvimRuntime = true;
-      plugins = true;
-    };
-  };
-};
 }

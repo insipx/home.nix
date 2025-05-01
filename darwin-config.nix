@@ -15,6 +15,15 @@
     };
   };
 
+  # Add nix settings to seperate conf file
+  # since we use Determinate Nix on our systems.
+  environment.etc."nix/nix.custom.conf".text = pkgs.lib.mkForce ''
+    # Add nix settings to seperate conf file
+    # since we use Determinate Nix on our systems.
+    trusted-users = insipx andrewplaza
+    extra-substituters = https://cache.nixos.org https://nix-community.cachix.org https://xmtp.cachix.org
+    extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= xmtp.cachix.org-1:nFPFrqLQ9kjYQKiWL7gKq6llcNEeaV4iI+Ka1F+Tmq0= xmtp.cachix.org-1:nFPFrqLQ9kjYQKiWL7gKq6llcNEeaV4iI+Ka1F+Tmq0=
+  '';
 
   # Set Git commit hash for darwin-version.
   system.configurationRevision = config.system.flakeRevision;

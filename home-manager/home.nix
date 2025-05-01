@@ -16,7 +16,7 @@ in
   inherit (pkgs) lib;
   imports = [
     nixvim.homeManagerModules.nixvim
-    catppuccin.homeManagerModules.catppuccin
+    catppuccin.homeModules.catppuccin
     (import ./neovim-configuration { inherit config pkgs; })
     (import privateConfiguration)
   ];

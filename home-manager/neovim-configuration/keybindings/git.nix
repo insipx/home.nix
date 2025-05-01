@@ -7,4 +7,13 @@
     '';
     options.desc = "open neogit";
   }
+  {
+    mode = "n";
+    key = "<Leader>gd";
+    action = "<cmd>DiffviewOpen<CR>";
+    options = {
+      silent = true;
+      desc = "open diffview";
+    };
+  }
 ]
