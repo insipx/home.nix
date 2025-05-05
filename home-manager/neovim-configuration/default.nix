@@ -144,6 +144,9 @@ in
           };
         };
       };
+      tiny-inline-diagnostic = {
+        enable = true;
+      };
       lspsaga.enable = true;
       #trouble = {
       #  enable = true;
