@@ -107,9 +107,9 @@ in
     diagnostics = {
       severity_sort = true;
       virtual_lines = {
-        only_current_line = true;
+        only_current_line = false;
       };
-      virtual_text = true;
+      virtual_text = false;
     };
     plugins = {
       lsp = {
@@ -471,6 +471,7 @@ in
           shade_filetypes = [
             "none"
           ];
+          shade_terminal = false;
           start_in_insert = true;
         };
         luaConfig.post = ''
