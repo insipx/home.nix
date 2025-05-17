@@ -70,6 +70,7 @@ in
         feh
         gh # Github CLI tool
         graphite-cli
+        rage
         # mpv
 
         # Fun
@@ -183,6 +184,7 @@ in
     fish = {
       enable = true;
       shellAliases = {
+        age = "rage";
         vi = "nvim";
         vim = "nvim";
         ls = "eza";

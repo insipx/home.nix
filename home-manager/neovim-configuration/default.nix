@@ -136,6 +136,9 @@ in
       #  fps = 60;
       #  render = "compact";
       #};
+      avante = {
+        enable = true;
+      };
       fidget = {
         enable = true;
         settings = {

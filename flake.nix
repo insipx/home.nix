@@ -27,6 +27,7 @@
     fenix.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-gl-host.url = "github:numtide/nix-gl-host";
+    inputs.sops-nix.url = "github:Mic92/sops-nix";
     # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     # where {version} is the hyprland release version
     # or "github:hyprwm/Hyprland?submodules=1" to follow the development branch
@@ -50,6 +51,7 @@
     , swww
     , ghostty
     , catppuccin
+    , sops-nix
       # , hy3
     , ...
     }@inputs:
@@ -105,6 +107,7 @@
           options
           ./darwin-config.nix
           home-manager.darwinModules.home-manager
+          sops-nix.darwinModules.sops
           {
             nixpkgs = nixpkgsConfig;
             home-manager = {
