@@ -71,6 +71,7 @@ in
         gh # Github CLI tool
         graphite-cli
         rage
+        age-plugin-yubikey
         # mpv
 
         # Fun
