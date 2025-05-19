@@ -3,11 +3,12 @@
 # Also see https://github.com/Mic92/dotfiles/blob/d6114726d859df36ccaa32891c4963ae5717ef7f/nixos/.sops.yaml
 # for a more complex example.
 keys:
-  - &insipx 843D72A9EB79A8692C585B3AE7738A7A0F5CDB89
+  - &work-machine age1yubikey1qtcmlk4zskt6fd8etazd57nz23w736wpg7pkxnwddl25hst2tws3v857a0g
+  - &insipx-gpg 843D72A9EB79A8692C585B3AE7738A7A0F5CDB89
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
     key_groups:
-      - pgp:
-          - *insipx
-        age:
-          - *insipx
+      - age:
+          - *work-machine
+        pgp:
+          - *insipx-gpg

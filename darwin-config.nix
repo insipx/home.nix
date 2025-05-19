@@ -1,9 +1,24 @@
 { pkgs, config, ... }: {
-
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = [ pkgs.vim ];
   ids.gids.nixbld = 350;
+
+  sops = {
+    age = {
+      # keyFile = "${config.system.primaryUserHome}/.config/sops/age/keys.txt"; # For age keys
+      generateKey = false;
+      sshKeyPaths = [ ];
+    };
+    secrets.anthropic_key = {
+      group = "staff";
+      owner = "${config.system.primaryUser}";
+      mode = "0400"; # Read-only by owner
+    };
+    defaultSopsFile = ./secrets/env.yaml;
+    gnupg.sshKeyPaths = [ ];
+    gnupg.home = "${config.system.primaryUserHome}/.gnupg";
+  };
 
   nix = {
     enable = false;
@@ -17,19 +32,26 @@
 
   # Add nix settings to seperate conf file
   # since we use Determinate Nix on our systems.
-  environment.etc."nix/nix.custom.conf".text = pkgs.lib.mkForce ''
-    # Add nix settings to seperate conf file
-    # since we use Determinate Nix on our systems.
-    trusted-users = insipx andrewplaza
-    extra-substituters = https://cache.nixos.org https://nix-community.cachix.org https://xmtp.cachix.org
-    extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= xmtp.cachix.org-1:nFPFrqLQ9kjYQKiWL7gKq6llcNEeaV4iI+Ka1F+Tmq0= xmtp.cachix.org-1:nFPFrqLQ9kjYQKiWL7gKq6llcNEeaV4iI+Ka1F+Tmq0=
-  '';
+  environment = {
+    etc."nix/nix.custom.conf".text = pkgs.lib.mkForce ''
+      # Add nix settings to seperate conf file
+      # since we use Determinate Nix on our systems.
+      trusted-users = insipx andrewplaza
+      extra-substituters = https://cache.nixos.org https://nix-community.cachix.org https://xmtp.cachix.org
+      extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= xmtp.cachix.org-1:nFPFrqLQ9kjYQKiWL7gKq6llcNEeaV4iI+Ka1F+Tmq0= xmtp.cachix.org-1:nFPFrqLQ9kjYQKiWL7gKq6llcNEeaV4iI+Ka1F+Tmq0=
+    '';
+  };
 
   # Set Git commit hash for darwin-version.
   system.configurationRevision = config.system.flakeRevision;
 
   programs.zsh.enable = true; # default shell on catalina
-  programs.fish.enable = true;
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      set -x ANTHROPIC_API_KEY (cat ${config.sops.secrets.anthropic_key.path})
+    '';
+  };
 
   users.users.insipx = {
     home = "/Users/insipx";

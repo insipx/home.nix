@@ -116,8 +116,14 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.insipx = mkMerge [ (import ./home-manager/home.nix) (import ./home-manager/mac.nix) ];
-              extraSpecialArgs = { inherit nixvim catppuccin; };
+              users.insipx = { ... }: {
+                imports = [
+                  nixvim.homeManagerModules.nixvim
+                  catppuccin.homeModules.catppuccin
+                  ./home-manager/home.nix
+                  ./home-manager/mac.nix
+                ];
+              };
             };
           }
         ];

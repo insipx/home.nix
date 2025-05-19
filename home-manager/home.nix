@@ -1,7 +1,5 @@
 { config
 , pkgs
-, nixvim
-, catppuccin
 , swww
 , ...
 }@inputs:
@@ -15,8 +13,6 @@ in
 {
   inherit (pkgs) lib;
   imports = [
-    nixvim.homeManagerModules.nixvim
-    catppuccin.homeModules.catppuccin
     (import ./neovim-configuration { inherit config pkgs; })
     (import privateConfiguration)
   ];
@@ -215,7 +211,6 @@ in
             gpgconf --launch gpg-agent
             fish_vi_key_bindings
             set -x KEYID "843D72A9EB79A8692C585B3AE7738A7A0F5CDB89"
-
             # Batpipe setup
             set -x LESSOPEN "|${pkgs.bat-extras.batpipe}/bin/.batpipe-wrapped %s";
             set -e LESSCLOSE;
@@ -224,13 +219,11 @@ in
             set -x LESS "$LESS -R";
             set -x BATPIPE "color";
 
-            #  set -gx VOLTA_HOME "$HOME/.volta"
-            # set -gx PATH "$VOLTA_HOME/bin" $PATH
             set -gx PATH "$HOME/.scripts" $PATH
             fish_add_path --prepend --global /usr/lib/emscripten
             if test (uname) = Darwin
               fish_add_path --prepend --global "$HOME/.nix-profile/bin" /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
-              fish_add_path --prepend --global "$HOME/.foundry/bin"
+              # fish_add_path --prepend --global "$HOME/.foundry/bin"
             end
 
             function ssh --wraps ssh
