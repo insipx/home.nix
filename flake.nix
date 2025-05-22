@@ -79,7 +79,6 @@
         ]; # adds all overlays to list
       };
 
-      options = import ./options.nix { inherit self nixpkgs; };
     in
     {
       overlays = {
@@ -98,6 +97,9 @@
         modules = [
           ./home-manager/home.nix
           ./linux-config.nix
+          nixvim.homeManagerModules.nixvim
+          catppuccin.homeModules.catppuccin
+          sops-nix.homeManagerModules.sops
           # inputs.hyprland.homeManagerModules.default
           {
             home = {
@@ -113,7 +115,7 @@
       # $ darwin-rebuild build --flake .#cyllene
       darwinConfigurations."cyllene" = darwinSystem {
         modules = [
-          options
+          ./options.nix
           ./darwin-config.nix
           home-manager.darwinModules.home-manager
           sops-nix.darwinModules.sops
@@ -133,7 +135,7 @@
 
       darwinConfigurations."kusanagi" = darwinSystem {
         modules = [
-          options
+          ./options.nix
           ./darwin-config.nix
           home-manager.darwinModules.home-manager
           {

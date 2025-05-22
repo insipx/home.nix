@@ -56,6 +56,7 @@ in
       mapleader = " ";
       maplocalleader = ",";
       loaded_netrw = 1;
+      loaded_matchparen = 1;
       loaded_netrwPlugin = 1;
       loaded_python_provider = 0;
       nocompatible = true;
@@ -248,9 +249,14 @@ in
           test_executor = "toggleterm";
         };
       };
-
+      vim-matchup = {
+        enable = true;
+        settings = {
+          matchparen_defered = 1;
+        };
+      };
       crates = {
-        enable = false;
+        enable = true;
         settings = {
           src = {
             coq = {

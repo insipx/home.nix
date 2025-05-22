@@ -1,4 +1,4 @@
-{ pkgs, hy3, system, ... }:
+{ pkgs, hy3, system, config, ... }:
 {
   imports = [
     #   (builtins.fetchurl {
@@ -54,8 +54,21 @@
     enableNotifications = true;
   };
 
-  programs.ssh.enable = true;
+  sops = {
+    defaultSopsFile = ./secrets/env.yaml;
+    secrets.anthropic_key = { };
+    gnupg.home = "${config.home.homeDirectory}/.gnupg";
+  };
+
   # nixGL.prefix = "${nixGLDefault}/bin/nixGLDefault";
   # programs.wezterm.package = (config.lib.nixGL.wrap pkgs.wezterm);
+  programs = {
+    fish = {
+      interactiveShellInit = ''
+        set -x ANTHROPIC_API_KEY (cat ${config.sops.secrets.anthropic_key.path})
+      '';
+    };
+    ssh.enable = true;
+  };
 }
 
