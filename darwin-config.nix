@@ -69,6 +69,7 @@
     config = {
       allowUnfree = true;
       allowBroken = false;
+      allowUnsupportedSystem = true;
     };
   };
 
@@ -86,7 +87,7 @@
       "pinentry-mac"
       # "cxreiff/tap/ttysvr"
     ];
-    casks = [ "firefox@nightly" "ghostty" "raycast" "orbstack" ];
+    casks = [ "firefox@nightly" "ghostty" "raycast" "orbstack" "gitkraken" ];
     onActivation = {
       autoUpdate = true;
       cleanup = "uninstall";

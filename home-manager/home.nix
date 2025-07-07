@@ -60,12 +60,13 @@ in
         statix
         # Git
         gitlint
+        gk-cli # gitkraken cli tool
+        gh # Github CLI tool
+        graphite-cli
 
         # General usability
         nix-index # Run `nix-index` and then use `nix-locate` like the normal unix `locate`
         feh
-        gh # Github CLI tool
-        graphite-cli
         rage
         age-plugin-yubikey
         # mpv
@@ -197,9 +198,6 @@ in
         jq = "xq";
         nix = "nix --log-format bar";
       };
-      #   loginShellInit = ''
-      #     eval (direnv hook fish)
-      #   '';
       interactiveShellInit = ''
             macchina
             set fish_greeting # Disable greeting

@@ -28,6 +28,7 @@
 
     nix-gl-host.url = "github:numtide/nix-gl-host";
     sops-nix.url = "github:Mic92/sops-nix";
+    # tidal.url = "github:mitchmindtree/tidalcycles.nix";
     # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     # where {version} is the hyprland release version
     # or "github:hyprwm/Hyprland?submodules=1" to follow the development branch
@@ -57,9 +58,17 @@
     }@inputs:
 
     let
-      inherit (nixpkgs.lib) attrValues mkMerge;
+      inherit (nixpkgs.lib) attrValues;
       inherit (nix-darwin.lib) darwinSystem;
 
+      darwinCommon = { ... }: {
+        imports = [
+          nixvim.homeManagerModules.nixvim
+          catppuccin.homeModules.catppuccin
+          ./home-manager/home.nix
+          ./home-manager/mac.nix
+        ];
+      };
       # the `self.overlays` in the `nixpkgsConfig`
       nixpkgsConfig = {
         config = { allowUnfree = true; };
@@ -116,14 +125,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.insipx = { ... }: {
-                imports = [
-                  nixvim.homeManagerModules.nixvim
-                  catppuccin.homeModules.catppuccin
-                  ./home-manager/home.nix
-                  ./home-manager/mac.nix
-                ];
-              };
+              users.insipx = darwinCommon;
             };
           }
         ];
@@ -142,8 +144,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.andrewplaza = mkMerge [ (import ./home-manager/home.nix) (import ./home-manager/mac.nix) ];
-              extraSpecialArgs = { inherit nixvim catppuccin; };
+              users.andrewplaza = darwinCommon;
             };
           }
         ];
