@@ -219,6 +219,7 @@ in
             set -x BATPIPE "color";
 
             set -gx PATH "$HOME/.scripts" $PATH
+            set -gx PATH "$HOME/.cargo/bin" $PATH
             fish_add_path --prepend --global /usr/lib/emscripten
             if test (uname) = Darwin
               fish_add_path --prepend --global "$HOME/.nix-profile/bin" /nix/var/nix/profiles/default/bin /run/current-system/sw/bin

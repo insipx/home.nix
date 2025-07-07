@@ -36,7 +36,13 @@
     systemd.enable = true;
   };
   # should enable the nightly using mozilla overlay on linux platform
-  programs.firefox.enable = true;
+  programs.firefox = {
+    enable = true;
+    profiles.default.extensions.force = true;
+  };
+  home.packages = [
+    pkgs.yofi
+  ];
   services.gpg-agent = {
     enable = false;
     enableScDaemon = true;
