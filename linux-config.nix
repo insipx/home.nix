@@ -39,6 +39,7 @@
   programs.firefox = {
     enable = true;
     profiles.default.extensions.force = true;
+    package = pkgs.firefox-bin;
   };
   home.packages = [
     pkgs.yofi
