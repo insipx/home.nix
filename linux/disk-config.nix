@@ -117,7 +117,7 @@
                 content = {
                   type = "btrfs";
                   extraArgs = [
-                    "-d raid1"
+                    "-d raid0"
                     "/dev/mapper/p1" # Use decrypted mapped device, same name as defined in disk1
 		    "/dev/mapper/p2"
                     "/dev/mapper/p3"

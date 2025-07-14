@@ -42,17 +42,21 @@
         "$mainMod, 0, workspace, 10"
 
         # Move active window to a workspace with mainMod + SHIFT + [0-9]
-        "$mainMod SHIFT, 1, movetoworkspace, 1 "
-        "$mainMod SHIFT, 2, movetoworkspace, 2 "
-        "$mainMod SHIFT, 3, movetoworkspace, 3 "
-        "$mainMod SHIFT, 4, movetoworkspace, 4 "
-        "$mainMod SHIFT, 5, movetoworkspace, 5 "
-        "$mainMod SHIFT, 6, movetoworkspace, 6 "
-        "$mainMod SHIFT, 7, movetoworkspace, 7 "
-        "$mainMod SHIFT, 8, movetoworkspace, 8 "
-        "$mainMod SHIFT, 9, movetoworkspace, 9 "
-        "$mainMod SHIFT, 0, movetoworkspace, 10"
+        "$mainMod SHIFT, 1, hy3:movetoworkspace, 1 "
+        "$mainMod SHIFT, 2, hy3:movetoworkspace, 2 "
+        "$mainMod SHIFT, 3, hy3:movetoworkspace, 3 "
+        "$mainMod SHIFT, 4, hy3:movetoworkspace, 4 "
+        "$mainMod SHIFT, 5, hy3:movetoworkspace, 5 "
+        "$mainMod SHIFT, 6, hy3:movetoworkspace, 6 "
+        "$mainMod SHIFT, 7, hy3:movetoworkspace, 7 "
+        "$mainMod SHIFT, 8, hy3:movetoworkspace, 8 "
+        "$mainMod SHIFT, 9, hy3:movetoworkspace, 9 "
+        "$mainMod SHIFT, 0, hy3:movetoworkspace, 10"
 
+        "$mainMod SHIFT, h, hy3:movewindow, left"
+        "$mainMod SHIFT, j, hy3:movewindow, down"
+        "$mainMod SHIFT, k, hy3:movewindow, up"
+        "$mainMod SHIFT, l, hy3:movewindow, right"
 
         # Tab Group
         "$mainMod, T, hy3:changegroup, toggletab"
