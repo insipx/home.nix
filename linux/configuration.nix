@@ -83,6 +83,7 @@
     yofi
     yubioath-flutter
     unzip
+    pinentry-curses
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
