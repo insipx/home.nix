@@ -1,20 +1,13 @@
 { config
 , pkgs
-, swww
+, inputs
 , ...
-}@inputs:
-let
-  privateConfiguration = builtins.fetchGit {
-    url = "git@github.com:insipx/home.private.nix.git";
-    rev = "98f0c6cbf66d7b80607be566546fd2ddb43ad611";
-    allRefs = true;
-  };
-in
-{
+}: {
   inherit (pkgs) lib;
   imports = [
-    (import ./neovim-configuration { inherit config pkgs; })
-    (import privateConfiguration)
+    ./neovim-configuration
+    ./ghostty.nix
+    #   (import privateConfiguration)
   ];
   catppuccin.enable = true;
   catppuccin.mako.enable = false;
@@ -35,7 +28,6 @@ in
         # Fonts, Github's Font, minecraft font, minecraft font vectorized
         nerd-fonts.symbols-only
         # berkeley-mono
-        # ghostty not packaged for darwin yet
 
         ripgrep
         grc # Colorizer
@@ -69,7 +61,6 @@ in
         nix-index # Run `nix-index` and then use `nix-locate` like the normal unix `locate`
         feh
         rage
-        age-plugin-yubikey
         # mpv
 
         # Fun
@@ -80,16 +71,7 @@ in
         # Networking
         nmap
         rustscan
-      ] ++ lib.optionals
-        pkgs.stdenv.isLinux
-        [
-          # pkgs.nixgl.auto.nixGLDefault
-          # gnupg
-          yubikey-personalization
-          cachix
-          swww.packages.${pkgs.system}.swww
-          inputs.nix-gl-host
-        ];
+      ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
     # plain files is through 'home.file'.
@@ -106,10 +88,6 @@ in
         text = ''
           Match host * exec "gpg-connect-agent UPDATESTARTUPTTY /bye"
         '';
-      };
-      ".config/ghostty" = {
-        source = ./dotfiles/ghostty;
-        recursive = true;
       };
     };
 
@@ -171,15 +149,6 @@ in
     };
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
-    #ghostty = { does not work on macos yet
-    #  enable = true;
-    #  enableFishIntegration = true;
-    #  settings = {
-    #    font-family = "Berekely Mono";
-    #    theme = "catppuccin-mocha";
-    #    font-size = "16";
-    #  };
-    #};
     fish = {
       enable = true;
       shellAliases = {
@@ -220,7 +189,6 @@ in
 
             set -gx PATH "$HOME/.scripts" $PATH
             set -gx PATH "$HOME/.cargo/bin" $PATH
-            fish_add_path --prepend --global /usr/lib/emscripten
             if test (uname) = Darwin
               fish_add_path --prepend --global "$HOME/.nix-profile/bin" /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
               # fish_add_path --prepend --global "$HOME/.foundry/bin"
@@ -272,10 +240,10 @@ in
       };
     };
 
-    direnv = {
-      enable = true;
-      nix-direnv.enable = true;
-    };
+    #direnv = {
+    #  enable = true;
+    #  nix-direnv.enable = true;
+    #};
   };
 
   xdg.enable = true;

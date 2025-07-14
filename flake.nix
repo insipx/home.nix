@@ -3,6 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
@@ -15,12 +17,10 @@
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     neorg-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixvim = {
-      url = "github:nix-community/nixvim";
-    };
+    nixvim.url = "github:nix-community/nixvim";
+
     # nixgl.url = "github:nix-community/nixGL";
     mozilla.url = "github:mozilla/nixpkgs-mozilla";
-    swww.url = "github:LGFae/swww";
     catppuccin.url = "github:catppuccin/nix";
     catppuccin.inputs.nixpkgs.follows = "nixpkgs";
     fenix.url = "github:nix-community/fenix";
@@ -29,45 +29,32 @@
     nix-gl-host.url = "github:numtide/nix-gl-host";
     sops-nix.url = "github:Mic92/sops-nix";
     # tidal.url = "github:mitchmindtree/tidalcycles.nix";
-    # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    # where {version} is the hyprland release version
-    # or "github:hyprwm/Hyprland?submodules=1" to follow the development branch
-
-    #hy3 = {
-    #  url = "github:outfoxxed/hy3?ref=hl{version}"; # where {version} is the hyprland release version
-    #  # or "github:outfoxxed/hy3" to follow the development branch.
-    #  # (you may encounter issues if you dont do the same for hyprland)
-    #  inputs.hyprland.follows = "hyprland";
-    #};
   };
 
   # `...` allows defining additional inputs to the outputs
   # without changing the fn signature. It makes the flake more flexible.
   outputs =
     { self
+    , disko
     , nix-darwin
     , nixpkgs
     , home-manager
-    , nixvim
-    , swww
-    , ghostty
-    , catppuccin
     , sops-nix
-      # , hy3
     , ...
     }@inputs:
 
     let
-      inherit (nixpkgs.lib) attrValues;
+      inherit (nixpkgs.lib) attrValues nixosSystem;
       inherit (nix-darwin.lib) darwinSystem;
 
       darwinCommon = { ... }: {
         imports = [
-          nixvim.homeManagerModules.nixvim
-          catppuccin.homeModules.catppuccin
+          inputs.nixvim.homeManagerModules.nixvim
+          inputs.catppuccin.homeModules.catppuccin
           ./home-manager/home.nix
           ./home-manager/mac.nix
         ];
+        extraSpecialArgs = { inherit inputs; };
       };
       # the `self.overlays` in the `nixpkgsConfig`
       nixpkgsConfig = {
@@ -88,27 +75,33 @@
       # Expose the package set, including overlays, for convenience.
       darwinPackages = self.darwinConfigurations."kusanagi".pkgs;
 
-
-      homeConfigurations."tanjiro" = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs ({
-          system = "x86_64-linux";
-          overlays = nixpkgsConfig.overlays ++ [ ghostty.overlays.default ];
-        } // nixpkgsConfig);
+      nixosConfigurations.tanjiro = nixosSystem {
+        system = "x86_64-linux";
         modules = [
-          ./home-manager/home.nix
-          ./linux-config.nix
-          nixvim.homeManagerModules.nixvim
-          catppuccin.homeModules.catppuccin
-          sops-nix.homeManagerModules.sops
-          # inputs.hyprland.homeManagerModules.default
+          disko.nixosModules.disko
+          sops-nix.nixosModules.sops
+          ./linux/configuration.nix
+          home-manager.nixosModules.home-manager
           {
-            home = {
-              username = "insipx";
-              homeDirectory = "/home/insipx";
+            nixpkgs = nixpkgsConfig;
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.insipx = { ... }: {
+                imports = [
+                  inputs.nixvim.homeManagerModules.nixvim
+                  inputs.catppuccin.homeModules.catppuccin
+                  ./home-manager/home.nix
+                  ./linux
+                ];
+              };
+              extraSpecialArgs = { inherit inputs; };
             };
           }
         ];
-        extraSpecialArgs = { inherit nixvim catppuccin swww; nix-gl-host = inputs.nix-gl-host.defaultPackage.x86_64-linux; };
+        specialArgs = {
+          inherit inputs;
+        };
       };
 
       # Build darwin flake using:
@@ -120,7 +113,7 @@
           home-manager.darwinModules.home-manager
           sops-nix.darwinModules.sops
           {
-            system.primaryUser = "insipx";
+            system. primaryUser = "insipx";
           }
           {
             nixpkgs = nixpkgsConfig;

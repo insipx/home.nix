@@ -12,6 +12,7 @@ in
     # package = pkgs.neovim;
     # nixpkgs.useGlobalPackages = false;
     extraPackages = with pkgs; [
+      gcc
       ripgrep
       lua51Packages.luarocks
       lua51Packages.lua

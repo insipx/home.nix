@@ -1,0 +1,6 @@
+{ ... }: {
+  imports = [
+    ./rice
+    ./home.nix
+  ];
+}

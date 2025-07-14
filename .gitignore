@@ -2,3 +2,5 @@
 
 profile.nix
 **/.direnv/**
+result/**
+result
