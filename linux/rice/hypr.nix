@@ -25,10 +25,10 @@
         "$mainMod, P, pseudo, # dwindle     "
         "$mainMod, J, togglesplit, # dwindle"
 
-        "$mainMod, h, movefocus, l"
-        "$mainMod, l, movefocus, r"
-        "$mainMod, k, movefocus, u"
-        "$mainMod, j, movefocus, d"
+        "$mainMod, h, hy3:movefocus, l"
+        "$mainMod, l, hy3:movefocus, r"
+        "$mainMod, k, hy3:movefocus, u"
+        "$mainMod, j, hy3:movefocus, d"
         # Workspaces switching
         "$mainMod, 1, workspace, 1 "
         "$mainMod, 2, workspace, 2 "
@@ -53,6 +53,9 @@
         "$mainMod SHIFT, 9, movetoworkspace, 9 "
         "$mainMod SHIFT, 0, movetoworkspace, 10"
 
+
+        # Tab Group
+        "$mainMod, T, hy3:changegroup, toggletab"
         # Example special workspace (scratchpad)
         "$mainMod, S, togglespecialworkspace, magic        "
         "$mainMod SHIFT, S, movetoworkspace, special:magic "
@@ -63,8 +66,8 @@
       ];
       bindm = [
         # Move/resize windows with mainMod + LMB/RMB and dragging
-        "$mainMod, mouse:272, movewindow  "
-        "$mainMod, mouse:273, resizewindow"
+        "$mainMod, mouse:272, hy3:resizewindow"
+        "$mainMod, mouse:273, hy3:movewindow"
       ];
       cursor = {
         no_hardware_cursors = true;
@@ -77,7 +80,7 @@
         resize_on_border = true;
         # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
         allow_tearing = false;
-        layout = "dwindle";
+        layout = "hy3";
       };
 
       animations = {

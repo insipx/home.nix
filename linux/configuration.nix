@@ -60,18 +60,21 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-  # Enable CUPS to print documents.
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.insipx = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       tree
     ];
   };
   users.defaultUserShell = pkgs.fish;
 
+  virtualisation.docker = {
+    enable = true;
+    storageDriver = "btrfs";
+  };
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [

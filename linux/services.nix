@@ -17,7 +17,9 @@
     lorri.enable = true;
     # Maybe want to enable in the future
     # Enable the OpenSSH daemon.
-    # services.openssh.enable = true;
+    # services.openssh.
+    # Execute shebangs like on normal linux (i.e #!/bin/bash)
+    envfs.enable = true;
   };
   # services custom config
   environment = {
