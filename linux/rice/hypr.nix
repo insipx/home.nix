@@ -13,17 +13,21 @@
       ];
       "$mainMod" = "SUPER";
       "$terminal" = "ghostty";
-      "$menu" = "yofi";
-
+      "$menu" = "tofi-drun --drun-launch=true";
+      "$run" = "tofi-run | xargs hyprctl dispatch exec";
+      # "$run" = "tofi-run --prompt-text 'Run: ' | xargs -I {} hyprctl dispatch exec 'ghostty -e {}; sleep infinity'";
+      exec-once = [
+        "clipse -listen"
+      ];
       bind = [
         "$mainMod, return, exec, $terminal"
         "$mainMod, Q, killactive,"
-        "$mainMod, M, exit,                 "
-        "$mainMod, E, exec, $fileManager    "
-        "$mainMod, V, togglefloating,       "
-        "$mainMod, R, exec, $menu           "
-        "$mainMod, P, pseudo, # dwindle     "
+        "$mainMod, M, exit,"
+        "$mainMod, E, exec, $fileManager"
+        "$mainMod, R, exec, $menu"
+        "$mainMod, D, exec, $run"
         "$mainMod, J, togglesplit, # dwindle"
+        "$mainMod, V, exec, ghostty --class=\"tanjiro.clipse\" -e 'clipse'"
 
         "$mainMod, h, hy3:movefocus, l"
         "$mainMod, l, hy3:movefocus, r"
@@ -74,7 +78,8 @@
         "$mainMod, mouse:273, hy3:movewindow"
       ];
       cursor = {
-        no_hardware_cursors = true;
+        no_hardware_cursors = 2;
+        use_cpu_buffer = 2;
       };
 
       general = {
@@ -101,7 +106,7 @@
       };
 
       decoration = {
-        rounding = 10;
+        rounding = 20;
 
         # Change transparency of focused and unfocused windows
         active_opacity = 1.0;
@@ -121,6 +126,15 @@
           vibrancy = 0.1696;
         };
       };
+      layerrule = [
+        "blur, launcher"
+        "ignorealpha 0.1, launcher"
+        "dimaround, launcher"
+      ];
+      windowrule = [
+        "float,class:(tanjiro.clipse)"
+        "size 622 652,class:(tanjiro.clipse)"
+      ];
     };
   };
 }

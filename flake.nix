@@ -25,10 +25,13 @@
     catppuccin.inputs.nixpkgs.follows = "nixpkgs";
     fenix.url = "github:nix-community/fenix";
     fenix.inputs.nixpkgs.follows = "nixpkgs";
-
+    rust-overlay.url = "github:oxalica/rust-overlay";
     nix-gl-host.url = "github:numtide/nix-gl-host";
     sops-nix.url = "github:Mic92/sops-nix";
     # tidal.url = "github:mitchmindtree/tidalcycles.nix";
+    rustowl = {
+      url = "github:nix-community/rustowl-flake";
+    };
   };
 
   # `...` allows defining additional inputs to the outputs
@@ -59,19 +62,17 @@
       # the `self.overlays` in the `nixpkgsConfig`
       nixpkgsConfig = {
         config = { allowUnfree = true; };
-        overlays = attrValues self.overlays ++ [
+        overlays = [
           # neorg-overlay.overlays.default
           # inputs.mozilla.overlays.firefox
           inputs.fenix.overlays.default
-        ]; # adds all overlays to list
+          inputs.rustowl.overlays.default
+          inputs.rust-overlay.overlays.default
+        ];
       };
 
     in
     {
-      overlays = {
-        # neovim = inputs.neovim-nightly.overlays.default;
-      };
-
       # Expose the package set, including overlays, for convenience.
       darwinPackages = self.darwinConfigurations."kusanagi".pkgs;
 

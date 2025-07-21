@@ -1,8 +1,4 @@
-{ config
-, pkgs
-, inputs
-, ...
-}: {
+{ pkgs, ... }: {
   inherit (pkgs) lib;
   imports = [
     ./neovim-configuration
@@ -101,16 +97,9 @@
   # NOTE: I SYMLINKED /usr/share/fonts/* to .nix-profile/fonts dir
   fonts.fontconfig.enable = true;
   programs = {
-    neovide = {
-      enable = false;
-      settings = {
-        vsync = true;
-        font = {
-          normal = [ "Berkeley Mono" "Symbols Nerd Font Mono" ];
-          size = 14;
-        };
-      };
-    };
+    # Let Home Manager install and manage itself.
+    home-manager.enable = true;
+
     atuin = {
       enable = true;
       enableFishIntegration = true;
@@ -147,8 +136,6 @@
       git = true;
       icons = "always";
     };
-    # Let Home Manager install and manage itself.
-    home-manager.enable = true;
     fish = {
       enable = true;
       shellAliases = {
@@ -240,10 +227,10 @@
       };
     };
 
-    #direnv = {
-    #  enable = true;
-    #  nix-direnv.enable = true;
-    #};
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
   };
 
   xdg.enable = true;

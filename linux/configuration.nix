@@ -10,6 +10,7 @@
       ./hardware-configuration.nix
       ./disk-config.nix
       ./services.nix
+      ./cachix.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -23,6 +24,9 @@
     };
     enrollConfig = true;
     maxGenerations = 15;
+    extraConfig = ''
+      default_entry: 1>1
+    '';
   };
 
   # Use latest xanmod kernel.
@@ -64,7 +68,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.insipx = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "fuse" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       tree
     ];
@@ -87,9 +91,15 @@
     yubioath-flutter
     unzip
     pinentry-curses
+    cachix
+    wl-clipboard
+    clipse
   ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    trusted-users = [ "root" "insipx" ];
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

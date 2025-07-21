@@ -11,7 +11,6 @@
   #       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
   #   };
   # };
-
   services.gpg-agent = {
     enable = true;
     enableScDaemon = true;
@@ -22,10 +21,23 @@
   };
 
   services.lorri = {
-    enable = true;
+    enable = false;
     enableNotifications = true;
   };
 
+  programs = {
+    neovide = {
+      enable = true;
+      settings = {
+        # neovim-bin = "${pkgs.neovim}/bin/nvim";
+        vsync = false;
+        font = {
+          normal = [ "Berkeley Mono" ];
+          size = 14;
+        };
+      };
+    };
+  };
   #sops = {
   #  defaultSopsFile = ./secrets/env.yaml;
   #  secrets.anthropic_key = { };

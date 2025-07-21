@@ -1,6 +1,6 @@
 { ... }: {
   imports = [
     ./hypr.nix
-    ./yofi.nix
+    ./launcher.nix
   ];
 }

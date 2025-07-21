@@ -41,8 +41,10 @@ in
       nodePackages_latest.jsonlint
       # Other
       htop
+      rust-analyzer-nightly
+      rustowl
     ];
-    extraPlugins = [ ];
+    extraPlugins = [ pkgs.rustowl-nvim ];
     extraPython3Packages =
       ps: with ps; [
         pynvim
@@ -202,7 +204,6 @@ in
       rustaceanvim = {
         enable = true;
         # Use fenix nightly rust-analalyzer
-        # rustAnalyzerPackage = pkgs.rust-analyzer-nightly;
         settings.server = {
           load_vscode_settings = true;
           standalone = false;
@@ -245,6 +246,7 @@ in
           enable_nextest = true;
           executor = "toggleterm";
           test_executor = "toggleterm";
+          reload_workspace_from_cargo_toml = true;
         };
       };
       vim-matchup = {
