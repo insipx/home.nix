@@ -3,7 +3,7 @@
     disk = {
       bootdisk = {
         type = "disk";
-        device = "/dev/nvme1n1";
+        device = "/dev/disk/by-id/nvme-HP_SSD_EX920_1TB_HBSE49092900273";
         content = {
           type = "gpt";
           partitions = {
@@ -119,7 +119,7 @@
                   extraArgs = [
                     "-d raid0"
                     "/dev/mapper/p1" # Use decrypted mapped device, same name as defined in disk1
-		    "/dev/mapper/p2"
+                    "/dev/mapper/p2"
                     "/dev/mapper/p3"
                   ];
                   subvolumes = {

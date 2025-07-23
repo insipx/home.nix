@@ -13,24 +13,27 @@
     # Other Sources
     # neovim-nightly.url = "github:nix-community/neovim-nightly-overlay?rev=1b313b2d3fafd50aaf06733cc8753660068ec19b";
     ghostty.url = "github:ghostty-org/ghostty";
+    ghostty.inputs.nixpkgs.follows = "nixpkgs";
 
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     neorg-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
     nixvim.url = "github:nix-community/nixvim";
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
 
     # nixgl.url = "github:nix-community/nixGL";
-    mozilla.url = "github:mozilla/nixpkgs-mozilla";
+    # mozilla.url = "github:mozilla/nixpkgs-mozilla";
     catppuccin.url = "github:catppuccin/nix";
     catppuccin.inputs.nixpkgs.follows = "nixpkgs";
     fenix.url = "github:nix-community/fenix";
     fenix.inputs.nixpkgs.follows = "nixpkgs";
     rust-overlay.url = "github:oxalica/rust-overlay";
-    nix-gl-host.url = "github:numtide/nix-gl-host";
+    rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:Mic92/sops-nix";
     # tidal.url = "github:mitchmindtree/tidalcycles.nix";
     rustowl = {
       url = "github:nix-community/rustowl-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 

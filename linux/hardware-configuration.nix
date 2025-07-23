@@ -30,6 +30,7 @@
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+    logitech.wireless.enable = true;
     graphics.enable = true;
     nvidia = {
       modesetting.enable = true;
@@ -39,9 +40,9 @@
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
   };
-  filesystems."/boot" = {
-    device = "/dev/disk/by-uuid/2D9E-215D";
-    fsType = "vfat";
-    options = [ "fmask=0077" "dmask=0077" ];
-  };
+  # fileSystems."/boot" = {
+  #   device = "/dev/disk/by-uuid/2D9E-215D";
+  #   fsType = "vfat";
+  #   options = [ "fmask=0077" "dmask=0077" ];
+  # };
 }

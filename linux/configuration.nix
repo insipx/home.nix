@@ -13,24 +13,27 @@
       ./cachix.nix
     ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.limine = {
-    enable = true;
-    efiSupport = true;
-    style = {
-      interface.branding = "tanjiro";
-      wallpapers = [ "/extra/boot-wallpapers/lain.jpg" ];
-      wallpaperStyle = "centered";
+  boot = {
+    # Use latest xanmod kernel.
+    kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    loader = {
+      efi.canTouchEfiVariables = true;
+      limine = {
+        enable = true;
+        efiSupport = true;
+        style = {
+          interface.branding = "tanjiro";
+          wallpapers = [ "/extra/boot-wallpapers/lain.jpg" ];
+          wallpaperStyle = "centered";
+        };
+        enrollConfig = true;
+        maxGenerations = 15;
+        extraConfig = ''
+          default_entry: 1>1
+        '';
+      };
     };
-    enrollConfig = true;
-    maxGenerations = 15;
-    extraConfig = ''
-      default_entry: 1>1
-    '';
   };
-
-  # Use latest xanmod kernel.
-  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
   networking.hostName = "tanjiro"; # Define your hostname.
   # Pick only one of the below networking options.
@@ -38,6 +41,17 @@
 
   programs = {
     hyprland.enable = true;
+    gamescope = {
+      enable = true;
+      capSysNice = true;
+    };
+    steam = {
+      enable = true;
+      gamescopeSession.enable = true;
+      remotePlay.openFirewall = true;
+      dedicatedServer.openFirewall = true;
+      localNetworkGameTransfers.openFirewall = true;
+    };
     firefox.enable = true;
     fish.enable = true;
     gnupg.agent = {
@@ -94,6 +108,8 @@
     cachix
     wl-clipboard
     clipse
+    solaar
+    efibootmgr
   ];
 
   nix.settings = {

@@ -8,7 +8,7 @@
     settings = {
       font-family = "Berkeley Mono";
       theme = "catppuccin-mocha";
-      font-size = "16";
+      font-size = "17";
       keybind = [
         "ctrl+space>shift+-=new_split:down "
         "ctrl+space>shift+\=new_split:right"

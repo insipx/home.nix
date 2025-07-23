@@ -1,11 +1,11 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }: {
 
   services = {
-    # displayManager.lemurs = {
-    #   enable = true;
-    #   settings.environment_switcher.include_tty_shell = true;
-    # };
-    seatd.enable = true;
+    displayManager.lemurs = {
+      enable = true;
+      settings.environment_switcher.include_tty_shell = true;
+    };
+    # seatd.enable = true;
     printing.enable = true;
     udev = {
       extraRules = ''
@@ -29,13 +29,13 @@
   };
   # services custom config
   environment = {
-    # etc."lemurs/wayland/hyprland" = {
-    #   mode = "0755";
-    #   enable = true;
-    #   text = ''
-    #     #! /bin/sh
-    #     exec ${lib.getExe pkgs.hyprland}
-    #   '';
-    # };
+    etc."lemurs/wayland/hyprland" = {
+      mode = "0755";
+      enable = true;
+      text = ''
+        #! /bin/sh
+        exec ${lib.getExe pkgs.hyprland}
+      '';
+    };
   };
 }
