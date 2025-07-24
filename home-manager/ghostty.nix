@@ -1,7 +1,14 @@
-{ pkgs, inputs, ... }: {
+{ lib, pkgs, inputs, ... }:
+let
+
+  # Takes ghostty from nix flake if on linux otherwise official ghostty
+  ghosttyPkg = builtins.head (lib.optionals pkgs.stdenv.isDarwin [ pkgs.ghostty-bin ] ++ lib.optionals pkgs.stdenv.isLinux [ inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default ]);
+
+in
+{
   programs.ghostty = {
     enable = true;
-    package = inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    package = ghosttyPkg;
     enableFishIntegration = true;
     installVimSyntax = true;
     installBatSyntax = true;
@@ -17,7 +24,7 @@
         "ctrl+space>k=goto_split:top"
         "ctrl+space>l=goto_split:right"
       ];
-      window-decoration = "none";
+      window-decoration = "auto";
     };
   };
 }

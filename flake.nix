@@ -50,7 +50,7 @@
     }@inputs:
 
     let
-      inherit (nixpkgs.lib) attrValues nixosSystem;
+      inherit (nixpkgs.lib) nixosSystem;
       inherit (nix-darwin.lib) darwinSystem;
 
       darwinCommon = { ... }: {
@@ -60,7 +60,6 @@
           ./home-manager/home.nix
           ./home-manager/mac.nix
         ];
-        extraSpecialArgs = { inherit inputs; };
       };
       # the `self.overlays` in the `nixpkgsConfig`
       nixpkgsConfig = {
@@ -112,7 +111,6 @@
       # $ darwin-rebuild build --flake .#cyllene
       darwinConfigurations."cyllene" = darwinSystem {
         modules = [
-          ./options.nix
           ./darwin-config.nix
           home-manager.darwinModules.home-manager
           sops-nix.darwinModules.sops
@@ -125,14 +123,17 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               users.insipx = darwinCommon;
+              extraSpecialArgs = { inherit inputs; };
             };
           }
         ];
+        specialArgs = {
+          inherit inputs;
+        };
       };
 
       darwinConfigurations."kusanagi" = darwinSystem {
         modules = [
-          ./options.nix
           ./darwin-config.nix
           home-manager.darwinModules.home-manager
           {
@@ -144,6 +145,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               users.andrewplaza = darwinCommon;
+              extraSpecialArgs = { inherit inputs; };
             };
           }
         ];

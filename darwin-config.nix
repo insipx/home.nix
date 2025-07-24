@@ -43,7 +43,7 @@
   };
 
   # Set Git commit hash for darwin-version.
-  system.configurationRevision = config.system.flakeRevision;
+  # system.configurationRevision = config.system.flakeRevision;
 
   programs.zsh.enable = true; # default shell on catalina
   programs.fish = {

@@ -1,6 +1,6 @@
-({ self, nixpkgs, ... }: {
-  options.system.flakeRevision = nixpkgs.lib.mkOption {
-    type = nixpkgs.lib.types.str;
+({ self, inputs, ... }: {
+  options.system.flakeRevision = inputs.nixpkgs.lib.mkOption {
+    type = inputs.nixpkgs.lib.types.str;
     default = null;
     description = "The current flake revision.";
   };
