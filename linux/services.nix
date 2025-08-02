@@ -5,7 +5,7 @@
       enable = true;
       settings.environment_switcher.include_tty_shell = true;
     };
-    # seatd.enable = true;
+    seatd.enable = true;
     printing.enable = true;
     udev = {
       extraRules = ''
@@ -29,12 +29,45 @@
   };
   # services custom config
   environment = {
-    etc."lemurs/wayland/hyprland" = {
+    etc."lemurs/wayland/Hypr" = {
       mode = "0755";
       enable = true;
       text = ''
         #! /bin/sh
         exec ${lib.getExe pkgs.hyprland}
+      '';
+    };
+    etc."lemurs/wayland/Gamez" = {
+      mode = "0755";
+      enable = true;
+      text = ''
+        #!/usr/bin/env bash
+        set -xeuo pipefail
+
+        gamescopeArgs=(
+            --adaptive-sync # VRR support
+            --hdr-enabled
+            --mangoapp # performance overlay
+            --rt
+            --steam
+        )
+        steamArgs=(
+            -pipewire-dmabuf
+            -tenfoot
+        )
+        mangoConfig=(
+            cpu_temp
+            gpu_temp
+            ram
+            vram
+        )
+        mangoVars=(
+            MANGOHUD=1
+            MANGOHUD_CONFIG="$(IFS=,; echo "''${mangoConfig[*]}")"
+        )
+
+        export "''${mangoVars[@]}"
+        exec gamescope "''${gamescopeArgs[@]}" -- steam "''${steamArgs[@]}"
       '';
     };
   };
