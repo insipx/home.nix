@@ -73,9 +73,9 @@
     mode = "n";
     key = "<leader>/";
     action.__raw = ''
-      function() 
+      function()
         require('telescope.builtin')
-          .live_grep(require('telescope.themes').get_ivy({})) 
+          .live_grep(require('telescope.themes').get_ivy({}))
       end
     '';
     options = {

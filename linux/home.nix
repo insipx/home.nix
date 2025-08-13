@@ -1,5 +1,5 @@
 # NixOs-specific home-manager configuration
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 {
   # nix = {
   #   package = pkgs.nix;

@@ -35,6 +35,7 @@
       url = "github:nix-community/rustowl-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    inputs.swww.url = "github:LGFae/swww";
   };
 
   # `...` allows defining additional inputs to the outputs
