@@ -1,0 +1,7 @@
+#       Serial: 14836775, Slot: 1
+#         Name: age-yubi-homelab
+#      Created: Tue, 26 Aug 2025 22:38:00 +0000
+#   PIN policy: Never  (A PIN is NOT required to decrypt)
+# Touch policy: Never  (A physical touch is NOT required to decrypt)
+#    Recipient: age1yubikey1qw0ux80u4fpkrl7xuqap8hufkjey3tfrnhcwge5dmzwnrstlv4g8u9ztmdj
+AGE-PLUGIN-YUBIKEY-1YAJWYQYZUH3WPKQ9Y0E4J

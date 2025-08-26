@@ -32,6 +32,7 @@
     '';
   };
   boot = {
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
     # Use latest xanmod kernel.
     kernelPackages = pkgs.linuxPackages_xanmod_latest;
     loader = {
@@ -110,6 +111,7 @@
   sops = {
     age = {
       generateKey = true;
+      keyFile = "./../keys/age-yubikey-identity-e5e2e0d8.txt";
     };
     defaultSopsFile = ./../secrets/env.yaml;
   };
@@ -160,6 +162,9 @@
     pwvucontrol
     pavucontrol
     alsa-utils
+    google-chrome
+    hyprshot
+    claude-code
   ];
 
   nix.settings = {
