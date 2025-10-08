@@ -43,9 +43,8 @@ in
       # Other
       htop
       rust-analyzer-nightly
-      rustowl
     ];
-    extraPlugins = [ pkgs.rustowl-nvim ];
+    extraPlugins = [ ];
     extraPython3Packages =
       ps: with ps; [
         pynvim

@@ -56,4 +56,40 @@
       desc = "toggle symbols outline";
     };
   }
+  {
+    mode = "n";
+    key = "<leader>lg";
+    action = "<cmd>Lspsaga show_workspace_diagnostics ++normal<CR>";
+    options = {
+      silent = true;
+      desc = "show workspace diagnostics";
+    };
+  }
+  {
+    mode = "n";
+    key = "<leader>l[E";
+    action.__raw = ''
+      function()
+        require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+      end
+    '';
+    options = {
+      silent = true;
+      desc = "next error";
+    };
+  }
+  {
+    mode = "n";
+    key = "<leader>l]E";
+    action.__raw = ''
+      function()
+        require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+      end
+    '';
+    options = {
+      silent = true;
+      desc = "previous error";
+    };
+  }
+
 ]
