@@ -107,6 +107,15 @@
       enable = true;
       enableFishIntegration = true;
     };
+    jujutsu = {
+      enable = true;
+      settings = {
+        user = {
+          name = "Andrew Plaza";
+          email = "github@andrewplaza.dev";
+        };
+      };
+    };
     # less.enable = true;
     bat = {
       enable = true;
