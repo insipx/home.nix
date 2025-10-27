@@ -1,0 +1,7 @@
+#       Serial: 22670852, Slot: 1
+#         Name: age-yubi
+#      Created: Sat, 17 May 2025 17:26:17 +0000
+#   PIN policy: Once   (A PIN is required once per session, if set)
+# Touch policy: Cached (A physical touch is required for decryption, and is cached for 15 seconds)
+#    Recipient: age1yubikey1qtcmlk4zskt6fd8etazd57nz23w736wpg7pkxnwddl25hst2tws3v857a0g
+AGE-PLUGIN-YUBIKEY-1QNH9JQVZLFGP6MCK9X6X2

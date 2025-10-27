@@ -25,7 +25,7 @@ in
       stylua
       deno
       nodePackages.prettier
-      nixfmt-rfc-style
+      alejandra
       rubyPackages.htmlbeautifier
       # codespell
 
@@ -107,7 +107,7 @@ in
       set exrc
     '';
 
-    diagnostics = {
+    diagnostic.settings = {
       severity_sort = true;
       virtual_lines = {
         only_current_line = false;
@@ -151,13 +151,6 @@ in
         enable = false;
       };
       lspsaga.enable = true;
-      #trouble = {
-      #  enable = true;
-      #  settings = {
-      #    auto_refresh = true;
-      #
-      #  };
-      #};
       blink-cmp = {
         enable = true;
       };
@@ -171,25 +164,12 @@ in
       };
       coq-thirdparty = {
         enable = false;
-        sources = [
+        settings = [
           {
             src = "copilot";
             short_name = "COP";
           }
         ];
-      };
-      copilot-vim = {
-        enable = false;
-        settings = {
-          workspace_folders = [
-            "~/code/xmtp/libxmtp"
-            "~/code/environments"
-          ];
-        };
-      };
-
-      copilot-lua = {
-        enable = true;
       };
 
       conform-nvim = {
@@ -204,7 +184,7 @@ in
             lua = [ "stylua" ];
             javascript = [ "prettier" ];
             typescript = [ "prettier" ];
-            nix = [ "nixfmt-rfc-style" ];
+            nix = [ "alejandra" ];
             yaml = [ "prettier" ];
             html = [ "htmlbeautifier" ];
             markdown = [ "deno_fmt" ];
@@ -270,7 +250,7 @@ in
         };
         settings.tools = {
           enable_clippy = true;
-          enable_nextest = true;
+          enable_nextest = false;
           executor = "toggleterm";
           test_executor = "toggleterm";
           reload_workspace_from_cargo_toml = true;

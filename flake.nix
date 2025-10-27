@@ -2,33 +2,50 @@
   description = "Insi Darwin system flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    disko.url = "github:nix-community/disko";
-    disko.inputs.nixpkgs.follows = "nixpkgs";
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
+    #nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/68ed3354133f549b9cb8e5231a126625dca4e724";
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Other Sources
-    # neovim-nightly.url = "github:nix-community/neovim-nightly-overlay?rev=1b313b2d3fafd50aaf06733cc8753660068ec19b";
-    ghostty.url = "github:ghostty-org/ghostty";
-    ghostty.inputs.nixpkgs.follows = "nixpkgs";
-
-    neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
-    neorg-overlay.inputs.nixpkgs.follows = "nixpkgs";
-
-    nixvim.url = "github:nix-community/nixvim";
-    nixvim.inputs.nixpkgs.follows = "nixpkgs";
-
-    # nixgl.url = "github:nix-community/nixGL";
-    # mozilla.url = "github:mozilla/nixpkgs-mozilla";
-    catppuccin.url = "github:catppuccin/nix";
-    catppuccin.inputs.nixpkgs.follows = "nixpkgs";
-    fenix.url = "github:nix-community/fenix";
-    fenix.inputs.nixpkgs.follows = "nixpkgs";
-    rust-overlay.url = "github:oxalica/rust-overlay";
-    rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
+    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    neorg-overlay = {
+      url = "github:nvim-neorg/nixpkgs-neorg-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    jujutsu = {
+      url = "github:jj-vcs/jj";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    catppuccin = {
+      url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     sops-nix.url = "github:Mic92/sops-nix";
     # tidal.url = "github:mitchmindtree/tidalcycles.nix";
     rustowl = {
@@ -57,7 +74,7 @@
 
       darwinCommon = { ... }: {
         imports = [
-          inputs.nixvim.homeManagerModules.nixvim
+          inputs.nixvim.homeModules.nixvim
           inputs.catppuccin.homeModules.catppuccin
           ./home-manager/home.nix
           ./home-manager/mac.nix
@@ -72,6 +89,8 @@
           inputs.fenix.overlays.default
           inputs.rustowl.overlays.default
           inputs.rust-overlay.overlays.default
+          inputs.neovim-nightly.overlays.default
+          inputs.jujutsu.overlays.default
         ];
       };
 

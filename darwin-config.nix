@@ -87,7 +87,7 @@
       "pinentry-mac"
       # "cxreiff/tap/ttysvr"
     ];
-    casks = [ "firefox@nightly" "raycast" "orbstack" "gitkraken" "claude" "claude-code" ];
+    casks = [ "firefox@nightly" "raycast" "orbstack" "claude" "claude-code" ];
     onActivation = {
       autoUpdate = true;
       cleanup = "uninstall";
