@@ -35,6 +35,8 @@
       url = "github:nix-community/rustowl-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    swww.url = "github:LGFae/swww";
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
   };
 
   # `...` allows defining additional inputs to the outputs
@@ -84,6 +86,7 @@
           disko.nixosModules.disko
           sops-nix.nixosModules.sops
           ./linux/configuration.nix
+          inputs.determinate.nixosModules.default
           home-manager.nixosModules.home-manager
           {
             nixpkgs = nixpkgsConfig;

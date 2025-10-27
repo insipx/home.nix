@@ -26,7 +26,6 @@ in
       deno
       nodePackages.prettier
       nixfmt-rfc-style
-      yamlfmt
       rubyPackages.htmlbeautifier
       # codespell
 
@@ -43,9 +42,8 @@ in
       # Other
       htop
       rust-analyzer-nightly
-      rustowl
     ];
-    extraPlugins = [ pkgs.rustowl-nvim ];
+    extraPlugins = [ ];
     extraPython3Packages =
       ps: with ps; [
         pynvim
@@ -104,7 +102,7 @@ in
     extraConfigLua = ''
       -- vim.opt.listchars:append "eol:↴"
       vim.opt.listchars:append "space:⋅"
-    ''; # + builtins.readFile ./neovim-configuration/lua/lualine.lua;
+    '' + builtins.readFile ./lua/conform.lua; # + builtins.readFile ./neovim-configuration/lua/lualine.lua;
     extraConfigVim = ''
       set exrc
     '';
@@ -207,7 +205,7 @@ in
             javascript = [ "prettier" ];
             typescript = [ "prettier" ];
             nix = [ "nixfmt-rfc-style" ];
-            yaml = [ "yamlfmt" ];
+            yaml = [ "prettier" ];
             html = [ "htmlbeautifier" ];
             markdown = [ "deno_fmt" ];
             json = [ "deno_fmt" ];

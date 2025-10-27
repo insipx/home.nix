@@ -20,6 +20,10 @@
     pipewire = {
       enable = true;
       pulse.enable = true;
+      audio.enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      wireplumber.enable = true;
     };
     # Maybe want to enable in the future
     # Enable the OpenSSH daemon.
@@ -48,6 +52,10 @@
             --adaptive-sync # VRR support
             --hdr-enabled
             --mangoapp # performance overlay
+            --fullscreen
+            --nested-refresh 240
+            --expose-wayland
+            --force-grab-cursor
             --rt
             --steam
         )

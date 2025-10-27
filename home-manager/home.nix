@@ -80,6 +80,9 @@
         [codespell]
         ignore-words-list = create
       '';
+      ".config/sops/age/keys.txt" = {
+        source = ./../keys/age-yubikey-identity-e5e2e0d8.txt;
+      };
       ".ssh/config" = {
         text = ''
           Match host * exec "gpg-connect-agent UPDATESTARTUPTTY /bye"
@@ -103,6 +106,15 @@
     atuin = {
       enable = true;
       enableFishIntegration = true;
+    };
+    jujutsu = {
+      enable = true;
+      settings = {
+        user = {
+          name = "Andrew Plaza";
+          email = "github@andrewplaza.dev";
+        };
+      };
     };
     # less.enable = true;
     bat = {

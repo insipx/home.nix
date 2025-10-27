@@ -14,21 +14,25 @@
     ];
 
   # yubikey needs polkit rules
-  security.polkit.enable = true;
-  security.polkit.extraConfig = ''
-    polkit.addRule(function(action, subject) {
-      if (action.id == "org.debian.pcsc-lite.access_card") {
-        return polkit.Result.YES;
-      }
-    });
+  security = {
+    rtkit.enable = true;
+    polkit.enable = true;
+    polkit.extraConfig = ''
+      polkit.addRule(function(action, subject) {
+        if (action.id == "org.debian.pcsc-lite.access_card") {
+          return polkit.Result.YES;
+        }
+      });
 
-    polkit.addRule(function(action, subject) {
-      if (action.id == "org.debian.pcsc-lite.access_pcsc") {
-        return polkit.Result.YES;
-      }
-    });
-  '';
+      polkit.addRule(function(action, subject) {
+        if (action.id == "org.debian.pcsc-lite.access_pcsc") {
+          return polkit.Result.YES;
+        }
+      });
+    '';
+  };
   boot = {
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
     # Use latest xanmod kernel.
     kernelPackages = pkgs.linuxPackages_xanmod_latest;
     loader = {
@@ -107,6 +111,7 @@
   sops = {
     age = {
       generateKey = true;
+      keyFile = "./../keys/age-yubikey-identity-e5e2e0d8.txt";
     };
     defaultSopsFile = ./../secrets/env.yaml;
   };
@@ -123,7 +128,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.insipx = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "fuse" "video" "input" "seat" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "fuse" "video" "audio" "input" "seat" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       tree
     ];
@@ -154,6 +159,12 @@
     killall
     mangohud
     libusb1
+    pwvucontrol
+    pavucontrol
+    alsa-utils
+    google-chrome
+    hyprshot
+    claude-code
   ];
 
   nix.settings = {
