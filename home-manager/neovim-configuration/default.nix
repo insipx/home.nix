@@ -10,7 +10,8 @@ in
   programs.nixvim = {
     enable = true;
     # package = pkgs.neovim;
-    # nixpkgs.useGlobalPackages = false;
+    nixpkgs.useGlobalPackages = true;
+    # nixpkgs.config.allowUnfree = true;
     extraPackages = with pkgs; [
       gcc
       ripgrep
@@ -159,10 +160,38 @@ in
       #
       #  };
       #};
-      coq-nvim = {
+      blink-cmp = {
         enable = true;
+      };
+      blink-cmp-copilot = {
+        enable = true;
+      };
+      coq-nvim = {
+        enable = false;
         settings.auto_start = "shut-up";
         installArtifacts = true;
+      };
+      coq-thirdparty = {
+        enable = false;
+        sources = [
+          {
+            src = "copilot";
+            short_name = "COP";
+          }
+        ];
+      };
+      copilot-vim = {
+        enable = false;
+        settings = {
+          workspace_folders = [
+            "~/code/xmtp/libxmtp"
+            "~/code/environments"
+          ];
+        };
+      };
+
+      copilot-lua = {
+        enable = true;
       };
 
       conform-nvim = {
@@ -260,7 +289,7 @@ in
         settings = {
           src = {
             coq = {
-              enabled = true;
+              enabled = false;
             };
           };
         };
@@ -517,7 +546,7 @@ in
       enable = true;
       autoLoad = true;
       settings = {
-        flavour = "mocha";
+        flavour = "frappe";
         integrations = {
           treesitter = true;
           notify = true;

@@ -1,6 +1,5 @@
 { lib, pkgs, inputs, ... }:
 let
-
   # Takes ghostty from nix flake if on linux otherwise official ghostty
   ghosttyPkg = builtins.head (lib.optionals pkgs.stdenv.isDarwin [ pkgs.ghostty-bin ] ++ lib.optionals pkgs.stdenv.isLinux [ inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default ]);
 
@@ -14,7 +13,7 @@ in
     installBatSyntax = true;
     settings = {
       font-family = "Berkeley Mono";
-      theme = "catppuccin-mocha";
+      theme = "Catppuccin\\ Frappe";
       font-size = "17";
       keybind = [
         "ctrl+space>shift+-=new_split:down "

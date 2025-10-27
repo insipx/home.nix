@@ -13,6 +13,21 @@
       ./cachix.nix
     ];
 
+  # yubikey needs polkit rules
+  security.polkit.enable = true;
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (action.id == "org.debian.pcsc-lite.access_card") {
+        return polkit.Result.YES;
+      }
+    });
+
+    polkit.addRule(function(action, subject) {
+      if (action.id == "org.debian.pcsc-lite.access_pcsc") {
+        return polkit.Result.YES;
+      }
+    });
+  '';
   boot = {
     # Use latest xanmod kernel.
     kernelPackages = pkgs.linuxPackages_xanmod_latest;
@@ -32,6 +47,32 @@
           default_entry: 1>1
         '';
       };
+    };
+    plymouth = {
+      enable = true;
+      theme = "cross_hud";
+      themePackages = with pkgs; [
+        # By default we would install all themes
+        (adi1090x-plymouth-themes.override {
+          selected_themes = [ "cross_hud" ];
+        })
+      ];
+    };
+    kernelModules = [ "kvm-amd" ];
+    kernelParams = [
+      "quiet"
+      "splash"
+      "boot.shell_on_fail"
+      "udev.log_priority=3"
+      "rd.systemd.show_status=auto"
+    ];
+    extraModulePackages = [ ];
+    consoleLogLevel = 3;
+    initrd = {
+      systemd.enable = true;
+      verbose = false;
+      kernelModules = [ ];
+      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
     };
   };
 
@@ -82,7 +123,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.insipx = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "fuse" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "fuse" "video" "input" "seat" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       tree
     ];
@@ -110,6 +151,9 @@
     clipse
     solaar
     efibootmgr
+    killall
+    mangohud
+    libusb1
   ];
 
   nix.settings = {

@@ -19,6 +19,12 @@
     pinentry.package = pkgs.pinentry-curses;
     enableFishIntegration = true;
   };
+  # THIS DOES NOT SEEM TO WORK
+  # NEED .gnupg/scdaemon.conf
+  # disable-ccid
+  programs.gpg.scdaemonSettings = {
+    disable-ccid = true;
+  };
 
   services.lorri = {
     enable = false;
@@ -33,7 +39,7 @@
         vsync = false;
         font = {
           normal = [ "Berkeley Mono" ];
-          size = 14;
+          size = 16;
         };
       };
     };
