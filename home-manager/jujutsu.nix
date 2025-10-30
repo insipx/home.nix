@@ -18,9 +18,31 @@ _: {
         # diff-formatter = ["nvim" "-c" "\"packadd nvim.difftool\"" "-c" "\"DiffTool $left $right\""];
         # diff-editor = "nvim_difftool";
       };
-      merge-tools.nvim_difftool = {
+      merge-tools.nvim = {
         program = "nvim";
-        edit-args = ["-c" "\"packadd nvim.difftool\"" "-c" "\"DiffTool $left $right\""];
+        edit-args = ["-c" "packadd nvim.difftool" "-c" "DiffTool $left $right"];
+      };
+      merge-tools.diffview = {
+        program = "sh";
+        # recommended nvim mergetool config according to https://github.com/jj-vcs/jj/wiki/Vim,-Neovim#using-neovim-as-a-diff-editor-with-existing-git-tooling
+        edit-args = [
+          "-c"
+          ''
+            set -eu
+            rm -f "$right/JJ-INSTRUCTIONS"
+            git -C "$left" init -q
+            git -C "$left" add -A
+            git -C "$left" commit -q -m baseline --allow-empty
+            mv "$left/.git" "$right"
+            (cd "$right"; nvim -c DiffviewOpen)
+            git -C "$right" add -p
+            git -C "$right" diff-index --quiet --cached HEAD && { echo "No changes done, aborting split."; exit 1; }
+            git -C "$right" commit -q -m split
+            git -C "$right" restore . # undo changes in modified files
+            git -C "$right" reset .   # undo --intent-to-add
+            git -C "$right" clean -q -df # remove untracked files
+          ''
+        ];
       };
       merge-tools.neovim = {
         program = "sh";
@@ -32,12 +54,12 @@ _: {
             rm -f "$right/JJ-INSTRUCTIONS"
             git -C "$left" init -q
             git -C "$left" add -A
-            git -C "$left" commit -q -m baseline --allow-empty # create parent commit
+            git -C "$left" commit -q -m baseline --allow-empty
             mv "$left/.git" "$right"
-            git -C "$right" add --intent-to-add -A # create current working copy
-            (cd "$right"; nvim)
+            (cd "$right"; nvim -c "packadd nvim.difftool" -c "DiffTool $left $right")
+            git -C "$right" add -p
             git -C "$right" diff-index --quiet --cached HEAD && { echo "No changes done, aborting split."; exit 1; }
-            git -C "$right" commit -q -m split # create commit on top of parent including changes
+            git -C "$right" commit -q -m split
             git -C "$right" restore . # undo changes in modified files
             git -C "$right" reset .   # undo --intent-to-add
             git -C "$right" clean -q -df # remove untracked files
