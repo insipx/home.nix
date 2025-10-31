@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   imports =
     [
@@ -98,7 +98,6 @@
       localNetworkGameTransfers.openFirewall = true;
     };
     firefox.enable = true;
-    fish.enable = true;
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
@@ -113,16 +112,30 @@
       generateKey = true;
       keyFile = "./../keys/age-yubikey-identity-e5e2e0d8.txt";
     };
+    #    secrets.anthropic_key = {
+    #      group = "staff";
+    #      owner = "insipx";
+    #      mode = "0400"; # Read-only by owner
+    #    };
+    #    secrets.cachix_auth_token = {
+    #      group = "staff";
+    #      owner = "insipx";
+    #      mode = "0400"; # Read-only by owner
+    #    };
     defaultSopsFile = ./../secrets/env.yaml;
   };
-  # Set your time zone.
-  time.timeZone = "America/New_York";
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Select internationalisation properties.
+  programs = {
+    fish = {
+      enable = true;
+      #      # Set your time zone.
+      #      interactiveShellInit = ''
+      #        time.timeZone = "America/New_York"
+      #                 set -x ANTHROPIC_API_KEY (cat ${config.sops.secrets.anthropic_key.path})
+      #                 set -x CACHIX_AUTH_TOKEN (cat ${config.sops.secrets.cachix_auth_token.path})
+      #      '';
+      #    };
+    };
+  }; # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -165,6 +178,9 @@
     google-chrome
     hyprshot
     claude-code
+    vlc
+
+    alsa-ucm-conf # includes options for Motu M2
   ];
 
   nix.settings = {

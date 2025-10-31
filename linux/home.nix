@@ -1,5 +1,5 @@
 # NixOs-specific home-manager configuration
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   # nix = {
   #   package = pkgs.nix;
@@ -44,19 +44,4 @@
       };
     };
   };
-  #sops = {
-  #  defaultSopsFile = ./secrets/env.yaml;
-  #  secrets.anthropic_key = { };
-  #  gnupg.home = "${config.home.homeDirectory}/.gnupg";
-  #};
-
-  #programs = {
-  #  fish = {
-  #    #interactiveShellInit = ''
-  #    #  set -x ANTHROPIC_API_KEY (cat ${config.sops.secrets.anthropic_key.path})
-  #    #'';
-  #  };
-  #  ssh.enable = true;
-  #};
 }
-

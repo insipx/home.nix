@@ -137,7 +137,7 @@
           home-manager.darwinModules.home-manager
           sops-nix.darwinModules.sops
           {
-            system. primaryUser = "insipx";
+            system.primaryUser = "insipx";
           }
           {
             nixpkgs = nixpkgsConfig;

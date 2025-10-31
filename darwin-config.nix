@@ -15,6 +15,11 @@
       owner = "${config.system.primaryUser}";
       mode = "0400"; # Read-only by owner
     };
+    secrets.cachix_auth_token = {
+      group = "staff";
+      owner = "${config.system.primaryUser}";
+      mode = "0400"; # Read-only by owner
+    };
     defaultSopsFile = ./secrets/env.yaml;
     gnupg.sshKeyPaths = [ ];
     gnupg.home = "${config.system.primaryUserHome}/.gnupg";

@@ -6,13 +6,14 @@ _: {
         name = "Andrew Plaza";
         email = "github@andrewplaza.dev";
       };
-      aliases.tug = ["bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@-"];
+      aliases.tug = [ "bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@-" ];
       signing = {
         behavior = "own";
         backend = "gpg"; # maybe use program option and link to exact nix binary
         key = "843D72A9EB79A8692C585B3AE7738A7A0F5CDB89";
       };
       ui = {
+        ui.show-cryptographic-signatures = true;
         # editor = ["nvim" "--cmd" "let g:flatten_wait=1"];
         # not sure how to get this  to work
         # diff-formatter = ["nvim" "-c" "\"packadd nvim.difftool\"" "-c" "\"DiffTool $left $right\""];
@@ -20,7 +21,7 @@ _: {
       };
       merge-tools.nvim = {
         program = "nvim";
-        edit-args = ["-c" "packadd nvim.difftool" "-c" "DiffTool $left $right"];
+        edit-args = [ "-c" "packadd nvim.difftool" "-c" "DiffTool $left $right" ];
       };
       merge-tools.diffview = {
         program = "sh";
@@ -70,13 +71,13 @@ _: {
         tools = {
           rustfmt = {
             enabled = true;
-            command = ["rustfmt" "--emit" "stdout"];
-            patterns = ["glob:'**/*.rs'"];
+            command = [ "rustfmt" "--emit" "stdout" ];
+            patterns = [ "glob:'**/*.rs'" ];
           };
           taplo = {
             enabled = true;
-            command = ["taplo fmt -"];
-            patterns = ["glob:'**/*.toml'"];
+            command = [ "taplo fmt -" ];
+            patterns = [ "glob:'**/*.toml'" ];
           };
         };
       };
