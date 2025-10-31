@@ -30,7 +30,7 @@
 
         ripgrep
         grc # Colorizer
-        du-dust # replacement for du
+        dust # replacement for du
         fd # find
         macchina
         glow

@@ -6,7 +6,7 @@ _: {
         name = "Andrew Plaza";
         email = "github@andrewplaza.dev";
       };
-      aliases.tug = [ "bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@-" ];
+      aliases.tug = ["bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@-"];
       signing = {
         behavior = "own";
         backend = "gpg"; # maybe use program option and link to exact nix binary
@@ -21,7 +21,7 @@ _: {
       };
       merge-tools.nvim = {
         program = "nvim";
-        edit-args = [ "-c" "packadd nvim.difftool" "-c" "DiffTool $left $right" ];
+        edit-args = ["-c" "packadd nvim.difftool" "-c" "DiffTool $left $right"];
       };
       merge-tools.diffview = {
         program = "sh";
@@ -69,15 +69,10 @@ _: {
       };
       fix = {
         tools = {
-          rustfmt = {
-            enabled = true;
-            command = [ "rustfmt" "--emit" "stdout" ];
-            patterns = [ "glob:'**/*.rs'" ];
-          };
           taplo = {
             enabled = true;
-            command = [ "taplo fmt -" ];
-            patterns = [ "glob:'**/*.toml'" ];
+            command = ["taplo fmt -"];
+            patterns = ["glob:'**/*.toml'"];
           };
         };
       };

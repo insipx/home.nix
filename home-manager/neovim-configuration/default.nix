@@ -25,7 +25,8 @@ in
       stylua
       deno
       nodePackages.prettier
-      alejandra
+      # alejandra
+      nixfmt-rfc-style
       rubyPackages.htmlbeautifier
       # codespell
 
@@ -44,8 +45,8 @@ in
       rust-analyzer-nightly
     ];
     extraPlugins = [ ];
-    extraPython3Packages =
-      ps: with ps; [
+    extraPython3Packages = ps:
+      with ps; [
         pynvim
         unidecode
         black
@@ -91,18 +92,22 @@ in
       expandtab = true;
     };
 
-    keymaps = [
-      {
-        key = "<Space>";
-        action = "<Nop>";
-        options.silent = true;
-      }
-    ] ++ keybindings.all ++ keybindings.desc;
+    keymaps =
+      [
+        {
+          key = "<Space>";
+          action = "<Nop>";
+          options.silent = true;
+        }
+      ]
+      ++ keybindings.all ++ keybindings.desc;
 
-    extraConfigLua = ''
-      -- vim.opt.listchars:append "eol:↴"
-      vim.opt.listchars:append "space:⋅"
-    '' + builtins.readFile ./lua/conform.lua; # + builtins.readFile ./neovim-configuration/lua/lualine.lua;
+    extraConfigLua =
+      ''
+        -- vim.opt.listchars:append "eol:↴"
+        vim.opt.listchars:append "space:⋅"
+      ''
+      + builtins.readFile ./lua/conform.lua; # + builtins.readFile ./neovim-configuration/lua/lualine.lua;
     extraConfigVim = ''
       set exrc
     '';
@@ -184,7 +189,7 @@ in
             lua = [ "stylua" ];
             javascript = [ "prettier" ];
             typescript = [ "prettier" ];
-            nix = [ "alejandra" ];
+            nix = [ "nixfmt-rfc-style" ];
             yaml = [ "prettier" ];
             html = [ "htmlbeautifier" ];
             markdown = [ "deno_fmt" ];
@@ -436,7 +441,6 @@ in
               "miniclue.gen_clues.z()"
             ];
             window.delay = 500;
-
           };
           trailspace = { };
           basics = { };
@@ -524,7 +528,7 @@ in
       enable = true;
       autoLoad = true;
       settings = {
-        flavour = "frappe";
+        flavour = "mocha";
         integrations = {
           treesitter = true;
           notify = true;

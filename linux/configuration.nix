@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 {
   imports =
     [
@@ -80,6 +80,14 @@
     };
   };
 
+  services.chrony = {
+    enable = true;
+    enableNTS = true;
+    servers = [
+      "time.cloudflare.com"
+      "ohio.time.system76.com"
+    ];
+  };
   networking.hostName = "tanjiro"; # Define your hostname.
   # Pick only one of the below networking options.
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
@@ -179,9 +187,24 @@
     hyprshot
     claude-code
     vlc
+    discord
 
     alsa-ucm-conf # includes options for Motu M2
+    lnav
   ];
+  # xdg.portal = {
+  #   enable = true;
+  #   config = {
+  #     hyprland = {
+  #       default = [ "hyprland" "termfilechooser" "gtk" ];
+  #     };
+  #   };
+  #   configPackages = with pkgs; [
+  #     xdg-desktop-portal-hyprland
+  #     xdg-desktop-portal-termfilechooser
+  #     xdg-desktop-portal-gtk
+  #   ];
+  # };
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];

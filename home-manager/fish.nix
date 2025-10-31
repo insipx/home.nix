@@ -1,7 +1,6 @@
-{
-  pkgs,
-  lib,
-  ...
+{ pkgs
+, lib
+, ...
 }: {
   programs.fish = {
     enable = true;
@@ -10,7 +9,7 @@
       vi = "nvim";
       vim = "nvim";
       ls = "${lib.getBin pkgs.eza}/bin/eza";
-      du = "${lib.getBin pkgs.du-dust}/bin/dust";
+      du = "${lib.getBin pkgs.dust}/bin/dust";
       pretty = "prettybat";
       diff = "batdiff";
       # less = "batpipe";

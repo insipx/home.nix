@@ -17,7 +17,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Other Sources
-    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    neovim-nightly = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     ghostty = {
       url = "github:ghostty-org/ghostty";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,8 +34,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     jujutsu = {
-      url = "github:jj-vcs/jj";
+      url = "github:jj-vcs/jj/v0.34.0";
+      # url = "github:jj-vcs/jj";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.follows = "rust-overlay";
     };
     catppuccin = {
       url = "github:catppuccin/nix";
@@ -48,12 +53,21 @@
     };
     sops-nix.url = "github:Mic92/sops-nix";
     # tidal.url = "github:mitchmindtree/tidalcycles.nix";
-    rustowl = {
-      url = "github:nix-community/rustowl-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # rustowl = {
+    #   url = "github:nix-community/rustowl-flake";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     swww.url = "github:LGFae/swww";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+    environments = {
+      url = "github:insipx/environments";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
+  nixConfig = {
+    extra-trusted-public-keys = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
+    extra-substituters = "nix-community.cachix.org";
   };
 
   # `...` allows defining additional inputs to the outputs
@@ -80,17 +94,24 @@
           ./home-manager/mac.nix
         ];
       };
+      override = final: prev: {
+        jujutsu = prev.jujutsu.overrideAttrs {
+          doCheck = false;
+        };
+      };
       # the `self.overlays` in the `nixpkgsConfig`
       nixpkgsConfig = {
         config = { allowUnfree = true; };
         overlays = [
-          # neorg-overlay.overlays.default
+          inputs.neorg-overlay.overlays.default
           # inputs.mozilla.overlays.firefox
           inputs.fenix.overlays.default
-          inputs.rustowl.overlays.default
+          # inputs.rustowl.overlays.default
           inputs.rust-overlay.overlays.default
           inputs.neovim-nightly.overlays.default
           inputs.jujutsu.overlays.default
+          inputs.environments.overlays.default
+          override
         ];
       };
 
