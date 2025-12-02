@@ -65,7 +65,7 @@
         # Tab Group
         "$mainMod, T, hy3:changegroup, toggletab"
         # Example special workspace (scratchpad)
-        "$mainMod, S, togglespecialworkspace, magic        "
+        "$mainMod, S, togglespecialworkspace, magic"
         "$mainMod SHIFT, S, movetoworkspace, special:magic "
 
         # Scroll through existing workspaces with mainMod + scroll

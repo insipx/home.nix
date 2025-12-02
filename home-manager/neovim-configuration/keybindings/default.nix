@@ -12,6 +12,7 @@ let
     ./telescope
     ./ui.nix
     ./git.nix
+    ./dap.nix
   ];
 
   imports = map import modules;
@@ -32,11 +33,17 @@ in
   syntaxNav = import ./syntax-nav.nix;
   workspaces = import ./workspaces.nix;
   telescope = import ./telescope;
+  dap = import ./dap.nix;
   desc = [
     {
       key = "<leader>b";
       action = "";
       options.desc = "buffers";
+    }
+    {
+      key = "<leader>r";
+      action = "";
+      options.desc = "rr debugger";
     }
     {
       key = "<leader>D";

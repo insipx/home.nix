@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-2411.url = "github:NixOS/nixpkgs/nixos-24.11";
     # nixpkgs.url = "github:NixOS/nixpkgs/68ed3354133f549b9cb8e5231a126625dca4e724";
     disko = {
       url = "github:nix-community/disko";
@@ -114,7 +115,6 @@
           override
         ];
       };
-
     in
     {
       # Expose the package set, including overlays, for convenience.
@@ -148,6 +148,61 @@
         specialArgs = {
           inherit inputs;
         };
+      };
+
+      nixosConfigurations.awsBuilder = inputs.nixpkgs-2411.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          ({ pkgs, modulesPath, ... }: {
+            users.users.insipx = {
+              isNormalUser = true;
+              extraGroups = [ "wheel" ];
+              openssh.authorizedKeys.keys = [
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUArrr4oix6p/bSjeuXKi2crVzsuSqSYoz//YJMsTlo cardno:14_836_775"
+              ];
+              packages = with pkgs; [
+                tree
+              ];
+            };
+            users.users.nixremote = {
+              isNormalUser = true;
+              packages = with pkgs; [
+                tree
+              ];
+              openssh.authorizedKeys.keys = [
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOIPrcoSB8P1OImd7wxZ7TqW4QQ02JQ4aIhpbtaOmweC root@tanjiro"
+              ];
+            };
+            nix.settings = {
+              experimental-features = [ "nix-command" "flakes" ];
+              trusted-users = [ "root" "nixremote" ];
+              system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+              substituters = [ "https://cache.nixos.org" "https://insipx.cachix.org" ];
+              trusted-public-keys = [
+                "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+                "insipx.cachix.org-1:JMvQq3zItXN5AO7VfPUAILAwMXQrzQ78rLoQTktWs14="
+              ];
+              post-build-hook = pkgs.writeShellScript "upload-to-cachix" ''
+                set -eu
+                set -f # disable globbing
+                export IFS=' '
+                echo "Uploading paths" $OUT_PATHS
+                exec ${pkgs.cachix}/bin/cachix push insipx $OUT_PATHS
+              '';
+            };
+            networking.hostName = "nixos-builder-arm64";
+
+            imports = [
+              (modulesPath + "/virtualisation/amazon-image.nix")
+            ];
+            services.openssh = {
+              enable = true;
+            };
+            networking.firewall.allowedTCPPorts = [ 22 ];
+
+            environment.systemPackages = with pkgs; [ cachix git ghostty.terminfo htop ];
+          })
+        ];
       };
 
       # Build darwin flake using:

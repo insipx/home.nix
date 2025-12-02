@@ -38,6 +38,7 @@
         tokei
         erdtree
         # ncdu
+        awscli2
         htop
         xq # Json format
         duf # alternative to df, filesystem free space viewer
@@ -45,6 +46,7 @@
         wget
         spotifyd
         fzf
+        jj-stack
 
         # Nix & General linting applicable to p. much everything related
         deadnix

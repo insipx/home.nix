@@ -13,6 +13,7 @@
       ./cachix.nix
     ];
 
+  time.timeZone = "America/New_York";
   # yubikey needs polkit rules
   security = {
     rtkit.enable = true;
@@ -32,7 +33,7 @@
     '';
   };
   boot = {
-    binfmt.emulatedSystems = [ "aarch64-linux" ];
+    # binfmt.emulatedSystems = [ "aarch64-linux" ];
     # Use latest xanmod kernel.
     kernelPackages = pkgs.linuxPackages_xanmod_latest;
     loader = {
@@ -191,26 +192,35 @@
 
     alsa-ucm-conf # includes options for Motu M2
     lnav
+    spotify
+    k3s
+    hypridle
   ];
-  # xdg.portal = {
-  #   enable = true;
-  #   config = {
-  #     hyprland = {
-  #       default = [ "hyprland" "termfilechooser" "gtk" ];
-  #     };
-  #   };
-  #   configPackages = with pkgs; [
-  #     xdg-desktop-portal-hyprland
-  #     xdg-desktop-portal-termfilechooser
-  #     xdg-desktop-portal-gtk
-  #   ];
-  # };
 
-  nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
-    trusted-users = [ "root" "insipx" ];
+  nix = {
+    optimise = {
+      automatic = true;
+      dates = "9:00";
+    };
+    buildMachines = [{
+      hostName = "arm64-builder.insipx.xyz";
+      system = "aarch64-linux";
+      maxJobs = 8;
+      speedFactor = 2;
+      supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+      mandatoryFeatures = [ ];
+      sshUser = "nixremote";
+      protocol = "ssh-ng";
+    }];
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ "root" "insipx" ];
+      system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+      builders-use-substitutes = true;
+      extra-platforms = [ ]; # Don't try to build aarch64 locally
+    };
+    distributedBuilds = true;
   };
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -235,4 +245,5 @@
   system.stateVersion = "25.05"; # Did you read the comment?
 
 }
+
 
