@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-2411.url = "github:NixOS/nixpkgs/nixos-24.11";
     # nixpkgs.url = "github:NixOS/nixpkgs/68ed3354133f549b9cb8e5231a126625dca4e724";
     disko = {
       url = "github:nix-community/disko";
@@ -64,6 +63,7 @@
       url = "github:insipx/environments";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable"; # IMPORTANT
   };
 
   nixConfig = {
@@ -128,6 +128,7 @@
           ./linux/configuration.nix
           inputs.determinate.nixosModules.default
           home-manager.nixosModules.home-manager
+          inputs.chaotic.nixosModules.default
           {
             nixpkgs = nixpkgsConfig;
             home-manager = {
@@ -150,9 +151,14 @@
         };
       };
 
-      nixosConfigurations.awsBuilder = inputs.nixpkgs-2411.lib.nixosSystem {
+      nixosConfigurations.arm64Builder = nixosSystem {
         system = "aarch64-linux";
         modules = [
+          inputs.chaotic.nixosModules.default
+          (_: {
+            chaotic.nyx.cache.enable = true;
+            chaotic.nyx.registry.enable = true;
+          })
           ({ pkgs, modulesPath, ... }: {
             users.users.insipx = {
               isNormalUser = true;
@@ -175,7 +181,7 @@
             };
             nix.settings = {
               experimental-features = [ "nix-command" "flakes" ];
-              trusted-users = [ "root" "nixremote" ];
+              trusted-users = [ "root" "nixremote" "insipx" ];
               system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
               substituters = [ "https://cache.nixos.org" "https://insipx.cachix.org" ];
               trusted-public-keys = [
