@@ -106,7 +106,10 @@
       dedicatedServer.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;
     };
-    firefox.enable = true;
+    firefox = {
+      enable = true;
+      package = pkgs.firefox-devedition;
+    };
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;

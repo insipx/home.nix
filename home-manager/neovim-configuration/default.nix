@@ -39,7 +39,6 @@ in
       markdownlint-cli
       shellcheck
       golangci-lint
-      nodePackages_latest.jsonlint
       # Other
       htop
       rust-analyzer-nightly
@@ -234,7 +233,7 @@ in
           ];
           env = [ "dotenv_linter" ];
           git = [ "gitlint" ];
-          json = [ "jsonlint" ];
+          json = [ "deno_fmt" ];
         };
       };
 
