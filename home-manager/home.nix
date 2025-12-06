@@ -61,6 +61,7 @@
         nix-index # Run `nix-index` and then use `nix-locate` like the normal unix `locate`
         feh
         rage
+        lazyjj
         # mpv
 
         # Fun
