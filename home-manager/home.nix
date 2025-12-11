@@ -10,6 +10,9 @@
   ];
   catppuccin.enable = true;
   catppuccin.mako.enable = false;
+  sops = {
+    age.keyFile = ./../keys/age-yubikey-identity-e5e2e0d8.txt;
+  };
   home = {
     # This value determines the Home Manager release that your configuration is
     # compatible with. This helps avoid breakage when a new Home Manager release
@@ -40,13 +43,14 @@
         # ncdu
         awscli2
         htop
-        xq # Json format
         duf # alternative to df, filesystem free space viewer
         websocat # Query websockets
         wget
         spotifyd
         fzf
         jj-stack
+        lazyjj
+        jq
 
         # Nix & General linting applicable to p. much everything related
         deadnix
@@ -73,7 +77,6 @@
         nmap
         rustscan
       ];
-
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
     # plain files is through 'home.file'.
     file = {
@@ -85,9 +88,6 @@
         [codespell]
         ignore-words-list = create
       '';
-      ".config/sops/age/keys.txt" = {
-        source = ./../keys/age-yubikey-identity-e5e2e0d8.txt;
-      };
       ".config/sops/age/age-yubi-cyllene.txt" = {
         source = ./../keys/age-yubi-cyllene.txt;
       };

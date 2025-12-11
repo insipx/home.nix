@@ -3,9 +3,9 @@
     mode = "n";
     key = "<leader>Da";
     action.__raw = ''
-      function() 
+      function()
         require('telescope.builtin')
-          .diagnostics(require('telescope.themes').get_ivy({})) 
+          .diagnostics(require('telescope.themes').get_ivy({}))
       end
     '';
     options = {
@@ -18,7 +18,7 @@
     mode = "n";
     key = "<leader>Dc";
     action.__raw = ''
-      function() 
+      function()
         require('telescope.builtin')
           .diagnostics({ theme = require('telescope.themes').get_ivy({}), bufnr = 0 }) 
       end

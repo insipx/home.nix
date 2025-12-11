@@ -35,4 +35,22 @@
       desc = "hop anywhere";
     };
   }
+  {
+    mode = "n";
+    key = "\\\\p";
+    options = {
+      silent = true;
+      desc = "toggle precognition";
+    };
+    action.__raw = ''
+      function()
+        if require("precognition").toggle() then
+          vim.notify("precognition on")
+        else
+          vim.notify("precognition off")
+        end
+      end
+    '';
+
+  }
 ]

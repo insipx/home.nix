@@ -3,9 +3,9 @@
     mode = "n";
     key = "<leader>ql";
     action.__raw = ''
-      function() 
+      function()
         require('telescope.builtin')
-          .quickfix(require('telescope.themes').get_ivy({})) 
+          .quickfix(require('telescope.themes').get_ivy({}))
       end
     '';
     options = {
@@ -18,9 +18,9 @@
     mode = "n";
     key = "<leader>qh";
     action.__raw = ''
-      function() 
+      function()
         require('telescope.builtin')
-          .quickfixhistory(require('telescope.themes').get_ivy({})) 
+          .quickfixhistory(require('telescope.themes').get_ivy({}))
       end
     '';
     options = {

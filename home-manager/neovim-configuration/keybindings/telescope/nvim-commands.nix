@@ -2,9 +2,9 @@
   mode = "n";
   key = "<leader>ec";
   action.__raw = ''
-    function() 
+    function()
       require('telescope.builtin')
-        .commands(require('telescope.themes').get_ivy({})) 
+        .commands(require('telescope.themes').get_ivy({}))
     end
   '';
   options = {

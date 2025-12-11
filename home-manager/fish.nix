@@ -18,7 +18,7 @@
       # grep = "batgrep";
       # ssh = "GPG_TTY=$(tty) ssh";
       cat = "${lib.getBin pkgs.bat}/bin/bat";
-      jq = "${lib.getBin pkgs.xq}/bin/xq";
+      # jq = "${lib.getBin pkgs.xq}/bin/xq";
       nix = "nix --log-format bar";
     };
     interactiveShellInit = ''

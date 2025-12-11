@@ -188,7 +188,6 @@
     pavucontrol
     alsa-utils
     google-chrome
-    hyprshot
     claude-code
     vlc
     discord
@@ -197,9 +196,19 @@
     lnav
     spotify
     k3s
-    hypridle
-  ];
 
+    # Hyprland
+    hyprshot
+    hypridle
+    catppuccin-cursors.mochaDark
+    rpi-imager
+  ];
+  catppuccin = {
+    flavor = "mocha";
+    cursors.enable = true;
+    tty.enable = true;
+    cache.enable = true;
+  };
   nix = {
     optimise = {
       automatic = true;

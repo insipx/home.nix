@@ -1,6 +1,8 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   keybindings = import ./keybindings;
-in {
+in
+{
   imports = [
     #     (import ./neovim-configuration/lualine.nix { inherit config pkgs; })
   ];
@@ -41,8 +43,9 @@ in {
       htop
       rust-analyzer-nightly
       vscode-extensions.vadimcn.vscode-lldb
+      viu # for FFF Picker
     ];
-    extraPlugins = [];
+    extraPlugins = [ ];
     extraPython3Packages = ps:
       with ps; [
         pynvim
@@ -123,16 +126,16 @@ in {
         servers = {
           nixd = {
             enable = true;
-            filetypes = ["nix"];
-            settings.formatting.command = ["nixpkgs-fmt"];
+            filetypes = [ "nix" ];
+            settings.formatting.command = [ "nixpkgs-fmt" ];
           };
           gopls = {
             enable = true;
-            filetypes = ["go"];
+            filetypes = [ "go" ];
           };
           taplo = {
             enable = true;
-            filetypes = ["toml"];
+            filetypes = [ "toml" ];
           };
         };
       };
@@ -208,16 +211,16 @@ in {
             timeoutMs = 350;
           };
           formatters_by_ft = {
-            toml = ["taplo"];
-            lua = ["stylua"];
-            javascript = ["prettier"];
-            typescript = ["prettier"];
-            nix = ["nixfmt-rfc-style"];
-            yaml = ["prettier"];
-            html = ["htmlbeautifier"];
-            markdown = ["deno_fmt"];
-            json = ["deno_fmt"];
-            "*" = ["codespell"];
+            toml = [ "taplo" ];
+            lua = [ "stylua" ];
+            javascript = [ "prettier" ];
+            typescript = [ "prettier" ];
+            nix = [ "nixfmt-rfc-style" ];
+            yaml = [ "prettier" ];
+            html = [ "htmlbeautifier" ];
+            markdown = [ "deno_fmt" ];
+            json = [ "deno_fmt" ];
+            "*" = [ "codespell" ];
           };
         };
       };
@@ -229,9 +232,9 @@ in {
             "nix"
             "statix"
           ];
-          env = ["dotenv_linter"];
-          git = ["gitlint"];
-          json = ["deno_fmt"];
+          env = [ "dotenv_linter" ];
+          git = [ "gitlint" ];
+          json = [ "deno_fmt" ];
         };
       };
 
@@ -252,18 +255,18 @@ in {
               checkOnSave = true;
               check = {
                 command = "check";
-                extraArgs = ["--no-deps"];
+                extraArgs = [ "--no-deps" ];
                 features = "all";
               };
               procMacro = {
                 enable = true;
                 attributes.enable = true;
                 ignored = {
-                  "async-trait" = ["async_trait"];
-                  "napi-derive" = ["napi"];
-                  "async-recursion" = ["async_recursion"];
-                  "ctor" = ["ctor"];
-                  "tokio" = ["test"];
+                  "async-trait" = [ "async_trait" ];
+                  "napi-derive" = [ "napi" ];
+                  "async-recursion" = [ "async_recursion" ];
+                  "ctor" = [ "ctor" ];
+                  "tokio" = [ "test" ];
                 };
               };
               diagnostics.disabled = [
@@ -335,12 +338,12 @@ in {
       gitblame.enable = true;
       diffview.enable = true;
       octo.enable = true;
-
+      fff = {
+        enable = true;
+      };
       telescope = {
         enable = true;
-        # enabledExtensions = [ "project" ];
         extensions = {
-          file-browser.enable = true;
           ui-select.enable = true;
           fzy-native.enable = true;
           media-files.enable = true;
@@ -390,7 +393,7 @@ in {
         enable = true;
         #grammarPackages = pkgs.vimPlugins.nvim-treesitter.passthru.allGrammars;
         nixGrammars = true;
-        languageRegister = {};
+        languageRegister = { };
 
         settings = {
           auto_install = true;
@@ -411,14 +414,14 @@ in {
           #];
         };
       };
-      treesitter-textobjects.enable = true;
+      treesitter-textobjects.enable = false;
       treesitter-context = {
         enable = true;
         settings = {
           max_lines = 2;
         };
       };
-      treesitter-refactor.enable = true; # TODO: can keymap bunch of cool stuff when want
+      treesitter-refactor.enable = false; # TODO: can keymap bunch of cool stuff when want
 
       indent-blankline = {
         enable = false;
@@ -427,7 +430,7 @@ in {
             enabled = true;
             show_start = true;
           };
-          exclude.filetypes = ["alpha"];
+          exclude.filetypes = [ "alpha" ];
         };
       };
       better-escape = {
@@ -439,13 +442,15 @@ in {
       };
 
       glow.enable = true;
-
+      precognition = {
+        enable = true;
+      };
       mini = {
         enable = true;
         modules = {
-          pairs = {};
-          bracketed = {};
-          bufremove = {};
+          pairs = { };
+          bracketed = { };
+          bufremove = { };
           clue = {
             triggers = [
               {
@@ -471,10 +476,10 @@ in {
             ];
             window.delay = 500;
           };
-          trailspace = {};
-          basics = {};
-          align = {};
-          indentscope = {};
+          trailspace = { };
+          basics = { };
+          align = { };
+          indentscope = { };
           hipatterns = {
             highlighters = {
               fixme = {
@@ -495,9 +500,9 @@ in {
               };
             };
           };
-          map = {};
-          misc = {};
-          icons = {};
+          map = { };
+          misc = { };
+          icons = { };
         };
         mockDevIcons = true;
       };

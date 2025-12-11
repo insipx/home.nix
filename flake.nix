@@ -2,7 +2,7 @@
   description = "Insi Darwin system flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     # nixpkgs.url = "github:NixOS/nixpkgs/68ed3354133f549b9cb8e5231a126625dca4e724";
     disko = {
       url = "github:nix-community/disko";
@@ -13,7 +13,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Other Sources
@@ -30,7 +30,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim = {
-      url = "github:nix-community/nixvim";
+      url = "github:nix-community/nixvim/nixos-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     jujutsu = {
@@ -63,7 +63,6 @@
       url = "github:insipx/environments";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable"; # IMPORTANT
   };
 
   nixConfig = {
@@ -128,10 +127,13 @@
           ./linux/configuration.nix
           inputs.determinate.nixosModules.default
           home-manager.nixosModules.home-manager
-          inputs.chaotic.nixosModules.default
+          inputs.catppuccin.nixosModules.default
           {
             nixpkgs = nixpkgsConfig;
             home-manager = {
+              sharedModules = [
+                inputs.sops-nix.homeManagerModules.sops
+              ];
               useGlobalPkgs = true;
               useUserPackages = true;
               users.insipx = { ... }: {
@@ -154,11 +156,6 @@
       nixosConfigurations.arm64Builder = nixosSystem {
         system = "aarch64-linux";
         modules = [
-          inputs.chaotic.nixosModules.default
-          (_: {
-            chaotic.nyx.cache.enable = true;
-            chaotic.nyx.registry.enable = true;
-          })
           ({ pkgs, modulesPath, ... }: {
             users.users.insipx = {
               isNormalUser = true;
