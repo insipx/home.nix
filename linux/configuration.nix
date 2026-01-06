@@ -16,21 +16,6 @@
   time.timeZone = "America/New_York";
   # yubikey needs polkit rules
   security = {
-    pki.certificates = [
-      ''
-        -----BEGIN CERTIFICATE-----
-        MIIBlDCCATmgAwIBAgIQZan2L1JiYhHTp/yUgVuAozAKBggqhkjOPQQDAjAoMQ4w
-        DAYDVQQKEwVWb2xvczEWMBQGA1UEAxMNVm9sb3MgUm9vdCBDQTAeFw0yNDEyMTky
-        MTMyMDFaFw0zNDEyMTcyMTMyMDFaMCgxDjAMBgNVBAoTBVZvbG9zMRYwFAYDVQQD
-        Ew1Wb2xvcyBSb290IENBMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEjPZBK319
-        OFl56WZG+fuEXNAW6ECAz/UfXnViAnkfiNag/N72+lGqc0UMj5TFZj4TCzONE6lQ
-        mRxekwfq2OYVkqNFMEMwDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8C
-        AQEwHQYDVR0OBBYEFJfVFrIznQi3WORnHTxEk1TC3EdMMAoGCCqGSM49BAMCA0kA
-        MEYCIQC362kqw/6FuZHy3ImWOtSkL+adh8/lRKMtyV8+MhSi4AIhAOiYIjTt5ulw
-        /7gVZPmEpIFGOubQgDOA67M7E84sk844
-        -----END CERTIFICATE-----
-      ''
-    ];
     rtkit.enable = true;
     polkit.enable = true;
     polkit.extraConfig = ''
@@ -224,30 +209,7 @@
     tty.enable = true;
     cache.enable = true;
   };
-  nix = {
-    optimise = {
-      automatic = true;
-      dates = "9:00";
-    };
-    buildMachines = [{
-      hostName = "arm64-builder.insipx.xyz";
-      system = "aarch64-linux";
-      maxJobs = 8;
-      speedFactor = 2;
-      supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-      mandatoryFeatures = [ ];
-      sshUser = "nixremote";
-      protocol = "ssh-ng";
-    }];
-    settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "insipx" ];
-      system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-      builders-use-substitutes = true;
-      extra-platforms = [ ]; # Don't try to build aarch64 locally
-    };
-    distributedBuilds = true;
-  };
+  nix.settings.trusted-users = [ "root" "insipx" ];
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -270,7 +232,6 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "25.05"; # Did you read the comment?
-
 }
 
 

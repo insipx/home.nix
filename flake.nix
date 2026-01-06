@@ -125,6 +125,7 @@
           disko.nixosModules.disko
           sops-nix.nixosModules.sops
           ./linux/configuration.nix
+          ./common.nix
           inputs.determinate.nixosModules.default
           home-manager.nixosModules.home-manager
           inputs.catppuccin.nixosModules.default
@@ -218,6 +219,7 @@
       darwinConfigurations."cyllene" = darwinSystem {
         modules = [
           ./darwin-config.nix
+          ./common.nix
           home-manager.darwinModules.home-manager
           sops-nix.darwinModules.sops
           {
