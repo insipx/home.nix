@@ -156,6 +156,11 @@
       nixosConfigurations.arm64Builder = nixosSystem {
         system = "aarch64-linux";
         modules = [
+          {
+            nixpkgs = {
+              config = { allowUnfree = true; };
+            };
+          }
           ({ pkgs, modulesPath, ... }: {
             users.users.insipx = {
               isNormalUser = true;

@@ -88,6 +88,9 @@
         [codespell]
         ignore-words-list = create
       '';
+      ".config/sops/age/age-yubi-identity-e5e2e0d8.txt" = {
+        source = ./../keys/age-yubikey-identity-e5e2e0d8.txt;
+      };
       ".config/sops/age/age-yubi-cyllene.txt" = {
         source = ./../keys/age-yubi-cyllene.txt;
       };
@@ -101,7 +104,6 @@
     sessionVariables = {
       EDITOR = "nvim";
       KEYID = "843D72A9EB79A8692C585B3AE7738A7A0F5CDB89";
-      CACHEPOT_CACHE_SIZE = "50G";
     };
   };
   # allows apps to find fonts
