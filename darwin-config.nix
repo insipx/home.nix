@@ -10,34 +10,31 @@
       generateKey = false;
       sshKeyPaths = [ ];
     };
-    secrets.anthropic_key = {
-      group = "staff";
-      owner = "${config.system.primaryUser}";
-      mode = "0400"; # Read-only by owner
-    };
-    secrets.cachix_auth_token = {
-      group = "staff";
-      owner = "${config.system.primaryUser}";
-      mode = "0400"; # Read-only by owner
-    };
-    defaultSopsFile = ./secrets/env.yaml;
-    gnupg.sshKeyPaths = [ ];
-    gnupg.home = "${config.system.primaryUserHome}/.gnupg";
+    # secrets.anthropic_key = {
+    #   group = "staff";
+    #   owner = "${config.system.primaryUser}";
+    #   mode = "0400"; # Read-only by owner
+    # };
+    # secrets.cachix_auth_token = {
+    #   group = "staff";
+    #   owner = "${config.system.primaryUser}";
+    #   mode = "0400"; # Read-only by owner
+    # };
+    # defaultSopsFile = ./secrets/env.yaml;
+    # gnupg.sshKeyPaths = [ ];
+    # gnupg.home = "${config.system.primaryUserHome}/.gnupg";
   };
-
-  nix.settings.trusted-users = [ "root" "insipx" "andrewplaza" ];
-
   # Add nix settings to seperate conf file
   # since we use Determinate Nix on our systems.
-  environment = {
-    etc."nix/nix.custom.conf".text = pkgs.lib.mkForce ''
-      # Add nix settings to seperate conf file
-      # since we use Determinate Nix on our systems.
-      trusted-users = insipx andrewplaza
-      extra-substituters = https://cache.nixos.org https://nix-community.cachix.org https://xmtp.cachix.org
-      extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= xmtp.cachix.org-1:nFPFrqLQ9kjYQKiWL7gKq6llcNEeaV4iI+Ka1F+Tmq0= xmtp.cachix.org-1:nFPFrqLQ9kjYQKiWL7gKq6llcNEeaV4iI+Ka1F+Tmq0=
-    '';
-  };
+  #environment = {
+  #  etc."nix/nix.custom.conf".text = pkgs.lib.mkForce ''
+  #    # Add nix settings to seperate conf file
+  #    # since we use Determinate Nix on our systems.
+  #    trusted-users = insipx andrewplaza
+  #    extra-substituters = https://cache.nixos.org https://xmtp.cachix.org
+  #    extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= xmtp.cachix.org-1:nFPFrqLQ9kjYQKiWL7gKq6llcNEeaV4iI+Ka1F+Tmq0= xmtp.cachix.org-1:nFPFrqLQ9kjYQKiWL7gKq6llcNEeaV4iI+Ka1F+Tmq0=
+  #  '';
+  #};
 
   # Set Git commit hash for darwin-version.
   # system.configurationRevision = config.system.flakeRevision;
@@ -45,9 +42,9 @@
   programs.zsh.enable = true; # default shell on catalina
   programs.fish = {
     enable = true;
-    interactiveShellInit = ''
-      set -x ANTHROPIC_API_KEY (cat ${config.sops.secrets.anthropic_key.path})
-    '';
+    #interactiveShellInit = ''
+    #  # set -x ANTHROPIC_API_KEY (cat ${config.sops.secrets.anthropic_key.path})
+    #'';
   };
 
   users.users.insipx = {

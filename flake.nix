@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-darwin = {
-      url = "github:LnL7/nix-darwin";
+      url = "github:LnL7/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
@@ -63,11 +63,6 @@
       url = "github:insipx/environments";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-  };
-
-  nixConfig = {
-    extra-trusted-public-keys = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
-    extra-substituters = "nix-community.cachix.org";
   };
 
   # `...` allows defining additional inputs to the outputs
@@ -244,12 +239,16 @@
         modules = [
           ./darwin-config.nix
           home-manager.darwinModules.home-manager
+          sops-nix.darwinModules.sops
           {
             system.primaryUser = "andrewplaza";
           }
           {
             nixpkgs = nixpkgsConfig;
             home-manager = {
+              sharedModules = [
+                inputs.sops-nix.homeManagerModules.sops
+              ];
               useGlobalPkgs = true;
               useUserPackages = true;
               users.andrewplaza = darwinCommon;

@@ -1,0 +1,7 @@
+#       Serial: 22385564, Slot: 1
+#         Name: kusanagi
+#      Created: Sun, 04 Jan 2026 14:32:55 +0000
+#   PIN policy: Never  (A PIN is NOT required to decrypt)
+# Touch policy: Never  (A physical touch is NOT required to decrypt)
+#    Recipient: age1yubikey1qwdmzqpa5ptztec4cyescxhl39tk8h4a7hrne2rtlvfhwg3faf0gwrq92uq
+AGE-PLUGIN-YUBIKEY-1NJF42QVZR3KYW2SQHQHV8

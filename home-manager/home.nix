@@ -10,9 +10,9 @@
   ];
   catppuccin.enable = true;
   catppuccin.mako.enable = false;
-  sops = {
-    age.keyFile = ./../keys/age-yubikey-identity-e5e2e0d8.txt;
-  };
+  #sops = {
+  #  age.keyFile = ./../keys/age-yubikey-identity-e5e2e0d8.txt;
+  #};
   home = {
     # This value determines the Home Manager release that your configuration is
     # compatible with. This helps avoid breakage when a new Home Manager release
@@ -51,6 +51,7 @@
         jj-stack
         lazyjj
         jq
+        age-plugin-yubikey
 
         # Nix & General linting applicable to p. much everything related
         deadnix
