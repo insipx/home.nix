@@ -63,6 +63,11 @@
       url = "github:insipx/environments";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # `...` allows defining additional inputs to the outputs
@@ -117,6 +122,7 @@
       nixosConfigurations.tanjiro = nixosSystem {
         system = "x86_64-linux";
         modules = [
+          inputs.noctalia.nixosModules.default
           disko.nixosModules.disko
           sops-nix.nixosModules.sops
           ./linux/configuration.nix

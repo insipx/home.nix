@@ -99,6 +99,8 @@
       ".ssh/config" = {
         text = ''
           Match host * exec "gpg-connect-agent UPDATESTARTUPTTY /bye"
+          Host 10.10.1.1
+            SetEnv TERM=xterm-256color
         '';
       };
     };

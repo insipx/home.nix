@@ -4,5 +4,6 @@
     ./launcher.nix
     ./wallpaper.nix
     ./catppuccin.nix
+    ./noctalia.nix
   ];
 }
