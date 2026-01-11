@@ -76,7 +76,7 @@ _:
         supportedFeatures = [ "benchmark" "big-parallel" ];
       }];
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
+      extra-experimental-features = [ "nix-command" "flakes" ];
       system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
       builders-use-substitutes = true;
       extra-platforms = [ ]; # Don't try to build aarch64 locally
