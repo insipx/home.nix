@@ -38,20 +38,21 @@
     kernelPackages = pkgs.linuxPackages_xanmod_latest;
     loader = {
       efi.canTouchEfiVariables = true;
-      limine = {
-        enable = true;
-        efiSupport = true;
-        style = {
-          interface.branding = "tanjiro";
-          wallpapers = [ "/extra/boot-wallpapers/lain.jpg" ];
-          wallpaperStyle = "centered";
-        };
-        enrollConfig = true;
-        maxGenerations = 15;
-        extraConfig = ''
-          default_entry: 1>1
-        '';
-      };
+      systemd-boot.enable = true;
+    #limine = {
+    #  enable = true;
+    #  efiSupport = true;
+    #  style = {
+    #    interface.branding = "tanjiro";
+    #    wallpapers = [ "/extra/boot-wallpapers/lain.jpg" ];
+    #    wallpaperStyle = "centered";
+    #  };
+    #  enrollConfig = true;
+    #  maxGenerations = 15;
+    #  extraConfig = ''
+    #    default_entry: 1>1
+    #  '';
+    #};
     };
     plymouth = {
       enable = true;

@@ -393,7 +393,9 @@ in
         enable = true;
         #grammarPackages = pkgs.vimPlugins.nvim-treesitter.passthru.allGrammars;
         nixGrammars = true;
-        languageRegister = { };
+        languageRegister = {
+          nix = "nix";
+        };
 
         settings = {
           auto_install = true;
@@ -414,7 +416,7 @@ in
           #];
         };
       };
-      treesitter-textobjects.enable = false;
+      treesitter-textobjects.enable = true;
       treesitter-context = {
         enable = true;
         settings = {

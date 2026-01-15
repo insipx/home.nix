@@ -15,6 +15,21 @@ _:
       -----END CERTIFICATE-----
     ''
   ];
+  programs.ssh = {
+    knownHosts = {
+      nixbuild = {
+        hostNames = [ "eu.nixbuild.net" ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
+      };
+    };
+    extraConfig = ''
+      Host eu.nixbuild.net
+        PubkeyAcceptedKeyTypes ssh-ed25519
+        ServerAliveInterval 60
+        IPQoS throughput
+        IdentityFile /etc/ssh/ssh_host_ed25519_key
+    '';
+  };
 
   nix = {
     gc = {
@@ -35,7 +50,31 @@ _:
       mandatoryFeatures = [ ];
       sshUser = "nixremote";
       protocol = "ssh-ng";
-    }];
+    }
+      {
+        hostName = "eu.nixbuild.net";
+        system = "x86_64-linux";
+        maxJobs = 100;
+        supportedFeatures = [ "benchmark" "big-parallel" ];
+      }
+      {
+        hostName = "eu.nixbuild.net";
+        system = "i686-linux";
+        maxJobs = 100;
+        supportedFeatures = [ "benchmark" "big-parallel" ];
+      }
+      {
+        hostName = "eu.nixbuild.net";
+        system = "armv7-linux";
+        maxJobs = 100;
+        supportedFeatures = [ "benchmark" "big-parallel" ];
+      }
+      {
+        hostName = "eu.nixbuild.net";
+        system = "aarch64-linux";
+        maxJobs = 100;
+        supportedFeatures = [ "benchmark" "big-parallel" ];
+      }];
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];

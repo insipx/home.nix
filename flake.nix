@@ -2,7 +2,7 @@
   description = "Insi Darwin system flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     # nixpkgs.url = "github:NixOS/nixpkgs/68ed3354133f549b9cb8e5231a126625dca4e724";
     disko = {
       url = "github:nix-community/disko";
@@ -13,7 +13,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Other Sources
@@ -30,7 +30,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim = {
-      url = "github:nix-community/nixvim/nixos-25.11";
+      url = "github:nix-community/nixvim/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     jujutsu = {
@@ -58,7 +58,7 @@
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
     swww.url = "github:LGFae/swww";
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+    # determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     environments = {
       url = "github:insipx/environments";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -127,7 +127,7 @@
           sops-nix.nixosModules.sops
           ./linux/configuration.nix
           ./common.nix
-          inputs.determinate.nixosModules.default
+          # inputs.determinate.nixosModules.default
           home-manager.nixosModules.home-manager
           inputs.catppuccin.nixosModules.default
           {
@@ -140,6 +140,7 @@
               useUserPackages = true;
               users.insipx = { ... }: {
                 imports = [
+                  inputs.noctalia.homeModules.default
                   inputs.nixvim.homeManagerModules.nixvim
                   inputs.catppuccin.homeModules.catppuccin
                   ./home-manager/home.nix
