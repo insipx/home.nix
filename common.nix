@@ -1,5 +1,11 @@
 _:
 {
+  environment.etc."volos.crt" = {
+    source = ./volos.cert;
+  };
+  environment.variables = {
+    NODE_EXTRA_CA_CERTS = "/etc/volos.crt";
+  };
   security.pki.certificates = [
     ''
       -----BEGIN CERTIFICATE-----
@@ -34,12 +40,23 @@ _:
   nix = {
     gc = {
       automatic = true;
-      dates = "weekly";
+      interval = [
+        {
+          Hour = 0;
+          Minute = 0;
+          Weekday = 7;
+        }
+      ];
       options = "--delete-older-than 30d";
     };
     optimise = {
       automatic = true;
-      dates = "9:00";
+      interval = [
+        {
+          Hour = 9;
+          Minute = 0;
+        }
+      ];
     };
     buildMachines = [{
       hostName = "arm64-builder.insipx.xyz";

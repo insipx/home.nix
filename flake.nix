@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-25.11";
+      url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
@@ -245,6 +245,7 @@
       darwinConfigurations."kusanagi" = darwinSystem {
         modules = [
           ./darwin-config.nix
+          ./common.nix
           home-manager.darwinModules.home-manager
           sops-nix.darwinModules.sops
           {
