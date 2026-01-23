@@ -45,42 +45,16 @@
   };
 
   nix = {
-    gc = {
-      automatic = true;
-      interval = [
-        {
-          Hour = 0;
-          Minute = 0;
-          Weekday = 7;
-        }
-      ];
-      options = "--delete-older-than 30d";
-    };
-    optimise = {
-      automatic = true;
-      interval = [
-        {
-          Hour = 9;
-          Minute = 0;
-        }
-      ];
-    };
     buildMachines = [{
       hostName = "arm64-builder.insipx.xyz";
       system = "aarch64-linux";
-      maxJobs = 8;
+      maxJobs = 100;
       speedFactor = 2;
       supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
       mandatoryFeatures = [ ];
       sshUser = "nixremote";
       protocol = "ssh-ng";
     }
-      {
-        hostName = "eu.nixbuild.net";
-        system = "x86_64-linux";
-        maxJobs = 100;
-        supportedFeatures = [ "benchmark" "big-parallel" ];
-      }
       {
         hostName = "eu.nixbuild.net";
         system = "i686-linux";
@@ -98,6 +72,13 @@
         system = "aarch64-linux";
         maxJobs = 100;
         supportedFeatures = [ "benchmark" "big-parallel" ];
+      }
+      {
+        # only enable x86_64 if we're not already on x86_64
+        hostName = "eu.nixbuild.net";
+        system = "x86_64-linux";
+        maxJobs = 100;
+        supportedFeatures = [ "benchmark" "big-parallel" "kvm" ];
       }];
     settings = {
       extra-experimental-features = [ "nix-command" "flakes" ];

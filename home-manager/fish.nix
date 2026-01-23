@@ -35,6 +35,7 @@
       # Batpipe setup
       set -x LESSOPEN "|${pkgs.bat-extras.batpipe}/bin/.batpipe-wrapped %s";
       set -e LESSCLOSE;
+      set -x NODE_EXTRA_CA_CERTS /etc/volos.crt
 
       # The following will enable colors when using batpipe with less:
       set -x LESS "$LESS -R";

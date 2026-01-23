@@ -39,20 +39,20 @@
     loader = {
       efi.canTouchEfiVariables = true;
       systemd-boot.enable = true;
-    #limine = {
-    #  enable = true;
-    #  efiSupport = true;
-    #  style = {
-    #    interface.branding = "tanjiro";
-    #    wallpapers = [ "/extra/boot-wallpapers/lain.jpg" ];
-    #    wallpaperStyle = "centered";
-    #  };
-    #  enrollConfig = true;
-    #  maxGenerations = 15;
-    #  extraConfig = ''
-    #    default_entry: 1>1
-    #  '';
-    #};
+      #limine = {
+      #  enable = true;
+      #  efiSupport = true;
+      #  style = {
+      #    interface.branding = "tanjiro";
+      #    wallpapers = [ "/extra/boot-wallpapers/lain.jpg" ];
+      #    wallpaperStyle = "centered";
+      #  };
+      #  enrollConfig = true;
+      #  maxGenerations = 15;
+      #  extraConfig = ''
+      #    default_entry: 1>1
+      #  '';
+      #};
     };
     plymouth = {
       enable = true;
@@ -118,6 +118,7 @@
     direnv = {
       enable = true;
       enableFishIntegration = true;
+      nix-direnv.enable = true;
     };
   };
   sops = {
@@ -164,6 +165,9 @@
   virtualisation.docker = {
     enable = true;
     storageDriver = "btrfs";
+    daemon.settings = {
+      # dns = [ "8.8.8.8" "8.8.4.4" ];
+    };
   };
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
@@ -192,6 +196,7 @@
     claude-code
     vlc
     discord
+    resources
 
     alsa-ucm-conf # includes options for Motu M2
     lnav

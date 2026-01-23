@@ -1,9 +1,28 @@
-{ pkgs, config, ... }: {
+{ pkgs, ... }: {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = [ pkgs.vim ];
   ids.gids.nixbld = 350;
-
+  gc = {
+    automatic = true;
+    interval = [
+      {
+        Hour = 0;
+        Minute = 0;
+        Weekday = 7;
+      }
+    ];
+    options = "--delete-older-than 30d";
+  };
+  optimise = {
+    automatic = true;
+    interval = [
+      {
+        Hour = 9;
+        Minute = 0;
+      }
+    ];
+  };
   sops = {
     age = {
       # keyFile = "${config.system.primaryUserHome}/.config/sops/age/keys.txt"; # For age keys

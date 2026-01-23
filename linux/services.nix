@@ -1,6 +1,7 @@
 { lib, pkgs, ... }: {
 
   services = {
+    flatpak.enable = true;
     displayManager.lemurs = {
       enable = true;
       settings.environment_switcher.include_tty_shell = true;

@@ -10,6 +10,7 @@
         "__GLX_VENDOR_LIBRARY_NAME,nvidia"
         "GBM_BACKEND,nvidia-drm"
         "XDG_SESSION_TYPE,wayland"
+        "NODE_EXTRA_CA_CERTS,/etc/volos.crt"
       ];
       "$mainMod" = "SUPER";
       "$terminal" = "ghostty";
@@ -130,18 +131,17 @@
           enabled = true;
           size = 3;
           passes = 1;
-
           vibrancy = 0.1696;
         };
       };
       layerrule = [
-        "blur, launcher"
-        "ignorealpha 0.1, launcher"
-        "dimaround, launcher"
+        "blur on, match:namespace launcher"
+        "ignore_alpha 0.1, match:namespace launcher"
+        "dim_around on, match:namespace launcher"
       ];
       windowrule = [
-        "float,class:(tanjiro.clipse)"
-        "size 622 652,class:(tanjiro.clipse)"
+        "float true,match:class tanjiro.clipse"
+        "size 622 652,match:class tanjiro.clipse"
       ];
     };
   };

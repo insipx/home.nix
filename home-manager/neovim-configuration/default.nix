@@ -41,7 +41,6 @@ in
       golangci-lint
       # Other
       htop
-      rust-analyzer-nightly
       vscode-extensions.vadimcn.vscode-lldb
       viu # for FFF Picker
     ];
@@ -119,6 +118,14 @@ in
         only_current_line = false;
       };
       virtual_text = false;
+    };
+    dependencies = {
+      tree-sitter.enable = true;
+      rust-analyzer = {
+        enable = true;
+        package = pkgs.rust-analyzer-nightly;
+      };
+      direnv.enable = true;
     };
     plugins = {
       lsp = {
@@ -391,11 +398,8 @@ in
 
       treesitter = {
         enable = true;
-        #grammarPackages = pkgs.vimPlugins.nvim-treesitter.passthru.allGrammars;
+        grammarPackages = pkgs.vimPlugins.nvim-treesitter.passthru.allGrammars;
         nixGrammars = true;
-        languageRegister = {
-          nix = "nix";
-        };
 
         settings = {
           auto_install = true;
@@ -405,15 +409,17 @@ in
           indent = {
             enable = true;
           };
-          #ensure_installed = [
-          #  "rust"
-          #  "javascript"
-          #  "typescript"
-          #  "sql"
-          #  "c"
-          #  "go"
-          #  "protobuf"
-          #];
+          ensure_installed = [
+            "rust"
+            "javascript"
+            "typescript"
+            "sql"
+            "c"
+            "go"
+            "protobuf"
+            "nix"
+            "toml"
+          ];
         };
       };
       treesitter-textobjects.enable = true;

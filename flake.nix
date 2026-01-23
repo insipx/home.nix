@@ -134,14 +134,14 @@
             nixpkgs = nixpkgsConfig;
             home-manager = {
               sharedModules = [
-                inputs.sops-nix.homeManagerModules.sops
+                inputs.sops-nix.homeModules.sops
               ];
               useGlobalPkgs = true;
               useUserPackages = true;
               users.insipx = { ... }: {
                 imports = [
                   inputs.noctalia.homeModules.default
-                  inputs.nixvim.homeManagerModules.nixvim
+                  inputs.nixvim.homeModules.nixvim
                   inputs.catppuccin.homeModules.catppuccin
                   ./home-manager/home.nix
                   ./linux
