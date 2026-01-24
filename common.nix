@@ -1,11 +1,18 @@
-_:
+{ pkgs, ... }:
 {
-  environment.etc."volos.crt" = {
-    source = ./volos.cert;
+  environment = {
+    systemPackages = with pkgs;[
+      opensc
+    ];
+
+    etc."volos.crt" = {
+      source = ./volos.cert;
+    };
+    variables = {
+      NODE_EXTRA_CA_CERTS = "/etc/volos.crt";
+    };
   };
-  environment.variables = {
-    NODE_EXTRA_CA_CERTS = "/etc/volos.crt";
-  };
+
   security.pki.certificates = [
     ''
       -----BEGIN CERTIFICATE-----

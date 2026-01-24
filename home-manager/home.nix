@@ -78,10 +78,14 @@
         nmap
         rustscan
         kubectl
+
+        step-kms-plugin
       ];
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
     # plain files is through 'home.file'.
     file = {
+      # used for opensc support in firefox
+      ".local/lib/opensc-pkcs11.so".source = "${pkgs.opensc}/lib/opensc-pkcs11.so";
       ".scripts" = {
         source = ./dotfiles/.scripts;
         recursive = true;
