@@ -3,6 +3,7 @@
   environment = {
     systemPackages = with pkgs;[
       opensc
+      sccache
     ];
 
     etc."volos.crt" = {
@@ -48,7 +49,7 @@
     buildMachines = [{
       hostName = "arm64-builder.insipx.xyz";
       system = "aarch64-linux";
-      maxJobs = 100;
+      maxJobs = 300;
       speedFactor = 2;
       supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
       mandatoryFeatures = [ ];
