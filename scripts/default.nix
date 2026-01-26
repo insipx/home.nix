@@ -1,12 +1,11 @@
 _: {
-  perSystem = { pkgs, self', ... }: {
-    packages = {
-      sccache_wrapper = pkgs.callPackage ./sccache_wrapper { };
-    };
-    overlays = {
-      scripts_overlay = _: prev: {
-        inherit (self'.pkgs) sccache_wrapper;
+  perSystem = { pkgs, ... }:
+    let
+      writeFishScriptBin = pkgs.lib.callPackage ./write_fish_script { };
+    in
+    {
+      packages = {
+        sccache_wrapper = pkgs.lib.callPackage ./sccache_wrapper { inherit writeFishScriptBin; };
       };
     };
-  };
 }

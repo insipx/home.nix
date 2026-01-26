@@ -119,8 +119,8 @@
       EDITOR = "nvim";
       KEYID = "843D72A9EB79A8692C585B3AE7738A7A0F5CDB89";
       # setup a profile "aws configure --profile tigris to enter secret keys"
-      AWS_PROFILE = "tigris";
-      RUSTC_WRAPPER = "${pkgs.sccache}/bin/sccache";
+      # AWS_PROFILE = "tigris";
+      RUSTC_WRAPPER = "${pkgs.sccache_wrapper}/bin/sccache";
       SCCACHE_REGION = "auto";
       SCCACHE_ENDPOINT = "https://fly.storage.tigris.dev";
       SCCACHE_BUCKET = "little-field-7109";

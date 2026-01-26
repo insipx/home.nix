@@ -3,7 +3,7 @@
   environment = {
     systemPackages = with pkgs;[
       opensc
-      sccache
+      sccache_wrapper
     ];
 
     etc."volos.crt" = {
