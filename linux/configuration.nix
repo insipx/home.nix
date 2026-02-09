@@ -10,7 +10,6 @@
       ./hardware-configuration.nix
       ./disk-config.nix
       ./services.nix
-      ./cachix.nix
     ];
 
   time.timeZone = "America/New_York";
@@ -90,9 +89,11 @@
       "ohio.time.system76.com"
     ];
   };
-  networking.hostName = "tanjiro"; # Define your hostname.
-  # Pick only one of the below networking options.
-  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
+  networking = {
+    hostName = "tanjiro"; # Define your hostname.
+    # Pick only one of the below networking options.
+    networkmanager.enable = true; # Easiest to use and most distros use this by default.
+  };
 
   programs = {
     hyprland.enable = true;
@@ -215,7 +216,7 @@
     tty.enable = true;
     cache.enable = true;
   };
-  nix.settings.trusted-users = [ "root" "insipx" ];
+  nix.settings.trusted-users = [ "root" ];
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

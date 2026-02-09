@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   inherit (pkgs) lib;
   imports = [
     ./neovim-configuration
@@ -119,8 +119,10 @@
       EDITOR = "nvim";
       KEYID = "843D72A9EB79A8692C585B3AE7738A7A0F5CDB89";
       # setup a profile "aws configure --profile tigris to enter secret keys"
+      # TODO: maybe use sops for secrets
       # AWS_PROFILE = "tigris";
-      RUSTC_WRAPPER = "${pkgs.sccache_wrapper}/bin/sccache";
+      RUSTC_WRAPPER = "${pkgs.sccache_wrapper}/bin/sccache_wrapper";
+      SCCACHE_BASEDIRS = "/home/${config.home.username}/code";
       SCCACHE_REGION = "auto";
       SCCACHE_ENDPOINT = "https://fly.storage.tigris.dev";
       SCCACHE_BUCKET = "little-field-7109";

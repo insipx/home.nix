@@ -83,6 +83,6 @@
         "x86_64-linux"
         "aarch64-darwin"
       ];
-      imports = [ ./systems.nix ./scripts ];
+      imports = [ ./systems.nix ];
     };
 }

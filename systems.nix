@@ -1,5 +1,5 @@
 { withSystem, inputs, ... }: {
-  perSystem = { system, ... }:
+  perSystem = { system, self', ... }:
     let
       override = final: prev: {
         jujutsu = prev.jujutsu.overrideAttrs {
@@ -8,6 +8,7 @@
       };
     in
     {
+      imports = [ ./scripts ];
       _module.args.pkgs = import inputs.nixpkgs {
         inherit system;
         overlays = with inputs; [
@@ -49,6 +50,7 @@
           disko.nixosModules.disko
           sops-nix.nixosModules.sops
           ./linux/configuration.nix
+          ./cachix.nix
           ./common.nix
           # inputs.determinate.nixosModules.default
           home-manager.nixosModules.home-manager
@@ -72,7 +74,7 @@
               extraSpecialArgs = { inherit inputs; };
             };
           }
-          inputs.nixpkgs.nixosModules.readOnlyPkgs
+          # inputs.nixpkgs.nixosModules.readOnlyPkgs
           ({ config, ... }: {
             # Use the configured pkgs from perSystem
             nixpkgs.pkgs = withSystem config.nixpkgs.hostPlatform.system (
