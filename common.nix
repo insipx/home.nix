@@ -1,7 +1,18 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
+  sops = {
+    defaultSopsFile = ./secrets/env.yaml;
+    secrets.nixAccessTokens = {
+      group = config.users.groups.keys.name;
+      mode = "0440";
+    };
+  };
+
+  nix.extraOptions = ''
+    !include ${config.sops.secrets.nixAccessTokens.path}
+  '';
   environment = {
-    systemPackages = with pkgs;[
+    systemPackages = with pkgs; [
       opensc
       sccache_wrapper
       lspmux
@@ -30,6 +41,22 @@
       -----END CERTIFICATE-----
     ''
   ];
+  programs.git = {
+    enable = true;
+    config = [
+      {
+        init = {
+          defaultBranch = "main";
+        };
+        url."https://github.com/" = {
+          insteadOf = [
+            "gh:"
+            "github:"
+          ];
+        };
+      }
+    ];
+  };
   programs.ssh = {
     knownHosts = {
       nixbuild = {
@@ -47,33 +74,48 @@
   };
 
   nix = {
-    buildMachines = [{
-      hostName = "arm64-builder.insipx.xyz";
-      system = "aarch64-linux";
-      maxJobs = 300;
-      speedFactor = 2;
-      supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-      mandatoryFeatures = [ ];
-      sshUser = "nixremote";
-      protocol = "ssh-ng";
-    }
+    buildMachines = [
+      {
+        hostName = "arm64-builder.insipx.xyz";
+        system = "aarch64-linux";
+        maxJobs = 300;
+        speedFactor = 2;
+        supportedFeatures = [
+          "nixos-test"
+          "benchmark"
+          "big-parallel"
+          "kvm"
+        ];
+        mandatoryFeatures = [ ];
+        sshUser = "nixremote";
+        protocol = "ssh-ng";
+      }
       {
         hostName = "eu.nixbuild.net";
         system = "i686-linux";
         maxJobs = 100;
-        supportedFeatures = [ "benchmark" "big-parallel" ];
+        supportedFeatures = [
+          "benchmark"
+          "big-parallel"
+        ];
       }
       {
         hostName = "eu.nixbuild.net";
         system = "armv7-linux";
         maxJobs = 100;
-        supportedFeatures = [ "benchmark" "big-parallel" ];
+        supportedFeatures = [
+          "benchmark"
+          "big-parallel"
+        ];
       }
       {
         hostName = "eu.nixbuild.net";
         system = "aarch64-linux";
         maxJobs = 100;
-        supportedFeatures = [ "benchmark" "big-parallel" ];
+        supportedFeatures = [
+          "benchmark"
+          "big-parallel"
+        ];
       }
       #     {
       #       # only enable x86_64 if we're not already on x86_64
@@ -84,8 +126,16 @@
       #     }
     ];
     settings = {
-      extra-experimental-features = [ "nix-command" "flakes" ];
-      system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+      extra-experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      system-features = [
+        "nixos-test"
+        "benchmark"
+        "big-parallel"
+        "kvm"
+      ];
       builders-use-substitutes = true;
       extra-platforms = [ ]; # Don't try to build aarch64 locally
     };

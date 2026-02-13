@@ -1,16 +1,6 @@
 # NixOs-specific home-manager configuration
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 {
-  # nix = {
-  #   package = pkgs.nix;
-  #   settings = {
-  #     experimental-features = "nix-command flakes";
-  #     trusted-users = [ "root" "insipx" "andrewplaza" ];
-  #     extra-substituters = "https://nix-community.cachix.org";
-  #     extra-trusted-public-keys =
-  #       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
-  #   };
-  # };
   services.gpg-agent = {
     enable = true;
     enableScDaemon = true;

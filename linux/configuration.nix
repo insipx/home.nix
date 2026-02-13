@@ -4,13 +4,12 @@
 
 { pkgs, ... }:
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./disk-config.nix
-      ./services.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./disk-config.nix
+    ./services.nix
+  ];
 
   time.timeZone = "America/New_York";
   # yubikey needs polkit rules
@@ -77,7 +76,14 @@
       systemd.enable = true;
       verbose = false;
       kernelModules = [ ];
-      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+      availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "ahci"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+      ];
     };
   };
 
@@ -156,7 +162,15 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.insipx = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "fuse" "video" "audio" "input" "seat" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "wheel"
+      "docker"
+      "fuse"
+      "video"
+      "audio"
+      "input"
+      "seat"
+    ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       tree
     ];
@@ -216,7 +230,10 @@
     tty.enable = true;
     cache.enable = true;
   };
-  nix.settings.trusted-users = [ "root" ];
+  nix.settings.trusted-users = [
+    "root"
+    "insipx"
+  ];
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -240,5 +257,3 @@
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "25.05"; # Did you read the comment?
 }
-
-

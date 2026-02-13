@@ -26,7 +26,7 @@ in
       deno
       nodePackages.prettier
       # alejandra
-      nixfmt-rfc-style
+      nixfmt
       rubyPackages.htmlbeautifier
       # codespell
 
@@ -45,8 +45,8 @@ in
       viu # for FFF Picker
     ];
     extraPlugins = [ ];
-    extraPython3Packages = ps:
-      with ps; [
+    extraPython3Packages =
+      ps: with ps; [
         pynvim
         unidecode
         black
@@ -92,22 +92,21 @@ in
       expandtab = true;
     };
 
-    keymaps =
-      [
-        {
-          key = "<Space>";
-          action = "<Nop>";
-          options.silent = true;
-        }
-      ]
-      ++ keybindings.all ++ keybindings.desc;
+    keymaps = [
+      {
+        key = "<Space>";
+        action = "<Nop>";
+        options.silent = true;
+      }
+    ]
+    ++ keybindings.all
+    ++ keybindings.desc;
 
-    extraConfigLua =
-      ''
-        -- vim.opt.listchars:append "eol:↴"
-        vim.opt.listchars:append "space:⋅"
-      ''
-      + builtins.readFile ./lua/conform.lua; # + builtins.readFile ./neovim-configuration/lua/lualine.lua;
+    extraConfigLua = ''
+      -- vim.opt.listchars:append "eol:↴"
+      vim.opt.listchars:append "space:⋅"
+    ''
+    + builtins.readFile ./lua/conform.lua; # + builtins.readFile ./neovim-configuration/lua/lualine.lua;
     extraConfigVim = ''
       set exrc
     '';
@@ -134,7 +133,7 @@ in
           nixd = {
             enable = true;
             filetypes = [ "nix" ];
-            settings.formatting.command = [ "nixpkgs-fmt" ];
+            settings.formatting.command = [ "nixfmt" ];
           };
           gopls = {
             enable = true;
@@ -222,7 +221,7 @@ in
             lua = [ "stylua" ];
             javascript = [ "prettier" ];
             typescript = [ "prettier" ];
-            nix = [ "nixfmt-rfc-style" ];
+            nix = [ "nixfmt" ];
             yaml = [ "prettier" ];
             html = [ "htmlbeautifier" ];
             markdown = [ "deno_fmt" ];

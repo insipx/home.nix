@@ -14,8 +14,6 @@ _: {
       pull = {
         rebase = true;
       };
-    };
-    settings = {
       diff = {
         tool = "nvim_difftool";
       };

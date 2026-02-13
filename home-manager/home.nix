@@ -1,4 +1,5 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+{
   inherit (pkgs) lib;
   imports = [
     ./neovim-configuration
@@ -10,9 +11,6 @@
   ];
   catppuccin.enable = true;
   catppuccin.mako.enable = false;
-  #sops = {
-  #  age.keyFile = ./../keys/age-yubikey-identity-e5e2e0d8.txt;
-  #};
   home = {
     # This value determines the Home Manager release that your configuration is
     # compatible with. This helps avoid breakage when a new Home Manager release
@@ -24,63 +22,61 @@
     stateVersion = "23.05"; # Please read the comment before changing.
     # The home.packages option allows you to install Nix packages into your
     # environment.
-    packages =
-      with pkgs;
-      [
-        # Fonts, Github's Font, minecraft font, minecraft font vectorized
-        nerd-fonts.symbols-only
-        # berkeley-mono
+    packages = with pkgs; [
+      # Fonts, Github's Font, minecraft font, minecraft font vectorized
+      nerd-fonts.symbols-only
+      # berkeley-mono
 
-        ripgrep
-        grc # Colorizer
-        dust # replacement for du
-        fd # find
-        macchina
-        glow
-        git
-        tokei
-        erdtree
-        # ncdu
-        awscli2
-        htop
-        duf # alternative to df, filesystem free space viewer
-        websocat # Query websockets
-        wget
-        spotifyd
-        fzf
-        jj-stack
-        lazyjj
-        jq
-        age-plugin-yubikey
+      ripgrep
+      grc # Colorizer
+      dust # replacement for du
+      fd # find
+      macchina
+      glow
+      git
+      tokei
+      erdtree
+      # ncdu
+      awscli2
+      htop
+      duf # alternative to df, filesystem free space viewer
+      websocat # Query websockets
+      wget
+      spotifyd
+      fzf
+      jj-stack
+      lazyjj
+      jq
+      age-plugin-yubikey
 
-        # Nix & General linting applicable to p. much everything related
-        deadnix
-        nixfmt
-        statix
-        # Git
-        gitlint
-        gh # Github CLI tool
-        graphite-cli
+      # Nix & General linting applicable to p. much everything related
+      deadnix
+      nixfmt
+      statix
+      # Git
+      gitlint
+      gh # Github CLI tool
+      graphite-cli
 
-        # General usability
-        nix-index # Run `nix-index` and then use `nix-locate` like the normal unix `locate`
-        feh
-        rage
-        lazyjj
-        # mpv
+      # General usability
+      nix-index # Run `nix-index` and then use `nix-locate` like the normal unix `locate`
+      feh
+      rage
+      lazyjj
+      # mpv
 
-        # Fun
-        lolcat
-        cowsay
-        chafa
+      # Fun
+      lolcat
+      cowsay
+      chafa
 
-        # Networking
-        nmap
-        rustscan
-        kubectl
+      # Networking
+      nmap
+      rustscan
+      kubectl
 
-        step-kms-plugin
-      ];
+      step-kms-plugin
+    ];
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
     # plain files is through 'home.file'.
     file = {

@@ -51,7 +51,7 @@
           sops-nix.nixosModules.sops
           ./linux/configuration.nix
           ./cachix.nix
-          ./garnix.nix
+          ./garnix/garnix.nix
           ./common.nix
           # inputs.determinate.nixosModules.default
           home-manager.nixosModules.home-manager
