@@ -1,6 +1,9 @@
-# NixOs-specific home-manager configuration
+# NixOS-specific home-manager configuration
 { pkgs, ... }:
 {
+  imports = [
+    ./rice
+  ];
   services.gpg-agent = {
     enable = true;
     enableScDaemon = true;

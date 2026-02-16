@@ -1,11 +1,15 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 {
   sops = {
     defaultSopsFile = ./secrets/env.yaml;
-    secrets.nixAccessTokens = {
-      group = config.users.groups.keys.name;
-      mode = "0440";
-    };
+    secrets.nixAccessTokens = lib.mkMerge [
+      {
+        mode = "0440";
+      }
+      (lib.mkIf (config.users.groups ? keys) {
+        group = config.users.groups.keys.name;
+      })
+    ];
   };
 
   nix.extraOptions = ''
@@ -41,22 +45,6 @@
       -----END CERTIFICATE-----
     ''
   ];
-  programs.git = {
-    enable = true;
-    config = [
-      {
-        init = {
-          defaultBranch = "main";
-        };
-        url."https://github.com/" = {
-          insteadOf = [
-            "gh:"
-            "github:"
-          ];
-        };
-      }
-    ];
-  };
   programs.ssh = {
     knownHosts = {
       nixbuild = {

@@ -4,26 +4,6 @@
   # $ nix-env -qaP | grep wget
   environment.systemPackages = [ pkgs.vim ];
   ids.gids.nixbld = 350;
-  gc = {
-    automatic = true;
-    interval = [
-      {
-        Hour = 0;
-        Minute = 0;
-        Weekday = 7;
-      }
-    ];
-    options = "--delete-older-than 30d";
-  };
-  optimise = {
-    automatic = true;
-    interval = [
-      {
-        Hour = 9;
-        Minute = 0;
-      }
-    ];
-  };
   sops = {
     age = {
       # keyFile = "${config.system.primaryUserHome}/.config/sops/age/keys.txt"; # For age keys
@@ -53,14 +33,7 @@
   };
 
   # The platform the configuration will be used on.
-  nixpkgs = {
-    hostPlatform = "aarch64-darwin";
-    config = {
-      allowUnfree = true;
-      allowBroken = false;
-      allowUnsupportedSystem = true;
-    };
-  };
+  nixpkgs.hostPlatform = "aarch64-darwin";
 
   # https://daiderd.com/nix-darwin/manual/index.html
   homebrew = {

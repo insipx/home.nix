@@ -37,7 +37,7 @@
         imports = [
           inputs.nixvim.homeModules.nixvim
           inputs.catppuccin.homeModules.catppuccin
-          ./home-manager/home.nix
+          ./home-manager
           ./home-manager/mac.nix
         ];
       };
@@ -49,11 +49,10 @@
           noctalia.nixosModules.default
           disko.nixosModules.disko
           sops-nix.nixosModules.sops
-          ./linux/configuration.nix
+          ./linux
           ./cachix.nix
-          ./garnix/garnix.nix
+          ./garnix
           ./common.nix
-          # inputs.determinate.nixosModules.default
           home-manager.nixosModules.home-manager
           inputs.catppuccin.nixosModules.default
           {
@@ -68,8 +67,8 @@
                   inputs.noctalia.homeModules.default
                   inputs.nixvim.homeModules.nixvim
                   inputs.catppuccin.homeModules.catppuccin
-                  ./home-manager/home.nix
-                  ./linux
+                  ./home-manager
+                  ./home-manager/machine-specific/linux
                 ];
               };
               extraSpecialArgs = { inherit inputs; };
@@ -147,10 +146,12 @@
           })
         ];
       };
-      nixosConfigurations.cyllene = inputs.nix-darwin.lib.darwinSystem {
+      darwinConfigurations.cyllene = inputs.nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
         modules = with inputs; [
           ./darwin-config.nix
           ./common.nix
+          ./determinate.nix
           home-manager.darwinModules.home-manager
           sops-nix.darwinModules.sops
           {
@@ -164,12 +165,20 @@
               extraSpecialArgs = { inherit inputs; };
             };
           }
+          ({ config, ... }: {
+            # Use the configured pkgs from perSystem
+            nixpkgs.pkgs = withSystem config.nixpkgs.hostPlatform.system (
+              { pkgs, ... }: # perSystem module arguments
+              pkgs
+            );
+          })
         ];
         specialArgs = {
           inherit inputs;
         };
       };
-      nixosConfigurations.kusanagi = inputs.nix-darwin.lib.darwinSystem {
+      darwinConfigurations.kusanagi = inputs.nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
         modules = with inputs; [
           ./darwin-config.nix
           ./common.nix
@@ -189,7 +198,17 @@
               extraSpecialArgs = { inherit inputs; };
             };
           }
+          ({ config, ... }: {
+            # Use the configured pkgs from perSystem
+            nixpkgs.pkgs = withSystem config.nixpkgs.hostPlatform.system (
+              { pkgs, ... }: # perSystem module arguments
+              pkgs
+            );
+          })
         ];
+        specialArgs = {
+          inherit inputs;
+        };
       };
     };
 }

@@ -20,6 +20,12 @@ _: {
       difftool = {
         nvim_difftool.cmd = "nvim -c \"packadd nvim.difftool\" -c \"DiffTool $LOCAL $REMOTE\"";
       };
+      url."https://github.com/" = {
+        insteadOf = [
+          "gh:"
+          "github:"
+        ];
+      };
     };
   };
 }
