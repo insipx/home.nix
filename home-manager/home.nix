@@ -100,6 +100,9 @@
       ".config/sops/age/age-yubi-cyllene.txt" = {
         source = ./../keys/age-yubi-cyllene.txt;
       };
+      ".config/sops/age/age-yubi-kusanagi.txt" = {
+        source = ./../keys/age-yubi-kusanagi.txt;
+      };
       ".ssh/config" = {
         text = ''
           Match host * exec "gpg-connect-agent UPDATESTARTUPTTY /bye"
