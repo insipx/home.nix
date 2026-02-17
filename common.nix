@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 {
   sops = {
     defaultSopsFile = ./secrets/env.yaml;
@@ -105,13 +110,17 @@
           "big-parallel"
         ];
       }
-      #     {
-      #       # only enable x86_64 if we're not already on x86_64
-      #       hostName = "eu.nixbuild.net";
-      #       system = "x86_64-linux";
-      #       maxJobs = 100;
-      #       supportedFeatures = [ "benchmark" "big-parallel" "kvm" ];
-      #     }
+      {
+        # only enable x86_64 if we're not already on x86_64
+        hostName = "eu.nixbuild.net";
+        system = "x86_64-linux";
+        maxJobs = 100;
+        supportedFeatures = [
+          "benchmark"
+          "big-parallel"
+          "kvm"
+        ];
+      }
     ];
     settings = {
       extra-experimental-features = [
