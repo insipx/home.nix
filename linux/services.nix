@@ -1,10 +1,14 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }:
+{
 
   services = {
     resolved = {
       enable = true;
       settings.Resolve.Domains = [ "~." ];
-      settings.Resolve.DNS = [ "127.0.0.1:5354" "10.10.69.1" ];
+      settings.Resolve.DNS = [
+        "127.0.0.1:5354"
+        "10.10.100.1"
+      ];
     };
     flatpak.enable = true;
     displayManager.lemurs = {
@@ -19,7 +23,10 @@
         ACTION=="add", SUBSYSTEM=="usb", TEST=="power/autosuspend" ATTR{power/autosuspend}="0"
         ACTION=="add", SUBSYSTEM=="usb", TEST=="power/autosuspend_delay_ms" ATTR{power/autosuspend_delay_ms}="0"
       '';
-      packages = [ pkgs.yubikey-personalization pkgs.libfido2 ];
+      packages = [
+        pkgs.yubikey-personalization
+        pkgs.libfido2
+      ];
     };
     pcscd.enable = true;
     # sound
