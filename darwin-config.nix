@@ -55,6 +55,7 @@
       "orbstack"
       "claude"
       "claude-code"
+      "visual-studio-code"
     ];
     onActivation = {
       autoUpdate = true;

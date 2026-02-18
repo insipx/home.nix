@@ -9,6 +9,7 @@ keys:
   - &laptop_tanjiro age19446pxygzyghv22qw9f2luusz5lh45qyharw897cyy58z5sfqq4s22l2x8
   - &laptop_kusanagi age1yubikey1qfvw6l6r3gltz38ml5a8g0acv4d3jxvm2vth50frrqeq27qz4pzpc6yjwsj
   - &machine_kusanagi age1594rnrdzj837lwtv039dnsp2gsmpsmp4dreezuf8rmnaf5u8kfysk6eax8
+  - &machine_cyllene age1ms7yqk2kedr9y37z4myu4lzdpu7mpcnslse9v2ut9hqk5d0fayqs3e9p09
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
     key_groups:
