@@ -19,5 +19,6 @@ creation_rules:
           - *laptop_tanjiro
           - *laptop_kusanagi
           - *machine_kusanagi
+          - *machine_cyllene
         pgp:
           - *insipx-gpg
