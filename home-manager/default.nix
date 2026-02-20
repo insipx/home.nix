@@ -1,4 +1,8 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  ...
+}:
 {
   inherit (pkgs) lib;
   imports = [
@@ -7,8 +11,11 @@
     ./jujutsu.nix
     ./git.nix
     ./fish.nix
+    ./emacs.nix
     #   (import privateConfiguration)
   ];
+
+  services.emacs.enable = true;
   catppuccin.enable = true;
   catppuccin.mako.enable = false;
   home = {

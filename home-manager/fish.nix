@@ -1,7 +1,9 @@
-{ pkgs
-, lib
-, ...
-}: {
+{
+  pkgs,
+  lib,
+  ...
+}:
+{
   programs.fish = {
     enable = true;
     shellAliases = {
@@ -33,16 +35,14 @@
       fish_vi_key_bindings
       set -x KEYID "843D72A9EB79A8692C585B3AE7738A7A0F5CDB89"
       # Batpipe setup
-      set -x LESSOPEN "|${pkgs.bat-extras.batpipe}/bin/.batpipe-wrapped %s";
-      set -e LESSCLOSE;
+      # set -x LESSOPEN "|${pkgs.bat-extras.batpipe}/bin/.batpipe-wrapped %s";
+      # set -e LESSCLOSE;
       set -x NODE_EXTRA_CA_CERTS /etc/volos.crt
 
       # The following will enable colors when using batpipe with less:
-      set -x LESS "$LESS -R";
+      # set -x LESS "$LESS -R";
       # set -x BATPIPE "color";
 
-      set -gx PATH "$HOME/.scripts" $PATH
-      set -gx PATH "$HOME/.cargo/bin" $PATH
       if test (uname) = Darwin
         fish_add_path --prepend --global "$HOME/.nix-profile/bin" /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
         # fish_add_path --prepend --global "$HOME/.foundry/bin"

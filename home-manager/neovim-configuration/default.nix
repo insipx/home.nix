@@ -120,10 +120,6 @@ in
     };
     dependencies = {
       tree-sitter.enable = true;
-      rust-analyzer = {
-        enable = true;
-        package = pkgs.rust-analyzer-nightly;
-      };
       direnv.enable = true;
     };
     plugins = {
@@ -164,9 +160,6 @@ in
       };
       lspsaga.enable = true;
       blink-cmp = {
-        enable = true;
-      };
-      blink-cmp-copilot = {
         enable = true;
       };
       coq-nvim = {
@@ -254,14 +247,13 @@ in
           default_settings = {
             rust-analyzer = {
               cargo = {
-                allTargets = false;
-                buildScripts.enable = false;
-                # features = "all";
+                allTargets = true;
+                buildScripts.enable = true;
+                features = "all";
               };
               checkOnSave = true;
               check = {
-                command = "check";
-                extraArgs = [ "--no-deps" ];
+                command = "clippy";
                 features = "all";
               };
               procMacro = {
@@ -302,9 +294,9 @@ in
       crates = {
         enable = true;
         settings = {
-          src = {
-            coq = {
-              enabled = false;
+          completion = {
+            crates = {
+              enabled = true;
             };
           };
         };

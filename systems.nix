@@ -1,7 +1,12 @@
 { withSystem, inputs, ... }:
 {
   perSystem =
-    { system, self', ... }:
+    {
+      system,
+      self',
+      inputs',
+      ...
+    }:
     let
       override = final: prev: {
         jujutsu = prev.jujutsu.overrideAttrs {
@@ -73,6 +78,7 @@
                     inputs.noctalia.homeModules.default
                     inputs.nixvim.homeModules.nixvim
                     inputs.catppuccin.homeModules.catppuccin
+                    inputs.doom-emacs.homeModule
                     ./home-manager
                     ./home-manager/machine-specific/linux
                   ];

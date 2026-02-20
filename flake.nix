@@ -21,6 +21,15 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    doom-emacs = {
+      url = "github:marienz/nix-doom-emacs-unstraightened";
+      inputs.nixpkgs.follows = "";
+    };
+    doom-config = {
+      url = "git+file:/home/insipx/code/insipx/doom-emacs";
+      # url = "github:insipx/doom-emacs";
+      flake = false;
+    };
     ghostty = {
       url = "github:ghostty-org/ghostty";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,7 +43,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     jujutsu = {
-      url = "github:jj-vcs/jj/v0.34.0";
+      url = "github:jj-vcs/jj/v0.38.0";
       # url = "github:jj-vcs/jj";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.rust-overlay.follows = "rust-overlay";
@@ -78,7 +87,8 @@
   # `...` allows defining additional inputs to the outputs
   # without changing the fn signature. It makes the flake more flexible.
   outputs =
-    inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
         "x86_64-linux"
         "aarch64-darwin"

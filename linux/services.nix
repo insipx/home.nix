@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 {
 
   services = {
@@ -43,6 +48,19 @@
     openssh.enable = true;
     # Execute shebangs like on normal linux (i.e #!/bin/bash)
     envfs.enable = true;
+  };
+  systemd.services.lspmux = {
+    enable = true;
+    description = "Language server multiplexer";
+    wantedBy = [ "default.target" ];
+    path = [
+      pkgs.rust-analyzer-nightly
+      inputs.fenix.packages.${pkgs.system}.minimal.toolchain
+    ];
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.lspmux}/bin/lspmux server";
+    };
   };
   # services custom config
   environment = {

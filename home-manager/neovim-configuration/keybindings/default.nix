@@ -1,111 +1,79 @@
 let
-  modules = [
-    ./file.nix
-    ./buffer.nix
-    ./search.nix
-    ./window.nix
-    ./insert.nix
-    ./terminal.nix
-    ./lsp
-    ./syntax-nav.nix
-    ./workspaces.nix
-    ./telescope
-    ./ui.nix
-    ./git.nix
-    ./dap.nix
-  ];
-
-  imports = map import modules;
-
-  all = builtins.concatLists
-    (map (m: if builtins.isAttrs m then m.all else m) imports);
+  lib = import ./lib.nix;
+  discovered = lib.autoDiscover ./.;
 in
-{
-  file = import ./file.nix;
-  buffer = import ./buffer.nix;
-  search = import ./search.nix;
-  ui = import ./ui.nix;
-  git = import ./git.nix;
-  window = import ./window.nix;
-  insert = import ./insert.nix;
-  terminal = import ./terminal.nix;
-  lsp = import ./lsp;
-  syntaxNav = import ./syntax-nav.nix;
-  workspaces = import ./workspaces.nix;
-  telescope = import ./telescope;
-  dap = import ./dap.nix;
+discovered
+// {
   desc = [
     {
       key = "<leader>b";
       action = "";
-      options.desc = "buffers";
+      options.desc = "+buffers";
+    }
+    {
+      key = "<leader>c";
+      action = "";
+      actions.desc = "+code";
     }
     {
       key = "<leader>r";
       action = "";
-      options.desc = "rr debugger";
+      options.desc = "+debugger";
     }
     {
-      key = "<leader>D";
+      key = "<leader>f";
       action = "";
-      options.desc = "diagnostics";
-    }
-    {
-      key = "<Leader>f";
-      action = "";
-      options.desc = "files";
+      options.desc = "+files";
     }
     {
       key = "g";
       action = "g";
-      options.desc = "lsp goto";
+      options.desc = "+goto";
     }
     {
-      key = "<Leader>i";
+      key = "<leader>i";
       action = "";
-      options.desc = "clipboard insert";
+      options.desc = "+clipboard";
     }
     {
-      key = "<Leader>l";
+      key = "<leader>l";
       action = "";
-      options.desc = "lsp";
+      options.desc = "+lsp";
     }
     {
-      key = "<Leader>p";
+      key = "<leader>p";
       action = "";
-      options.desc = "project";
+      options.desc = "+project";
     }
     {
-      key = "<Leader>q";
+      key = "<leader>q";
       action = "";
-      options.desc = "quickfix/search";
+      options.desc = "+quickfix";
     }
     {
-      key = "<Leader>t";
+      key = "<leader>t";
       action = "";
-      options.desc = "terminal";
+      options.desc = "+terminal";
     }
     {
-      key = "<Leader>w";
+      key = "<leader>w";
       action = "";
-      options.desc = "window";
+      options.desc = "+window";
     }
     {
-      key = "<Leader>u";
+      key = "<leader>u";
       action = "";
-      options.desc = "ui elements";
+      options.desc = "+ui toggles";
     }
     {
-      key = "<Leader>g";
+      key = "<leader>g";
       action = "";
-      options.desc = "git";
+      options.desc = "+git";
     }
     {
-      key = "<Leader><Tab>";
+      key = "<leader><Tab>";
       action = "";
-      options.desc = "workspace";
+      options.desc = "+workspace";
     }
   ];
-
-  inherit all;
 }
