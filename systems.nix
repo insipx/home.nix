@@ -48,7 +48,7 @@
             inputs.nixvim.homeModules.nixvim
             inputs.catppuccin.homeModules.catppuccin
             ./home-manager
-            ./home-manager/mac.nix
+            ./home-manager/mac
           ];
         };
     in

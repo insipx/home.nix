@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   home.file = {
     ".gnupg/gpg-agent.conf".text = ''
       # https://github.com/drduh/config/blob/master/gpg-agent.conf
