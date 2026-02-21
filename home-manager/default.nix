@@ -12,6 +12,7 @@
     ./git.nix
     ./fish.nix
     ./emacs.nix
+    ./lspmux.nix
     #   (import privateConfiguration)
   ];
 

@@ -35,7 +35,6 @@
       desc = "delete buffer";
     };
   }
-
   {
     mode = "n";
     key = "<Leader>ba";

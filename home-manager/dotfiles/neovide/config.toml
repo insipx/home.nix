@@ -1,5 +1,0 @@
-vsync = true
-
-[font]
-normal = ["Berkeley Mono", "Symbols Nerd Font Mono"]
-size = 14

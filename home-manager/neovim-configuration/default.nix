@@ -217,8 +217,8 @@ in
             nix = [ "nixfmt" ];
             yaml = [ "prettier" ];
             html = [ "htmlbeautifier" ];
-            markdown = [ "deno_fmt" ];
-            json = [ "deno_fmt" ];
+            markdown = [ "deno fmt" ];
+            json = [ "deno fmt" ];
             "*" = [ "codespell" ];
           };
         };
@@ -233,7 +233,7 @@ in
           ];
           env = [ "dotenv_linter" ];
           git = [ "gitlint" ];
-          json = [ "deno_fmt" ];
+          json = [ "deno lint" ];
         };
       };
 
@@ -338,6 +338,15 @@ in
       octo.enable = true;
       fff = {
         enable = true;
+        settings = {
+          prompt = "> ";
+          layout = {
+            width = 1;
+            height = 1;
+            prompt_position = "top";
+            preview_position = "top";
+          };
+        };
       };
       telescope = {
         enable = true;

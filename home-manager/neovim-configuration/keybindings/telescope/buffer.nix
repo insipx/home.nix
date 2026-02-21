@@ -20,7 +20,7 @@
     action.__raw = ''
       function()
         require('telescope')
-          .extensions.scope.buffers(require('telescope.themes').get_ivy({})) 
+          .extensions.scope.buffers(require('telescope.themes').get_ivy({}))
       end
     '';
     options = {

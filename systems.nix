@@ -31,6 +31,7 @@
           override
           (_: _: {
             inherit (self'.packages) sccache_wrapper;
+            inherit (inputs'.nvim-fff.packages) fff-nvim;
           })
         ];
         config = {

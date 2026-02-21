@@ -13,7 +13,7 @@ discovered
     {
       key = "<leader>c";
       action = "";
-      actions.desc = "+code";
+      options.desc = "+code";
     }
     {
       key = "<leader>r";
