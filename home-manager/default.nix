@@ -6,12 +6,10 @@
 {
   inherit (pkgs) lib;
   imports = [
-    ./neovim-configuration
     ./ghostty.nix
     ./jujutsu.nix
     ./git.nix
     ./fish.nix
-    ./emacs.nix
     ./lspmux.nix
     ./neovide.nix
     #   (import privateConfiguration)

@@ -60,14 +60,15 @@
       "locked": {
         "lastModified": 1771625335,
         "narHash": "sha256-xN8xbWBP7HHBOgjhnCNKw4tGyy/GSxQWz0wORTNQVZA=",
+        "owner": "insipx",
+        "repo": "doom-emacs",
         "rev": "c1f7bb6510924274059b3d12c91e56eeac0f0eaa",
-        "revCount": 9,
-        "type": "git",
-        "url": "file:/home/insipx/code/insipx/doom-emacs"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:/home/insipx/code/insipx/doom-emacs"
+        "owner": "insipx",
+        "repo": "doom-emacs",
+        "type": "github"
       }
     },
     "doom-emacs": {
@@ -507,11 +508,11 @@
         "zon2nix": "zon2nix"
       },
       "locked": {
-        "lastModified": 1771694308,
-        "narHash": "sha256-jPxFDCVP6M6Pc0d1YfQUil/UTrrbV+Gkakp7O9qdH4A=",
+        "lastModified": 1771710593,
+        "narHash": "sha256-X+KzZUijlnhbp+yMa5ZnDgH/kAYe8ADq93V9ImPlQD0=",
         "owner": "ghostty-org",
         "repo": "ghostty",
-        "rev": "2e172eeb60b0096f2946eb631b2e8bc294e45c62",
+        "rev": "2e102b015facfa82432d09bd5d8151d239552800",
         "type": "github"
       },
       "original": {

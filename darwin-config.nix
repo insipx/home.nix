@@ -55,7 +55,7 @@
       "orbstack"
       "claude"
       "claude-code"
-      "visual-studio-code"
+      "vimr"
     ];
     onActivation = {
       autoUpdate = true;

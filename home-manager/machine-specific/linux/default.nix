@@ -3,6 +3,7 @@
 {
   imports = [
     ./rice
+    ../../emacs.nix
   ];
   services.gpg-agent = {
     enable = true;

@@ -4,7 +4,6 @@
     {
       system,
       self',
-      inputs',
       ...
     }:
     let
@@ -19,19 +18,17 @@
       _module.args.pkgs = import inputs.nixpkgs {
         inherit system;
         overlays = with inputs; [
-          neorg-overlay.overlays.default
+          shadow-nvim.overlays.default
           # inputs.mozilla.overlays.firefox
           fenix.overlays.default
           # inputs.rustowl.overlays.default
           rust-overlay.overlays.default
-          neovim-nightly.overlays.default
           jujutsu.overlays.default
           environments.overlays.default
           sccache.overlays.default
           override
           (_: _: {
             inherit (self'.packages) sccache_wrapper;
-            inherit (inputs'.nvim-fff.packages) fff-nvim;
           })
         ];
         config = {
@@ -45,10 +42,10 @@
         { ... }:
         {
           imports = [
-            inputs.nixvim.homeModules.nixvim
             inputs.catppuccin.homeModules.catppuccin
+            inputs.doom-emacs.homeModule
             ./home-manager
-            ./home-manager/mac
+            ./home-manager/machine-specific/mac
           ];
         };
     in
@@ -77,7 +74,6 @@
                 {
                   imports = [
                     inputs.noctalia.homeModules.default
-                    inputs.nixvim.homeModules.nixvim
                     inputs.catppuccin.homeModules.catppuccin
                     inputs.doom-emacs.homeModule
                     ./home-manager
@@ -195,6 +191,7 @@
           ./determinate.nix
           home-manager.darwinModules.home-manager
           sops-nix.darwinModules.sops
+          shadow-nvim.darwinModules.shadow-nvim
           {
             system.primaryUser = "insipx";
           }
@@ -228,12 +225,14 @@
           ./common.nix
           home-manager.darwinModules.home-manager
           sops-nix.darwinModules.sops
+          shadow-nvim.darwinModules.shadow-nvim
           {
             system.primaryUser = "andrewplaza";
             nix.settings.trusted-users = [
               "root"
               "andrewplaza"
             ];
+            programs.shadow-nvim.enable = true;
           }
           {
             home-manager = {

@@ -17,33 +17,21 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Other Sources
-    neovim-nightly = {
-      url = "github:nix-community/neovim-nightly-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nvim-fff = {
-      url = "github:dmtrKovalenko/fff.nvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     doom-emacs = {
       url = "github:marienz/nix-doom-emacs-unstraightened";
       inputs.nixpkgs.follows = "";
     };
     doom-config = {
-      url = "git+file:/home/insipx/code/insipx/doom-emacs";
-      # url = "github:insipx/doom-emacs";
+      # url = "git+file:/home/insipx/code/insipx/doom-emacs";
+      url = "github:insipx/doom-emacs";
       flake = false;
+    };
+    shadow-nvim = {
+      url = "git+file:/Users/andrewplaza/code/insipx/shadow-nvim";
+      # url = "github:insipx/shadow-nvim";
     };
     ghostty = {
       url = "github:ghostty-org/ghostty";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    neorg-overlay = {
-      url = "github:nvim-neorg/nixpkgs-neorg-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixvim = {
-      url = "github:nix-community/nixvim/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     jujutsu = {
