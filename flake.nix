@@ -22,13 +22,13 @@
       inputs.nixpkgs.follows = "";
     };
     doom-config = {
-      # url = "git+file:/home/insipx/code/insipx/doom-emacs";
-      url = "github:insipx/doom-emacs";
+      url = "git+file:/home/insipx/code/insipx/doom-emacs";
+      # url = "github:insipx/doom-emacs";
       flake = false;
     };
     shadow-nvim = {
-      url = "git+file:/Users/andrewplaza/code/insipx/shadow-nvim";
-      # url = "github:insipx/shadow-nvim";
+      # url = "github:insipx/neovim";
+      url = "git+file:/home/insipx/code/insipx/neovim";
     };
     ghostty = {
       url = "github:ghostty-org/ghostty";
@@ -56,6 +56,10 @@
       url = "github:mozilla/sccache";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    unfree = {
+      # url = "git+file:/home/insipx/code/insipx/unfree";
+      url = "github:insipx/unfree/main";
+    };
     sops-nix.url = "github:Mic92/sops-nix";
     # tidal.url = "github:mitchmindtree/tidalcycles.nix";
     # rustowl = {
@@ -69,7 +73,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
-
+    jj-spr.url = "github:LucioFranco/jj-spr";
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -85,6 +89,9 @@
         "x86_64-linux"
         "aarch64-darwin"
       ];
-      imports = [ ./systems.nix ];
+      imports = [
+        ./systems.nix
+        inputs.flake-parts.flakeModules.modules
+      ];
     };
 }

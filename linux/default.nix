@@ -11,6 +11,9 @@
     ./services.nix
   ];
 
+  fonts.packages = [
+    pkgs.berkeley-mono
+  ];
   time.timeZone = "America/New_York";
   # yubikey needs polkit rules
   security = {
@@ -95,13 +98,45 @@
       "ohio.time.system76.com"
     ];
   };
+  services.resolved = {
+    enable = true;
+    settings.Resolve.DNSOverTLS = "opportunistic";
+  };
+  systemd.network = {
+    enable = true;
+
+    netdevs."10-dns-xmtpd" = {
+      netdevConfig = {
+        Name = "dns-xmtpd";
+        Kind = "dummy";
+      };
+    };
+
+    networks."10-dns-xmtpd" = {
+      matchConfig.Name = "dns-xmtpd";
+      networkConfig = {
+        DNS = "127.0.0.1:5354";
+        Domains = "~xmtpd.local";
+        DNSSEC = false;
+        DNSOverTLS = false;
+      };
+      address = [ "192.168.254.253/32" ];
+    };
+  };
   networking = {
     hostName = "tanjiro"; # Define your hostname.
-    # Pick only one of the below networking options.
-    networkmanager.enable = true; # Easiest to use and most distros use this by default.
+    networkmanager = {
+      enable = true;
+      dns = "systemd-resolved";
+    };
   };
 
   programs = {
+    shadow-nvim = {
+      enable = true;
+      font = "Berkeley Mono Condensed";
+      font-size = 16;
+    };
     hyprland.enable = true;
     gamescope = {
       enable = true;

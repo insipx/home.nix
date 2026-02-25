@@ -1,4 +1,4 @@
-_: {
+{pkgs, ...}: {
   programs.jujutsu = {
     enable = true;
     settings = {
@@ -7,6 +7,8 @@ _: {
         email = "github@andrewplaza.dev";
       };
       aliases.tug = ["bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@-"];
+      aliases.spr = ["util" "exec" "--" "${pkgs.jj-spr}/bin/jj-spr"];
+      aliases.stack = ["util" "exec" "--" "${pkgs.jj-stack}/bin/jj-stack"];
       signing = {
         behavior = "own";
         backend = "gpg"; # maybe use program option and link to exact nix binary

@@ -1,20 +1,11 @@
 {
   lib,
   pkgs,
-  inputs,
   ...
 }:
 {
 
   services = {
-    resolved = {
-      enable = true;
-      settings.Resolve.Domains = [ "~." ];
-      settings.Resolve.DNS = [
-        "127.0.0.1:5354"
-        "10.10.100.1"
-      ];
-    };
     flatpak.enable = true;
     displayManager.lemurs = {
       enable = true;

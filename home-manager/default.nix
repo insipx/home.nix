@@ -32,7 +32,8 @@
     packages = with pkgs; [
       # Fonts, Github's Font, minecraft font, minecraft font vectorized
       nerd-fonts.symbols-only
-      # berkeley-mono
+      berkeley-mono
+      source-code-pro
 
       ripgrep
       grc # Colorizer
@@ -64,6 +65,7 @@
       gitlint
       gh # Github CLI tool
       graphite-cli
+      jj-spr
 
       # General usability
       nix-index # Run `nix-index` and then use `nix-locate` like the normal unix `locate`
@@ -119,7 +121,6 @@
     };
 
     sessionVariables = {
-      EDITOR = "nvim";
       KEYID = "843D72A9EB79A8692C585B3AE7738A7A0F5CDB89";
       # setup a profile "aws configure --profile tigris to enter secret keys"
       # TODO: maybe use sops for secrets

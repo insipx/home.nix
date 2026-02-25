@@ -26,9 +26,11 @@
           jujutsu.overlays.default
           environments.overlays.default
           sccache.overlays.default
+          unfree.overlays.default
           override
           (_: _: {
             inherit (self'.packages) sccache_wrapper;
+            jj-spr = inputs.jj-spr.packages.${system}.default;
           })
         ];
         config = {
@@ -62,6 +64,7 @@
           ./common.nix
           home-manager.nixosModules.home-manager
           inputs.catppuccin.nixosModules.default
+          inputs.shadow-nvim.nixosModules.default
           {
             home-manager = {
               sharedModules = [

@@ -21,9 +21,9 @@ in
     installVimSyntax = true;
     installBatSyntax = true;
     settings = {
-      font-family = "Berkeley Mono";
+      font-family = "Berkeley Mono Condensed";
       theme = "Catppuccin Mocha";
-      font-size = "14";
+      font-size = "16";
       keybind = [
         "ctrl+space>shift+-=new_split:down "
         "ctrl+space>shift+\|=new_split:right"

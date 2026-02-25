@@ -1,23 +1,25 @@
 {
   pkgs,
   config,
-  lib,
   ...
 }:
 {
   sops = {
     defaultSopsFile = ./secrets/env.yaml;
-    secrets.nixAccessTokens = lib.mkMerge [
-      {
-        mode = "0440";
-      }
-      (lib.mkIf (config.users.groups ? keys) {
-        group = config.users.groups.keys.name;
-      })
-    ];
+    secrets.nixAccessTokens = {
+      mode = "0440";
+      owner = config.users.users.insipx.name;
+      group = config.users.users.insipx.group;
+    };
+    secrets.nixAccessTokensClassic = {
+      mode = "0440";
+      owner = config.users.users.insipx.name;
+      group = config.users.users.insipx.group;
+    };
   };
 
   nix.extraOptions = ''
+    !include ${config.sops.secrets.nixAccessTokensClassic.path}
     !include ${config.sops.secrets.nixAccessTokens.path}
   '';
   environment = {
