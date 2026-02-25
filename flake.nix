@@ -21,14 +21,16 @@
       inputs.nixpkgs.follows = "";
     };
     doom-config = {
-      url = "git+file:/home/insipx/code/insipx/doom-emacs";
+      # url = "git+file:/home/insipx/code/insipx/doom-emacs";
+      # url = "github:insipx/doom-emacs";
+      url = "git+file:/Users/andrewplaza/code/insipx/doom-emacs";
       # url = "github:insipx/doom-emacs";
       flake = false;
     };
     shadow-nvim = {
-      url = "github:insipx/neovim";
-      # url = "git+file:/home/insipx/code/insipx/neovim";
-    };
+       # url = "git+file:/Users/andrewplaza/code/insipx/shadow-nvim";
+       url = "github:insipx/neovim";
+     };
     ghostty = {
       url = "github:ghostty-org/ghostty";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -57,7 +59,8 @@
     };
     unfree = {
       # url = "git+file:/home/insipx/code/insipx/unfree";
-      url = "github:insipx/unfree/main";
+      # url = "github:insipx/unfree/main";
+      url = "git+ssh://git@github.com/insipx/unfree.git";
     };
     sops-nix = {
       url = "github:Mic92/sops-nix";

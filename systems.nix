@@ -30,8 +30,6 @@
           jupiter-secrets.overlays.default
           claude-code.overlays.default
           override
-          (_: _: {
-          })
         ];
         config = {
           allowUnfree = true;
@@ -243,6 +241,7 @@
         modules = with inputs; [
           ./darwin-config.nix
           ./common.nix
+          ./cachix.nix
           home-manager.darwinModules.home-manager
           sops-nix.darwinModules.sops
           shadow-nvim.darwinModules.shadow-nvim
@@ -252,7 +251,7 @@
               "root"
               "andrewplaza"
             ];
-            programs.shadow-nvim.enable = true;
+            # programs.shadow-nvim.enable = true;
           }
           {
             home-manager = {
