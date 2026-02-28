@@ -2,7 +2,7 @@
 {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = [ pkgs.vim ];
+  environment.systemPackages = with pkgs; [ git ];
   ids.gids.nixbld = 350;
   sops = {
     age = {
@@ -13,7 +13,11 @@
 
   # Set Git commit hash for darwin-version.
   # system.configurationRevision = config.system.flakeRevision;
-
+  programs.shadow-nvim = {
+    enable = true;
+    font = "Berkeley Mono Condensed";
+    font-size = 16;
+  };
   programs.zsh.enable = true; # default shell on catalina
   programs.fish = {
     enable = true;

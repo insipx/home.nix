@@ -29,7 +29,6 @@
           unfree.overlays.default
           override
           (_: _: {
-            inherit (self'.packages) sccache_wrapper;
             jj-spr = inputs.jj-spr.packages.${system}.default;
           })
         ];
@@ -198,19 +197,24 @@
           sops-nix.darwinModules.sops
           shadow-nvim.darwinModules.shadow-nvim
           inputs.determinate.darwinModules.default
-          {
-            system.primaryUser = "insipx";
-            determinateNix = {
-              enable = true;
-              customSettings = {
-                trusted-users = [
-                  "root"
-                  "insipx"
-                ];
-                sandbox = true;
+          (
+            { config, ... }:
+            {
+              system.primaryUser = "insipx";
+              determinateNix = {
+                enable = true;
+                customSettings = {
+                  trusted-users = [
+                    "root"
+                    "insipx"
+                  ];
+                  sandbox = true;
+                  extra-experimental-features = "external-builders";
+                  # extraOptions = "!include ${config.sops.secrets.nixAccessTokens.path}";
+                };
               };
-            };
-          }
+            }
+          )
           {
             home-manager = {
               useGlobalPkgs = true;

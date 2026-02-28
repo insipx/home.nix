@@ -8,24 +8,32 @@
     defaultSopsFile = ./secrets/env.yaml;
     secrets.nixAccessTokens = {
       mode = "0440";
-      owner = config.users.users.insipx.name;
-      group = config.users.users.insipx.group;
+      owner =
+        if pkgs.stdenv.hostPlatform == "x86_64-linux" then
+          config.users.users.insipx.name
+        else
+          config.system.primaryUser;
+      group =
+        if pkgs.stdenv.hostPlatform == "x86_64-linux" then config.users.users.insipx.name else "staff";
+      # group = config.users.users.insipx.group;
     };
     secrets.nixAccessTokensClassic = {
       mode = "0440";
-      owner = config.users.users.insipx.name;
-      group = config.users.users.insipx.group;
+      owner =
+        if pkgs.stdenv.hostPlatform == "x86_64-linux" then
+          config.users.users.insipx.name
+        else
+          config.system.primaryUser;
+      # group = config.users.users.insipx.group;
     };
   };
 
   nix.extraOptions = ''
-    !include ${config.sops.secrets.nixAccessTokensClassic.path}
     !include ${config.sops.secrets.nixAccessTokens.path}
   '';
   environment = {
     systemPackages = with pkgs; [
       opensc
-      sccache_wrapper
       lspmux
     ];
 
