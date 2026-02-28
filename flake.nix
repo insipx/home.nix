@@ -27,8 +27,8 @@
       flake = false;
     };
     shadow-nvim = {
-      # url = "github:insipx/neovim";
-      url = "git+file:/home/insipx/code/insipx/neovim";
+      url = "github:insipx/neovim";
+      # url = "git+file:/home/insipx/code/insipx/neovim";
     };
     ghostty = {
       url = "github:ghostty-org/ghostty";
@@ -67,7 +67,7 @@
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
     swww.url = "github:LGFae/swww";
-    # determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     environments = {
       url = "github:insipx/environments";
       inputs.nixpkgs.follows = "nixpkgs";

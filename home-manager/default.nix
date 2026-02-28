@@ -125,7 +125,7 @@
       # setup a profile "aws configure --profile tigris to enter secret keys"
       # TODO: maybe use sops for secrets
       # AWS_PROFILE = "tigris";
-      RUSTC_WRAPPER = "${pkgs.sccache_wrapper}/bin/sccache_wrapper";
+      # RUSTC_WRAPPER = "${pkgs.sccache_wrapper}/bin/sccache_wrapper";
       SCCACHE_BASEDIRS = "/home/${config.home.username}/code";
       SCCACHE_REGION = "auto";
       SCCACHE_ENDPOINT = "https://fly.storage.tigris.dev";

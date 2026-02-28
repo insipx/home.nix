@@ -59,8 +59,8 @@
           disko.nixosModules.disko
           sops-nix.nixosModules.sops
           ./linux
-          ./cachix.nix
-          ./garnix
+          # ./cachix.nix
+          # ./garnix
           ./common.nix
           home-manager.nixosModules.home-manager
           inputs.catppuccin.nixosModules.default
@@ -192,11 +192,24 @@
           ./darwin-config.nix
           ./common.nix
           ./determinate.nix
+          ./cachix.nix
+          ./garnix
           home-manager.darwinModules.home-manager
           sops-nix.darwinModules.sops
           shadow-nvim.darwinModules.shadow-nvim
+          inputs.determinate.darwinModules.default
           {
             system.primaryUser = "insipx";
+            determinateNix = {
+              enable = true;
+              customSettings = {
+                trusted-users = [
+                  "root"
+                  "insipx"
+                ];
+                sandbox = true;
+              };
+            };
           }
           {
             home-manager = {
