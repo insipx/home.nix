@@ -27,9 +27,10 @@
           environments.overlays.default
           sccache.overlays.default
           unfree.overlays.default
+          jupiter-secrets.overlays.default
+          claude-code.overlays.default
           override
           (_: _: {
-            jj-spr = inputs.jj-spr.packages.${system}.default;
           })
         ];
         config = {
@@ -54,12 +55,11 @@
       nixosConfigurations.tanjiro = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = with inputs; [
+          inputs.jupiter-secrets.nixosModules.default
           noctalia.nixosModules.default
           disko.nixosModules.disko
-          sops-nix.nixosModules.sops
           ./linux
-          # ./cachix.nix
-          # ./garnix
+          ./cachix.nix
           ./common.nix
           home-manager.nixosModules.home-manager
           inputs.catppuccin.nixosModules.default

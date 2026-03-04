@@ -11,6 +11,11 @@
     ./services.nix
   ];
 
+  jupiter-secrets = {
+    enable = true;
+    settings.claudevm = true;
+    generateKey = false;
+  };
   fonts.packages = [
     pkgs.berkeley-mono
   ];
@@ -247,11 +252,13 @@
     vlc
     discord
     resources
+    coder
 
     alsa-ucm-conf # includes options for Motu M2
     lnav
     spotify
     k3s
+    signal-desktop
 
     # Hyprland
     hyprshot
@@ -272,6 +279,12 @@
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 4d --keep 3";
+    flake = "/etc/nixos";
+  };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

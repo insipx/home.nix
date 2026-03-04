@@ -35,6 +35,7 @@
     systemPackages = with pkgs; [
       opensc
       lspmux
+      nix-output-monitor
     ];
 
     etc."volos.crt" = {

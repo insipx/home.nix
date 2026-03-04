@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    # nixpkgs.url = "github:NixOS/nixpkgs/68ed3354133f549b9cb8e5231a126625dca4e724";
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -60,7 +59,11 @@
       # url = "git+file:/home/insipx/code/insipx/unfree";
       url = "github:insipx/unfree/main";
     };
-    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    claude-code.url = "github:sadjow/claude-code-nix";
     # tidal.url = "github:mitchmindtree/tidalcycles.nix";
     # rustowl = {
     #   url = "github:nix-community/rustowl-flake";
@@ -73,10 +76,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
-    jj-spr.url = "github:LucioFranco/jj-spr";
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    jupiter-secrets = {
+      url = "github:insipx/jupiter-secrets";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.sops-nix.follows = "sops-nix";
     };
   };
 

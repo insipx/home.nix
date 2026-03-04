@@ -65,7 +65,6 @@
       gitlint
       gh # Github CLI tool
       graphite-cli
-      jj-spr
 
       # General usability
       nix-index # Run `nix-index` and then use `nix-locate` like the normal unix `locate`
@@ -126,11 +125,6 @@
       # TODO: maybe use sops for secrets
       # AWS_PROFILE = "tigris";
       # RUSTC_WRAPPER = "${pkgs.sccache_wrapper}/bin/sccache_wrapper";
-      # SCCACHE_BASEDIRS = "/home/${config.home.username}/code";
-      # SCCACHE_REGION = "auto";
-      # SCCACHE_ENDPOINT = "https://fly.storage.tigris.dev";
-      # SCCACHE_BUCKET = "little-field-7109";
-      # SCCACHE_S3_USE_SSL = "true";
     };
   };
   # allows apps to find fonts

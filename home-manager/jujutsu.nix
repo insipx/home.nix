@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   programs.jujutsu = {
     enable = true;
     settings = {
@@ -6,9 +7,20 @@
         name = "Andrew Plaza";
         email = "github@andrewplaza.dev";
       };
-      aliases.tug = ["bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@-"];
-      aliases.spr = ["util" "exec" "--" "${pkgs.jj-spr}/bin/jj-spr"];
-      aliases.stack = ["util" "exec" "--" "${pkgs.jj-stack}/bin/jj-stack"];
+      aliases.tug = [
+        "bookmark"
+        "move"
+        "--from"
+        "heads(::@- & bookmarks())"
+        "--to"
+        "@-"
+      ];
+      aliases.stack = [
+        "util"
+        "exec"
+        "--"
+        "${pkgs.jj-stack}/bin/jj-stack"
+      ];
       signing = {
         behavior = "own";
         backend = "gpg"; # maybe use program option and link to exact nix binary
@@ -23,7 +35,12 @@
       };
       merge-tools.nvim = {
         program = "nvim";
-        edit-args = ["-c" "packadd nvim.difftool" "-c" "DiffTool $left $right"];
+        edit-args = [
+          "-c"
+          "packadd nvim.difftool"
+          "-c"
+          "DiffTool $left $right"
+        ];
       };
       merge-tools.diffview = {
         program = "sh";
@@ -73,8 +90,8 @@
         tools = {
           taplo = {
             enabled = true;
-            command = ["taplo fmt -"];
-            patterns = ["glob:'**/*.toml'"];
+            command = [ "taplo fmt -" ];
+            patterns = [ "glob:'**/*.toml'" ];
           };
         };
       };
