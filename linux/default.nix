@@ -11,11 +11,11 @@
     ./services.nix
   ];
 
-  jupiter-secrets = {
-    enable = true;
-    settings.claudevm = true;
-    generateKey = false;
-  };
+  # jupiter-secrets = {
+  #   enable = true;
+  #   settings.claudevm = true;
+  #   generateKey = false;
+  # };
   fonts.packages = [
     pkgs.berkeley-mono
   ];
@@ -248,7 +248,6 @@
     pavucontrol
     alsa-utils
     google-chrome
-    claude-code
     vlc
     discord
     resources

@@ -57,8 +57,6 @@
       "firefox@nightly"
       "raycast"
       "orbstack"
-      "claude"
-      "claude-code"
       "vimr"
     ];
     onActivation = {

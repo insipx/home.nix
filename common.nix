@@ -36,6 +36,7 @@
       opensc
       lspmux
       nix-output-monitor
+      claude-code
     ];
 
     etc."volos.crt" = {

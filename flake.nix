@@ -21,16 +21,13 @@
       inputs.nixpkgs.follows = "";
     };
     doom-config = {
-      # url = "git+file:/home/insipx/code/insipx/doom-emacs";
-      # url = "github:insipx/doom-emacs";
-      url = "git+file:/Users/andrewplaza/code/insipx/doom-emacs";
-      # url = "github:insipx/doom-emacs";
+      url = "github:insipx/doom-emacs";
       flake = false;
     };
     shadow-nvim = {
-       # url = "git+file:/Users/andrewplaza/code/insipx/shadow-nvim";
-       url = "github:insipx/neovim";
-     };
+      # url = "git+file:/Users/andrewplaza/code/insipx/shadow-nvim";
+      url = "github:insipx/neovim";
+    };
     ghostty = {
       url = "github:ghostty-org/ghostty";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -83,11 +80,11 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    jupiter-secrets = {
-      url = "github:insipx/jupiter-secrets";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.sops-nix.follows = "sops-nix";
-    };
+    #jupiter-secrets = {
+    #  url = "github:insipx/jupiter-secrets";
+    #  inputs.nixpkgs.follows = "nixpkgs";
+    #  inputs.sops-nix.follows = "sops-nix";
+    #};
   };
 
   # `...` allows defining additional inputs to the outputs
