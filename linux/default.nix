@@ -3,6 +3,20 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
 { pkgs, ... }:
+let
+  nixBuilderShell = pkgs.writeShellScriptBin "nix-builder-shell" ''
+    case "$SSH_ORIGINAL_COMMAND" in
+      ""|"nix-daemon --stdio") exec nix-daemon --stdio ;;
+      "nix-store --serve --write") exec nix-store --serve --write ;;
+      "nix-store --serve") exec nix-store --serve ;;
+      *)
+        logger -t nix-builder-shell "rejected: $SSH_ORIGINAL_COMMAND"
+        echo "Only nix build commands allowed ($SSH_ORIGINAL_COMMAND)" >&2
+        exit 1
+        ;;
+    esac
+  '';
+in
 {
   imports = [
     # Include the results of the hardware scan.
@@ -10,12 +24,15 @@
     ./disk-config.nix
     ./services.nix
   ];
-
-  # jupiter-secrets = {
-  #   enable = true;
-  #   settings.claudevm = true;
-  #   generateKey = false;
-  # };
+  nix.settings.substituters = [
+    "ssh-ng://nixbuilder@kusanagi?ssh-key=/root/.ssh/nixremote"
+    "ssh-ng://nixbuilder@cyllene?ssh-key=/root/.ssh/nixremote"
+  ];
+  jupiter-secrets = {
+    enable = true;
+    settings.claudevm = true;
+    generateKey = false;
+  };
   fonts.packages = [
     pkgs.berkeley-mono
   ];
@@ -137,6 +154,13 @@
   };
 
   programs = {
+    nix-ld.enable = true;
+    nh = {
+      enable = true;
+      clean.enable = true;
+      clean.extraArgs = "--keep-since 4d --keep 3";
+      flake = "/etc/nixos";
+    };
     shadow-nvim = {
       enable = true;
       font = "Berkeley Mono Condensed";
@@ -199,6 +223,13 @@
   }; # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
+  users.users.builder = {
+    isNormalUser = true;
+    home = "/var/lib/builder";
+    shell = "${nixBuilderShell}/bin/nix-builder-shell";
+    openssh.authorizedKeys.keys = [ ];
+  };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.insipx = {
     isNormalUser = true;
@@ -210,10 +241,18 @@
       "audio"
       "input"
       "seat"
+      "libvirtd"
     ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       tree
     ];
+  };
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      vhostUserPackages = [ pkgs.virtiofsd ];
+      swtpm.enable = true;
+    };
   };
   users.defaultUserShell = pkgs.fish;
 
@@ -262,6 +301,7 @@
     # Hyprland
     hyprshot
     hypridle
+    hyprlock
     catppuccin-cursors.mochaDark
     rpi-imager
   ];
@@ -274,16 +314,12 @@
   nix.settings.trusted-users = [
     "root"
     "insipx"
+    "builder"
   ];
+  nix.settings.sandbox = "relaxed";
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-  programs.nh = {
-    enable = true;
-    clean.enable = true;
-    clean.extraArgs = "--keep-since 4d --keep 3";
-    flake = "/etc/nixos";
-  };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

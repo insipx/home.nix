@@ -8,22 +8,20 @@
     defaultSopsFile = ./secrets/env.yaml;
     secrets.nixAccessTokens = {
       mode = "0440";
-      owner =
-        if pkgs.stdenv.hostPlatform == "x86_64-linux" then
-          config.users.users.insipx.name
-        else
-          config.system.primaryUser;
-      group =
-        if pkgs.stdenv.hostPlatform == "x86_64-linux" then config.users.users.insipx.name else "staff";
+      owner = "insipx";
+      # if pkgs.stdenv.hostPlatform == "x86_64-linux" then
+      # else
+      # config.system.primaryUser;
+      group = if pkgs.stdenv.hostPlatform.isLinux then config.users.users.insipx.group else "staff";
       # group = config.users.users.insipx.group;
     };
     secrets.nixAccessTokensClassic = {
       mode = "0440";
       owner =
-        if pkgs.stdenv.hostPlatform == "x86_64-linux" then
-          config.users.users.insipx.name
-        else
-          config.system.primaryUser;
+        # if pkgs.stdenv.hostPlatform == "x86_64-linux" then
+        config.users.users.insipx.name;
+      #else
+      #  config.system.primaryUser;
       # group = config.users.users.insipx.group;
     };
   };
@@ -133,6 +131,40 @@
       #     "kvm"
       #   ];
       # }
+      {
+        hostName = "kusanagi";
+        sshUser = "nixbuilder";
+        sshKey = "/root/.ssh/nixremote";
+        systems = [
+          "x86_64-darwin"
+          "aarch64-darwin"
+        ];
+        maxJobs = 8;
+        speedFactor = 2;
+        supportedFeatures = [
+          "nixos-test"
+          "benchmark"
+          "big-parallel"
+        ];
+        protocol = "ssh-ng";
+      }
+      {
+        hostName = "cyllene";
+        sshUser = "nixbuilder";
+        sshKey = "/root/.ssh/nixremote";
+        systems = [
+          "x86_64-darin"
+          "aarch64-darwin"
+        ];
+        maxJobs = 8;
+        speedFactor = 3;
+        supportedFeatures = [
+          "nixos-test"
+          "benchmark"
+          "big-parallel"
+        ];
+        protocol = "ssh-ng";
+      }
     ];
     settings = {
       extra-experimental-features = [
