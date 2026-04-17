@@ -250,6 +250,7 @@
             nix.settings.trusted-users = [
               "root"
               "andrewplaza"
+              "nixbuilder"
             ];
             # programs.shadow-nvim.enable = true;
           }
