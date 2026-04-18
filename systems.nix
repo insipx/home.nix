@@ -204,6 +204,7 @@
                   trusted-users = [
                     "root"
                     "insipx"
+                    "nixbuilder"
                   ];
                   sandbox = true;
                   extra-experimental-features = "external-builders";

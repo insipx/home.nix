@@ -35,7 +35,7 @@
       fish_vi_key_bindings
       set -x KEYID "843D72A9EB79A8692C585B3AE7738A7A0F5CDB89"
       # Batpipe setup
-      # set -x LESSOPEN "|${pkgs.bat-extras.batpipe}/bin/.batpipe-wrapped %s";
+      # set -x LESSOPEN "|batpipe-path/bin/.batpipe-wrapped %s";
       # set -e LESSCLOSE;
       set -x NODE_EXTRA_CA_CERTS /etc/volos.crt
 

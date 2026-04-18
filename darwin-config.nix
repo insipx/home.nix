@@ -22,7 +22,7 @@
     enable = true;
     extraConfig = ''
       PasswordAuthentication no
-      KbdInteractiveAuthentidation no
+      KbdInteractiveAuthentication no
       ChallengeResponseAuthentication no
       UsePAM no
     '';
