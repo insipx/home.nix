@@ -13,11 +13,20 @@
 
   # Set Git commit hash for darwin-version.
   # system.configurationRevision = config.system.flakeRevision;
-   programs.shadow-nvim = {
-     enable = true;
-     font = "Berkeley Mono Condensed";
-     font-size = 16;
-   };
+  programs.shadow-nvim = {
+    enable = true;
+    font = "Berkeley Mono Condensed";
+    font-size = 16;
+  };
+  services.openssh = {
+    enable = true;
+    extraConfig = ''
+      PasswordAuthentication no
+      KbdInteractiveAuthentidation no
+      ChallengeResponseAuthentication no
+      UsePAM no
+    '';
+  };
   programs.zsh.enable = true; # default shell on catalina
   programs.fish = {
     enable = true;

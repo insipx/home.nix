@@ -12,7 +12,7 @@
     ./fish.nix
     ./lspmux.nix
     ./neovide.nix
-    ./emacs.nix
+    # ./emacs.nix
     #   (import privateConfiguration)
   ];
 

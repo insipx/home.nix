@@ -16,14 +16,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Other Sources
-    doom-emacs = {
-      url = "github:marienz/nix-doom-emacs-unstraightened";
-      inputs.nixpkgs.follows = "";
-    };
-    doom-config = {
-      url = "github:insipx/doom-emacs";
-      flake = false;
-    };
+    # doom-emacs = {
+    #   url = "github:marienz/nix-doom-emacs-unstraightened";
+    #   inputs.nixpkgs.follows = "";
+    # };
+    # doom-config = {
+    #   url = "github:insipx/doom-emacs";
+    #   flake = false;
+    # };
     shadow-nvim = {
       # url = "git+file:/Users/andrewplaza/code/insipx/shadow-nvim";
       url = "github:insipx/neovim";
