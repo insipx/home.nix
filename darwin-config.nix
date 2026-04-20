@@ -2,7 +2,19 @@
 {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs; [ git ];
+  environment.systemPackages = with pkgs; [
+    git
+    betterdisplay
+  ];
+  launchd.user.agents.sunshine = {
+    command = "/opt/homebrew/bin/sunshine";
+    serviceConfig = {
+      KeepAlive = true;
+      RunAtLoad = true;
+      StandardOutPath = "/tmp/sunshine.out.log";
+      StandardErrorPath = "/tmp/sunshine.err.log";
+    };
+  };
   ids.gids.nixbld = 350;
   sops = {
     age = {
@@ -60,6 +72,7 @@
       "ykman"
       "pinentry"
       "pinentry-mac"
+      "sunshine"
       # "cxreiff/tap/ttysvr"
     ];
     casks = [
@@ -67,6 +80,9 @@
       "raycast"
       "orbstack"
       "vimr"
+    ];
+    taps = [
+      "LizardByte/homebrew"
     ];
     onActivation = {
       autoUpdate = true;
