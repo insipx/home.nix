@@ -18,6 +18,12 @@ let
   '';
 in
 {
+  nix.settings.extra-allowed-impure-host-deps = [
+    "/bin/sh"
+    "/dev"
+    "/usr/lib"
+    "/System/Library"
+  ];
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix

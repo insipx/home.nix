@@ -80,11 +80,11 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    #jupiter-secrets = {
-    #  url = "github:insipx/jupiter-secrets";
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    #  inputs.sops-nix.follows = "sops-nix";
-    #};
+    jupiter-secrets = {
+      url = "github:insipx/jupiter-secrets";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.sops-nix.follows = "sops-nix";
+    };
   };
 
   # `...` allows defining additional inputs to the outputs

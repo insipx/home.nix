@@ -27,7 +27,7 @@
           environments.overlays.default
           sccache.overlays.default
           unfree.overlays.default
-          # jupiter-secrets.overlays.default
+          jupiter-secrets.overlays.default
           claude-code.overlays.default
           override
         ];
@@ -53,7 +53,7 @@
       nixosConfigurations.tanjiro = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = with inputs; [
-          # inputs.jupiter-secrets.nixosModules.default
+          inputs.jupiter-secrets.nixosModules.default
           noctalia.nixosModules.default
           disko.nixosModules.disko
           ./linux
