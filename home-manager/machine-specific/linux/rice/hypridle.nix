@@ -10,11 +10,11 @@ _: {
         };
         listener = [
           {
-            timeout = 300;
+            timeout = 1600;
             on-timeout = "hyprlock";
           }
           {
-            timeout = 1200;
+            timeout = 2000;
             on-timeout = "hyprctl dispatch dpms off"; # screen off when timeout has passed
             on-resume = "hyprctl dispatch dpms on && brightnessctl -r"; # screen on when activity is detected after timeout has fired.
           }

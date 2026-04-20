@@ -56,8 +56,8 @@
     };
     unfree = {
       # url = "git+file:/home/insipx/code/insipx/unfree";
-      # url = "github:insipx/unfree/main";
-      url = "git+ssh://git@github.com/insipx/unfree.git";
+      url = "github:insipx/unfree/main";
+      # url = "git+ssh://git@github.com/insipx/unfree.git";
     };
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -84,6 +84,10 @@
       url = "github:insipx/jupiter-secrets";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.sops-nix.follows = "sops-nix";
+    };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.0.0";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 

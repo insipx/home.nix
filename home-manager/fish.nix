@@ -12,6 +12,7 @@
       vim = "nvim";
       ls = "${lib.getBin pkgs.eza}/bin/eza";
       du = "${lib.getBin pkgs.dust}/bin/dust";
+      df = "${lib.getBin pkgs.duf}/bin/duf";
       pretty = "prettybat";
       diff = "batdiff";
       # less = "batpipe";

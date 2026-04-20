@@ -18,7 +18,7 @@ let
   '';
 in
 {
-  nix.settings.extra-allowed-impure-host-deps = [
+  nix.settings.allowed-impure-host-deps = [
     "/bin/sh"
     "/dev"
     "/usr/lib"
@@ -62,12 +62,16 @@ in
     '';
   };
   boot = {
-    # binfmt.emulatedSystems = [ "aarch64-linux" ];
     # Use latest xanmod kernel.
     kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
     loader = {
       efi.canTouchEfiVariables = true;
-      systemd-boot.enable = true;
+      # b/c lanzaboote
+      systemd-boot.enable = pkgs.lib.mkForce false;
       #limine = {
       #  enable = true;
       #  efiSupport = true;
@@ -299,6 +303,8 @@ in
     catppuccin-cursors.mochaDark
     rpi-imager
     moonlight-qt
+
+    sbctl
   ];
   catppuccin = {
     flavor = "mocha";

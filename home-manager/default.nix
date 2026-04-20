@@ -115,7 +115,8 @@
             SetEnv TERM=xterm-256color
           Host freebsd.insipx.xyz
             SetEnv TERM=xterm-256color
-
+          Match host *
+            ConnectTimeout=1
         '';
       };
     };

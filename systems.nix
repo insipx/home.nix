@@ -53,6 +53,7 @@
       nixosConfigurations.tanjiro = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = with inputs; [
+          inputs.lanzaboote.nixosModules.lanzaboote
           inputs.jupiter-secrets.nixosModules.default
           noctalia.nixosModules.default
           disko.nixosModules.disko
