@@ -7,6 +7,20 @@
 
   services = {
     flatpak.enable = true;
+    avahi.enable = true;
+    chrony = {
+      enable = true;
+      enableNTS = true;
+      servers = [
+        "time.cloudflare.com"
+        "ohio.time.system76.com"
+      ];
+    };
+    resolved = {
+      enable = true;
+      settings.Resolve.DNSOverTLS = "opportunistic";
+    };
+
     displayManager.lemurs = {
       enable = true;
       settings.environment_switcher.include_tty_shell = true;

@@ -1,12 +1,21 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   wayland.windowManager.hyprland = {
     enable = true;
     # set the Hyprland and XDPH packages to null to use the ones from the NixOS module
     plugins = [ pkgs.hyprlandPlugins.hy3 ];
     settings = {
       monitor = "DP-1,highrr,0x0,1";
+      misc = {
+        vrr = 2;
+        vfr = true;
+      };
+      render = {
+        direct_scanout = 2;
+      };
       env = [
         "LIBVA_DRIVER_NAME,nvidia"
+        "NVD_BACKEND,direct"
         "__GLX_VENDOR_LIBRARY_NAME,nvidia"
         "GBM_BACKEND,nvidia-drm"
         "XDG_SESSION_TYPE,wayland"
@@ -89,7 +98,7 @@
         border_size = 2;
         resize_on_border = true;
         # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
-        allow_tearing = false;
+        allow_tearing = true;
         layout = "hy3";
       };
 
@@ -142,6 +151,11 @@
       windowrule = [
         "float true,match:class tanjiro.clipse"
         "size 622 652,match:class tanjiro.clipse"
+
+        # Moonlight — verify class name with `hyprctl clients` while it's running
+        "immediate true,match:class ^(com\\.moonlight_stream\\.Moonlight)$"
+        "opaque true,match:class ^(com\\.moonlight_stream\\.Moonlight)$"
+        "fullscreen true,match:class ^(com\\.moonlight_stream\\.Moonlight)$"
       ];
     };
   };

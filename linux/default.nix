@@ -112,18 +112,6 @@ in
     };
   };
 
-  services.chrony = {
-    enable = true;
-    enableNTS = true;
-    servers = [
-      "time.cloudflare.com"
-      "ohio.time.system76.com"
-    ];
-  };
-  services.resolved = {
-    enable = true;
-    settings.Resolve.DNSOverTLS = "opportunistic";
-  };
   systemd.network = {
     enable = true;
 
@@ -304,6 +292,7 @@ in
     hyprlock
     catppuccin-cursors.mochaDark
     rpi-imager
+    moonlight-qt
   ];
   catppuccin = {
     flavor = "mocha";

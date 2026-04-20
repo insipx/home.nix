@@ -153,11 +153,11 @@
         sshUser = "nixbuilder";
         sshKey = "/root/.ssh/nixremote";
         systems = [
-          "x86_64-darin"
+          "x86_64-darwin"
           "aarch64-darwin"
         ];
         maxJobs = 8;
-        speedFactor = 3;
+        speedFactor = 2;
         supportedFeatures = [
           "nixos-test"
           "benchmark"

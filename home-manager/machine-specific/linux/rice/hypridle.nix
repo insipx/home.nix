@@ -21,11 +21,11 @@ _: {
         ];
       };
     };
-    hyprlock = {
+  };
+  programs.hyprlock = {
+    enable = true;
+    settings.animations = {
       enable = true;
-      animations = {
-        enable = true;
-      };
     };
   };
 }
