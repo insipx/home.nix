@@ -73,6 +73,7 @@
       "pinentry"
       "pinentry-mac"
       "sunshine"
+      "ruby-build"
       # "cxreiff/tap/ttysvr"
     ];
     casks = [

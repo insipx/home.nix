@@ -135,6 +135,10 @@
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
 
+    rbenv = {
+      enable = true;
+      enableFishIntegration = true;
+    };
     atuin = {
       enable = true;
       enableFishIntegration = true;
