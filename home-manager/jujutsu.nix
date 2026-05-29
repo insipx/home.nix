@@ -89,15 +89,6 @@
           ''
         ];
       };
-      fix = {
-        tools = {
-          taplo = {
-            enabled = true;
-            command = [ "taplo fmt -" ];
-            patterns = [ "glob:'**/*.toml'" ];
-          };
-        };
-      };
     };
   };
 }

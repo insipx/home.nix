@@ -24,6 +24,14 @@
     #   url = "github:insipx/doom-emacs";
     #   flake = false;
     # };
+    hyprland.url = "github:hyprwm/Hyprland?ref=v0.55.0";
+
+    hy3 = {
+      url = "github:outfoxxed/hy3?ref=hl0.55.0"; # where {version} is the hyprland release version
+      # or "github:outfoxxed/hy3" to follow the development branch.
+      # (you may encounter issues if you dont do the same for hyprland)
+      inputs.hyprland.follows = "hyprland";
+    };
     shadow-nvim = {
       # url = "git+file:/Users/andrewplaza/code/insipx/shadow-nvim";
       url = "github:insipx/neovim";
