@@ -1,6 +1,5 @@
 {
   pkgs,
-  config,
   ...
 }:
 {
@@ -35,6 +34,11 @@
       nerd-fonts.symbols-only
       berkeley-mono
       source-code-pro
+
+      # Hyprland desktop tooling
+      yazi # terminal file manager (SUPER+E)
+      satty # screenshot annotation (piped from hyprshot)
+      hyprpicker # color picker
 
       ripgrep
       grc # Colorizer

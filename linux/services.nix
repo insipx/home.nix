@@ -54,6 +54,18 @@
     # Execute shebangs like on normal linux (i.e #!/bin/bash)
     envfs.enable = true;
   };
+
+  # A recent nixpkgs bump broke the s6-notify bridge in the stock seatd unit: seatd
+  # 0.9.3 starts fine ("seatd started") but its Type=notify readiness never reaches
+  # systemd, so systemd kills it on a 90s start-timeout loop. libseat then can't reach
+  # a seat (the lemurs wayland session is registered seatless in logind), aquamarine
+  # spins "Couldn't dispatch libseat events" forever, Hyprland melts and xdph crashes
+  # in teardown. Run seatd directly with Type=exec so systemd treats exec as ready.
+  systemd.services.seatd.serviceConfig = {
+    Type = lib.mkForce "exec";
+    ExecStart = lib.mkForce "${pkgs.seatd}/bin/seatd -u root -g seat -l info";
+  };
+
   # services custom config
   environment = {
     etc."lemurs/wayland/Hypr" = {

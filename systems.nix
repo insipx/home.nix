@@ -3,7 +3,7 @@
   perSystem =
     {
       system,
-      self',
+      inputs',
       ...
     }:
     let
@@ -11,6 +11,7 @@
         jujutsu = prev.jujutsu.overrideAttrs {
           doCheck = false;
         };
+        inherit (inputs'.hy3.packages) hy3;
       };
     in
     {
@@ -22,6 +23,8 @@
           # inputs.mozilla.overlays.firefox
           fenix.overlays.default
           # inputs.rustowl.overlays.default
+          inputs.hyprland.overlays.hyprland-packages
+          inputs.hyprland.overlays.hyprland-extras
           rust-overlay.overlays.default
           jujutsu.overlays.default
           environments.overlays.default
@@ -50,7 +53,7 @@
         };
     in
     {
-      nixosConfigurations.tanjiro = inputs.nixpkgs.lib.nixosSystem {
+      nixosConfigurations.tanjiro = inputs.nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
         modules = with inputs; [
           inputs.lanzaboote.nixosModules.lanzaboote
@@ -64,6 +67,7 @@
           inputs.catppuccin.nixosModules.default
           inputs.shadow-nvim.nixosModules.default
           {
+            programs.hyprland.portalPackage = inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland;
             home-manager = {
               sharedModules = [
                 inputs.sops-nix.homeModules.sops
@@ -76,6 +80,7 @@
                   imports = [
                     inputs.noctalia.homeModules.default
                     inputs.catppuccin.homeModules.catppuccin
+                    inputs.hyprland.homeManagerModules.default
                     # inputs.doom-emacs.homeModule
                     ./home-manager
                     ./home-manager/machine-specific/linux
