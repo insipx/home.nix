@@ -73,6 +73,15 @@
         ServerAliveInterval 60
         IPQoS throughput
         IdentityFile /etc/ssh/ssh_host_ed25519_key
+
+      # Darwin remote builders: GB-scale ssh-ng transfers have wedged
+      # silently mid-copy (frozen socket, no FIN). Keepalives detect the
+      # dead peer instead of hanging the nix daemon indefinitely.
+      Host kusanagi cyllene
+        ServerAliveInterval 30
+        ServerAliveCountMax 6
+        TCPKeepAlive yes
+        IPQoS throughput
     '';
   };
 
@@ -170,6 +179,9 @@
       extra-experimental-features = [
         "nix-command"
         "flakes"
+        # iOS SDK derivations opt into content-addressing (stable store
+        # paths across Xcode bundle hash drift)
+        "ca-derivations"
       ];
       system-features = [
         "nixos-test"

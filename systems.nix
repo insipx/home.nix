@@ -58,7 +58,6 @@
         modules = with inputs; [
           inputs.lanzaboote.nixosModules.lanzaboote
           inputs.jupiter-secrets.nixosModules.default
-          noctalia.nixosModules.default
           disko.nixosModules.disko
           ./linux
           ./cachix.nix
@@ -213,7 +212,7 @@
                     "nixbuilder"
                   ];
                   sandbox = true;
-                  extra-experimental-features = "external-builders";
+                  extra-experimental-features = "external-builders ca-derivations";
                   # extraOptions = "!include ${config.sops.secrets.nixAccessTokens.path}";
                 };
               };
