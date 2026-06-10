@@ -211,7 +211,8 @@
                     "insipx"
                     "nixbuilder"
                   ];
-                  sandbox = true;
+                  sandbox = "relaxed";
+                  # sandbox = true;
                   extra-experimental-features = "external-builders ca-derivations";
                   # extraOptions = "!include ${config.sops.secrets.nixAccessTokens.path}";
                 };
