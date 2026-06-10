@@ -214,8 +214,12 @@
                   sandbox = "relaxed";
                   # sandbox = true;
                   extra-experimental-features = "external-builders ca-derivations";
-                  # extraOptions = "!include ${config.sops.secrets.nixAccessTokens.path}";
                 };
+                # Determinate ignores nix.settings.netrc-file (nix.enable = false),
+                # so add our github netrc on top of Determinate's own FlakeHub netrc.
+                determinateNixd.authentication.additionalNetrcSources = [
+                  config.sops.secrets.nixGithubNetrc.path
+                ];
               };
             }
           )

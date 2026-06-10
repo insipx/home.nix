@@ -24,11 +24,19 @@
       #  config.system.primaryUser;
       # group = config.users.users.insipx.group;
     };
+    # netrc-format GitHub credentials, read by the Nix daemon / determinate-nixd
+    # (root) when fetching private flake inputs. Shared across all machines.
+    secrets.nixGithubNetrc = {
+      mode = "0440";
+      owner = "root";
+      group = if pkgs.stdenv.hostPlatform.isLinux then "root" else "wheel";
+    };
   };
 
-  nix.extraOptions = ''
-    !include ${config.sops.secrets.nixAccessTokens.path}
-  '';
+  # Authenticate private github: flake inputs via netrc. This works on both
+  # stock Nix (netrc-file below) and Determinate Nix (additionalNetrcSources,
+  # wired per-host in systems.nix), so it is the single credential mechanism.
+  nix.settings.netrc-file = config.sops.secrets.nixGithubNetrc.path;
   environment = {
     systemPackages = with pkgs; [
       opensc

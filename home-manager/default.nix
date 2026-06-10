@@ -15,8 +15,14 @@
     #   (import privateConfiguration)
   ];
 
-  services.emacs.enable = true;
+  # emacs 30.2 fails to build on darwin (macfont.o compile error in the macOS
+  # Core Text font backend), so only enable the service on Linux for now.
+  services.emacs.enable = pkgs.stdenv.hostPlatform.isLinux;
   catppuccin.enable = true;
+  # Opt into the current auto-enroll behavior explicitly. catppuccin/nix is
+  # splitting `enable` (global toggle) from `autoEnable` (enroll all ports);
+  # setting this to match silences the migration warning and keeps behavior.
+  catppuccin.autoEnable = true;
   catppuccin.mako.enable = false;
   home = {
     # This value determines the Home Manager release that your configuration is
@@ -37,8 +43,7 @@
 
       # Hyprland desktop tooling
       yazi # terminal file manager (SUPER+E)
-      satty # screenshot annotation (piped from hyprshot)
-      hyprpicker # color picker
+      # satty + hyprpicker are Linux-only; see machine-specific/linux
 
       ripgrep
       grc # Colorizer

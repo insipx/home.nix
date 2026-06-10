@@ -5,6 +5,12 @@
     ./rice
     # ../../emacs.nix
   ];
+
+  # Wayland/Hyprland desktop tooling — Linux-only, has no meaning on darwin.
+  home.packages = with pkgs; [
+    satty # screenshot annotation (piped from hyprshot)
+    hyprpicker # color picker
+  ];
   services.gpg-agent = {
     enable = true;
     enableScDaemon = true;

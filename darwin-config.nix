@@ -88,6 +88,10 @@
     onActivation = {
       autoUpdate = true;
       cleanup = "uninstall";
+      # Newer Homebrew refuses `brew bundle --cleanup` without an explicit
+      # force flag (it can uninstall formulae/casks). --force restores the
+      # prior non-interactive cleanup behavior nix-darwin expects.
+      extraFlags = [ "--force" ];
     };
   };
   # Used for backwards compatibility, please read the changelog before changing.
