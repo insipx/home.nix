@@ -41,8 +41,16 @@
     systemPackages = with pkgs; [
       opensc
       lspmux
+      zellij
       nix-output-monitor
-      claude-code
+      llm-agents.catnip
+      llm-agents.code-review-graph
+      llm-agents.codex
+      mcp-server-filesystem
+      notion-mcp-server
+      github-mcp-server
+      mcp-nixos
+      claude-chill
     ];
 
     etc."volos.crt" = {
@@ -99,7 +107,7 @@
         hostName = "arm64-builder.insipx.xyz";
         system = "aarch64-linux";
         maxJobs = 300;
-        speedFactor = 2;
+        speedFactor = 100;
         supportedFeatures = [
           "nixos-test"
           "benchmark"
@@ -110,33 +118,36 @@
         sshUser = "nixremote";
         protocol = "ssh-ng";
       }
-      {
-        hostName = "eu.nixbuild.net";
-        system = "i686-linux";
-        maxJobs = 100;
-        supportedFeatures = [
-          "benchmark"
-          "big-parallel"
-        ];
-      }
-      {
-        hostName = "eu.nixbuild.net";
-        system = "armv7-linux";
-        maxJobs = 100;
-        supportedFeatures = [
-          "benchmark"
-          "big-parallel"
-        ];
-      }
-      {
-        hostName = "eu.nixbuild.net";
-        system = "aarch64-linux";
-        maxJobs = 100;
-        supportedFeatures = [
-          "benchmark"
-          "big-parallel"
-        ];
-      }
+      # {
+      #   hostName = "eu.nixbuild.net";
+      #   system = "i686-linux";
+      #   maxJobs = 100;
+      #   speedFactor = 50;
+      #   supportedFeatures = [
+      #     "benchmark"
+      #     "big-parallel"
+      #   ];
+      # }
+      # {
+      #   hostName = "eu.nixbuild.net";
+      #   system = "armv7-linux";
+      #   maxJobs = 100;
+      #   speedFactor = 50;
+      #   supportedFeatures = [
+      #     "benchmark"
+      #     "big-parallel"
+      #   ];
+      # }
+      # {
+      #   hostName = "eu.nixbuild.net";
+      #   system = "aarch64-linux";
+      #   maxJobs = 100;
+      #   speedFactor = 50;
+      #   supportedFeatures = [
+      #     "benchmark"
+      #     "big-parallel"
+      #   ];
+      # }
       # {
       #   # only enable x86_64 if we're not already on x86_64
       #   hostName = "eu.nixbuild.net";
@@ -198,7 +209,7 @@
         "kvm"
       ];
       builders-use-substitutes = true;
-      extra-platforms = [ ]; # Don't try to build aarch64 locally
+      # extra-platforms = [ ]; # Don't try to build aarch64 locally
     };
     distributedBuilds = true;
   };

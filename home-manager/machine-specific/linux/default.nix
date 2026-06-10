@@ -18,6 +18,10 @@
     enableSshSupport = true;
     pinentry.package = pkgs.pinentry-curses;
     enableFishIntegration = true;
+    extraConfig = ''
+      allow-loopback-pinentry
+      allow-emacs-pinentry
+    '';
   };
   # THIS DOES NOT SEEM TO WORK
   # NEED .gnupg/scdaemon.conf

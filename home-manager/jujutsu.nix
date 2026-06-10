@@ -25,6 +25,10 @@
         behavior = "own";
         backend = "gpg"; # maybe use program option and link to exact nix binary
         key = "843D72A9EB79A8692C585B3AE7738A7A0F5CDB89";
+        backends.gpg.extra-args = [
+          "--pinentry-mode"
+          "loopback"
+        ];
       };
       revset-aliases = {
         "immutable_heads()" = "builtin_immutable_heads() | ancestors(bookmarks(glob:'release/v*'))";

@@ -12,6 +12,7 @@
           doCheck = false;
         };
         inherit (inputs'.hy3.packages) hy3;
+        inherit (inputs'.claude-chill.packages) claude-chill;
       };
     in
     {
@@ -31,7 +32,8 @@
           sccache.overlays.default
           unfree.overlays.default
           jupiter-secrets.overlays.default
-          claude-code.overlays.default
+          llm-agents.overlays.default
+          mcp-servers.overlays.default
           override
         ];
         config = {
@@ -214,6 +216,9 @@
                   sandbox = "relaxed";
                   # sandbox = true;
                   extra-experimental-features = "external-builders ca-derivations";
+                  # xcframework drvs bind Xcode first-launch content via
+                  # __impureHostDeps
+                  allowed-impure-host-deps = "/bin/sh /dev /usr/lib /System/Library /Library/Developer/PrivateFrameworks";
                 };
                 # Determinate ignores nix.settings.netrc-file (nix.enable = false),
                 # so add our github netrc on top of Determinate's own FlakeHub netrc.

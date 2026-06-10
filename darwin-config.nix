@@ -94,6 +94,17 @@
       extraFlags = [ "--force" ];
     };
   };
+  # xcodebuild from a /nix/store Xcode dlopens plugins linked against
+  # /Library/Developer PrivateFrameworks (Xcode first-launch content);
+  # libxmtp's xcframework derivations request it via __impureHostDeps.
+  nix.settings.allowed-impure-host-deps = [
+    "/bin/sh"
+    "/dev"
+    "/usr/lib"
+    "/System/Library"
+    "/Library/Developer/PrivateFrameworks"
+  ];
+
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;

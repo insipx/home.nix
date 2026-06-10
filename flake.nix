@@ -25,7 +25,7 @@
     #   flake = false;
     # };
     hyprland.url = "github:hyprwm/Hyprland?ref=v0.55.0";
-
+    claude-chill.url = "github:davidbeesley/claude-chill";
     hy3 = {
       url = "github:outfoxxed/hy3?ref=hl0.55.0"; # where {version} is the hyprland release version
       # or "github:outfoxxed/hy3" to follow the development branch.
@@ -71,7 +71,11 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    claude-code.url = "github:sadjow/claude-code-nix";
+    llm-agents.url = "github:numtide/llm-agents.nix";
+    mcp-servers = {
+      url = "github:natsukium/mcp-servers-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # tidal.url = "github:mitchmindtree/tidalcycles.nix";
     # rustowl = {
     #   url = "github:nix-community/rustowl-flake";
@@ -94,7 +98,7 @@
       inputs.sops-nix.follows = "sops-nix";
     };
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v1.0.0";
+      url = "github:nix-community/lanzaboote/v1.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

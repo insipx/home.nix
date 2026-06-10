@@ -6,6 +6,7 @@ _: {
         name = "Andrew Plaza";
         email = "github@andrewplaza.dev";
       };
+      gpg.program = "gpg --pinentry-mode=loopback";
       signing = {
         key = "843D72A9EB79A8692C585B3AE7738A7A0F5CDB89";
         signByDefault = true;

@@ -10,6 +10,7 @@
     ./git.nix
     ./fish.nix
     ./lspmux.nix
+    ./mcp.nix
     ./neovide.nix
     # ./emacs.nix
     #   (import privateConfiguration)

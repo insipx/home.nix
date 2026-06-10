@@ -15,6 +15,7 @@
       df = "${lib.getBin pkgs.duf}/bin/duf";
       pretty = "prettybat";
       diff = "batdiff";
+      code = "claude-chill claude-code";
       # less = "batpipe";
       man = "batman";
       # rg = "batgrep";
