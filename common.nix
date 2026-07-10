@@ -24,12 +24,13 @@
       #  config.system.primaryUser;
       # group = config.users.users.insipx.group;
     };
-    # netrc-format GitHub credentials, read by the Nix daemon / determinate-nixd
-    # (root) when fetching private flake inputs. Shared across all machines.
+    # netrc-format GitHub credentials for private github: flake inputs. Must be
+    # readable by the invoking user, not just root: flake fetches run in the
+    # user's nix client process, not the daemon. Shared across all machines.
     secrets.nixGithubNetrc = {
       mode = "0440";
-      owner = "root";
-      group = if pkgs.stdenv.hostPlatform.isLinux then "root" else "wheel";
+      owner = "insipx";
+      group = if pkgs.stdenv.hostPlatform.isLinux then config.users.users.insipx.group else "staff";
     };
   };
 

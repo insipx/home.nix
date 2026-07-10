@@ -52,6 +52,9 @@
     linear = {
       url = "https://mcp.linear.app/mcp";
     };
+    okx = {
+      url = "https://www.okx.com/api/v1/mcp/trading-oauth";
+    };
   };
 
   programs.claude-code = {
