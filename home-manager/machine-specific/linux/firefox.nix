@@ -52,6 +52,9 @@ in
           # best-effort activation of the force-installed theme; worst case one
           # click in about:addons on first run
           "extensions.activeThemeID" = catppuccinTheme;
+          # textfox hides the horizontal tab bar and styles the native vertical
+          # tabs sidebar instead — without this there are no visible tabs
+          "sidebar.verticalTabs" = true;
         };
       };
       # declared only so the HM-generated profiles.ini keeps this profile listed
