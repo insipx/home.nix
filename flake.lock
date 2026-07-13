@@ -1995,6 +1995,7 @@
         "shadow-nvim": "shadow-nvim",
         "sops-nix": "sops-nix",
         "swww": "swww",
+        "textfox": "textfox",
         "unfree": "unfree"
       }
     },
@@ -2417,6 +2418,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "textfox": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780405768,
+        "narHash": "sha256-WhPHaupeq5yWP53anFH6vr/ZMQQtAYGtpgUhzqWx9Ws=",
+        "owner": "adriankarlen",
+        "repo": "textfox",
+        "rev": "d6895da75f10fa17f1b637759aec3d84818b20e2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "adriankarlen",
+        "repo": "textfox",
         "type": "github"
       }
     },

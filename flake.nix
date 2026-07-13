@@ -92,6 +92,10 @@
       url = "github:noctalia-dev/noctalia/legacy-v4";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    textfox = {
+      url = "github:adriankarlen/textfox";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     jupiter-secrets = {
       url = "github:insipx/jupiter-secrets";
       inputs.nixpkgs.follows = "nixpkgs";

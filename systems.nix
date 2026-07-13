@@ -75,6 +75,9 @@
               ];
               useGlobalPkgs = true;
               useUserPackages = true;
+              # first firefox activation clobbers the imperative profiles.ini;
+              # back up instead of failing
+              backupFileExtension = "backup";
               users.insipx =
                 { ... }:
                 {
@@ -82,6 +85,7 @@
                     inputs.noctalia.homeModules.default
                     inputs.catppuccin.homeModules.catppuccin
                     inputs.hyprland.homeManagerModules.default
+                    inputs.textfox.homeManagerModules.default
                     # inputs.doom-emacs.homeModule
                     ./home-manager
                     ./home-manager/machine-specific/linux
