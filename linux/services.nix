@@ -32,6 +32,10 @@
         ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
         ACTION=="add", SUBSYSTEM=="usb", TEST=="power/autosuspend" ATTR{power/autosuspend}="0"
         ACTION=="add", SUBSYSTEM=="usb", TEST=="power/autosuspend_delay_ms" ATTR{power/autosuspend_delay_ms}="0"
+        # our Hyprland session runs under seatd and never attaches to a logind
+        # seat, so the uaccess tag from libfido2's rules grants nothing; give
+        # FIDO tokens (webauthn hidraw interface) to the seat group instead
+        SUBSYSTEM=="hidraw", ENV{ID_FIDO_TOKEN}=="1", GROUP="seat", MODE="0660"
       '';
       packages = [
         pkgs.yubikey-personalization

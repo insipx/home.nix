@@ -32,7 +32,7 @@
           sccache.overlays.default
           unfree.overlays.default
           jupiter-secrets.overlays.default
-          llm-agents.overlays.default
+          llm-agents.overlays.shared-nixpkgs
           mcp-servers.overlays.default
           override
         ];

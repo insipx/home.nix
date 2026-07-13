@@ -24,7 +24,7 @@
     #   url = "github:insipx/doom-emacs";
     #   flake = false;
     # };
-    hyprland.url = "github:hyprwm/Hyprland?ref=v0.55.0";
+    hyprland.url = "github:hyprwm/Hyprland?ref=v0.55.4";
     claude-chill.url = "github:davidbeesley/claude-chill";
     hy3 = {
       url = "github:outfoxxed/hy3?ref=hl0.55.0"; # where {version} is the hyprland release version
