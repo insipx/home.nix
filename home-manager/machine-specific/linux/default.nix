@@ -3,6 +3,7 @@
 {
   imports = [
     ./rice
+    ./firefox.nix
     # ../../emacs.nix
   ];
 
