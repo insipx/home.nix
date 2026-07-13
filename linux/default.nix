@@ -176,9 +176,14 @@ in
       dedicatedServer.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;
     };
-    firefox = {
+    # policies only — installs no browser; applies to google-chrome via
+    # /etc/opt/chrome/policies. firefox is home-manager-owned (machine-specific/linux/firefox.nix)
+    chromium = {
       enable = true;
-      package = pkgs.firefox;
+      extensions = [
+        "bkkmolkhemgaeaeggcmfbghljjjoofoh" # catppuccin mocha theme
+        "clngdbkpkpeebahjckkjfobafhncgmne" # stylus
+      ];
     };
     gnupg.agent = {
       enable = true;
