@@ -76,7 +76,6 @@
       # Git
       gitlint
       gh # Github CLI tool
-      graphite-cli
 
       # General usability
       nix-index # Run `nix-index` and then use `nix-locate` like the normal unix `locate`
@@ -134,6 +133,7 @@
 
     sessionVariables = {
       KEYID = "843D72A9EB79A8692C585B3AE7738A7A0F5CDB89";
+      CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION = "1000";
       # setup a profile "aws configure --profile tigris to enter secret keys"
       # TODO: maybe use sops for secrets
       # AWS_PROFILE = "tigris";
