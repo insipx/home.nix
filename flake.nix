@@ -92,7 +92,7 @@
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
     noctalia = {
-      url = "github:noctalia-dev/noctalia/legacy-v4";
+      url = "github:noctalia-dev/noctalia/v5.0.0-beta.3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     textfox = {
