@@ -59,6 +59,7 @@
     };
     variables = {
       NODE_EXTRA_CA_CERTS = "/etc/volos.crt";
+      CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION = "1000";
     };
   };
 
