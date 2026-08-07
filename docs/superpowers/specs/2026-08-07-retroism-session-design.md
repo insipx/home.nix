@@ -51,20 +51,41 @@ Both real desktop sessions stamp their identity into the systemd user
 manager before launching the compositor, so per-session units can condition
 on it and stale values from a previous login are always overwritten:
 
-- `Hypr` script (modified): `systemctl --user set-environment RICE=noctalia`
-  (plus `export RICE=noctalia`), then `exec hyprland` as today.
-- `Retroism` script (new): `systemctl --user set-environment RICE=retroism`
-  (plus export), then
-  `exec hyprland --config $HOME/.config/hypr/retroism.conf`.
-- `Gamez` is untouched; it never reaches a graphical-session shell rice.
+- `Hyprland` script (the existing `Hypr` entry, **renamed**):
+  `systemctl --user set-environment RICE=noctalia` plus
+  `systemctl --user unset-environment DCONF_PROFILE`, then `exec hyprland`.
+  The name is load-bearing: lemurs re-selects by exact title match against
+  `/var/cache/lemurs`, which holds `Hyprland` — leaving it as `Hypr` would
+  miss, fall back to index 0 of an *unsorted* `read_dir` (empirically
+  `Gamez`), and — because the greeter focuses the password field when a
+  username is cached — silently launch Steam on the first login.
+- `Retroism` script (new): `systemctl --user set-environment RICE=retroism`,
+  then `exec hyprland --config "${XDG_CONFIG_HOME:-$HOME/.config}/hypr/retroism.conf"`.
+- `Gamez` is untouched and deliberately stamps nothing: `graphical-session.target`
+  is never started in that session (nothing pins it — `hyprland-session.target`
+  has no `[Install]` section), so both gated units are unreachable there.
 
-`RICE` reaches user units through two deliberate channels, both verified in
-the plan: the `systemctl --user set-environment` call above (before any
-unit re-evaluation), and the rendered config's systemd bootstrap line (§2)
-which lists `RICE` in its `dbus-update-activation-environment --systemd`
-import. There is no other fallback — an earlier draft claimed hyprland's
-default import would carry it, which the adversarial review correctly
-called out as fiction (the import list is fixed).
+**lemurs merges two session sources**, which this draft missed: the scripts in
+`/etc/lemurs/wayland/` *and* `.desktop` files from `wayland_sessions_path`.
+The packaged entries (`Hyprland`, `Hyprland (uwsm-managed)`, `Steam`) stamp
+nothing, and the greeter was in fact pre-selecting one. Both
+`wayland.wayland_sessions_path` and `x11.xsessions_path` are therefore
+overridden to empty directories, so every graphical entry the greeter offers
+goes through a stamping script.
+
+`RICE` reaches user units through two channels: the `set-environment` call
+above (before any unit re-evaluation), and the rendered config's systemd
+bootstrap line (§2), which lists `RICE` in its
+`dbus-update-activation-environment --systemd` import — *both* sessions
+now have both channels (the noctalia one gained its second via
+`wayland.windowManager.hyprland.systemd.variables`). There is no other
+fallback: an earlier draft claimed hyprland's default import would carry it,
+which the adversarial review correctly called fiction — the import list is
+fixed. `DCONF_PROFILE` has only the one manager-level channel, because
+`dbus-update-activation-environment` can set but never unset; the residual
+risk is that if the user manager is unreachable at greeter time, `RICE`
+still lands via the bootstrap while `DCONF_PROFILE` stays pointed at the
+retro profile, giving a half-retro noctalia session.
 
 ## 2. Hyprland config: shared base + per-rice layers
 
@@ -125,25 +146,45 @@ called out as fiction (the import list is fixed).
   square corners), gated `ConditionEnvironment=RICE=retroism`.
   Open item for testing: if retroism's Quickshell ships its own notification
   UI, drop mako.
-- **swww**: stays globally enabled and un-gated (rice-agnostic daemon).
-  Each session sets its own image: noctalia does its own wallpaper
-  management; the retro session's `swww img` exec-once (§2) overrides the
-  restored last wallpaper at startup.
+- **swww**: the daemon stays globally enabled and un-gated (rice-agnostic).
+  The retro image is set by `retroism-wallpaper.service`, not an exec-once:
+  it is `After`/`Requires` the daemon unit (really named `awww.service`) and
+  `PartOf`/`WantedBy` `graphical-session.target`, so systemd orders it after
+  the session bootstrap restarts the daemon instead of racing it.
+  This draft's original claim — that noctalia "does its own wallpaper
+  management", so a shared daemon is harmless — **is false on this machine**:
+  the noctalia session sets no wallpaper at all, and swww caches the last
+  image per output and restores it at daemon start. The retro wallpaper
+  would therefore follow the user back into the noctalia session. The unit
+  now runs `swww clear-cache` in `ExecStopPost` (prefixed `-`, since it
+  exits non-zero when no cache exists) so the retro image dies with its
+  session.
 - clipse and other existing user services: untouched, run in both sessions.
 
 ## 4. Per-session GTK / icon / cursor theming
 
 No global gtk settings change. Mechanisms, all scoped by session env from §2:
 
-- Widget theme: `GTK_THEME` env + themes package on `XDG_DATA_DIRS`.
-- Icon + cursor theme: NixOS `programs.dconf.profiles.retroism` — profile
-  order: writable `user-db:retroism-user`, then `system-db:retroism`
-  (*defaults*, not locks — a lock would also override `retroism-user` and
-  break in-session tweaking; review wording fix) carrying
-  `org/gnome/desktop/interface` `icon-theme`/`gtk-theme`/`cursor-theme`
-  from the fork's `themeNames` + `cursor.name`, then fallback to the normal
-  user db. Writes inside the retro session land in `retroism-user`, so
-  in-session tweaks never touch the noctalia session's dconf state.
+- Widget theme: `GTK_THEME` env only. **As implemented, no `XDG_DATA_DIRS`
+  prepend** — the fork puts `themesPackage` in `home.packages`, so the
+  profile's share dir is already on `XDG_DATA_DIRS` and a prepend would be
+  a no-op (verified in review).
+- Icon + cursor theme: a **home-manager-generated dconf profile** (not NixOS
+  `programs.dconf.profiles`) at an absolute `DCONF_PROFILE` path — profile
+  order: writable `user-db:retroism_user`, then `file-db:` pointing at a
+  compiled read-only db of *defaults* (not locks — a lock would also
+  override `retroism_user` and break in-session tweaking), then the normal
+  `user-db:user` as fallback. Keys are `org/gnome/desktop/interface`
+  `icon-theme`/`gtk-theme`/`cursor-theme`/`cursor-size`, sourced from the
+  fork's `themeNames` and `cursor.{name,size}`. Writes inside the retro
+  session land in `retroism_user`, so in-session tweaks never touch the
+  noctalia session's dconf state.
+  The db name **must not contain a hyphen**: libdconf interpolates it into
+  the D-Bus object path `/ca/desrt/dconf/Writer/%s` without validation, and
+  a hyphen is illegal there — an earlier `retroism-user` made every write
+  in the session abort with a `g_variant_is_object_path` assertion while
+  reads kept working, so the session looked correct and silently persisted
+  nothing.
 - Known gap (accepted, medium): apps that read theming through the
   xdg-desktop-portal settings portal may see the portal's own environment,
   not the session's `DCONF_PROFILE`. Mitigation: `DCONF_PROFILE` is in the
@@ -152,27 +193,34 @@ No global gtk settings change. Mechanisms, all scoped by session env from §2:
   adds a portal restart to the session bootstrap.
 - Cursor package: `pkgs.hackneyed` (availability verified during planning;
   fallback: package it in the fork).
-- nemo comes from `home.packages` (both sessions have it installed; it only
-  *looks* retro in the retroism session).
+- GTK test apps: **nemo is not installed on this machine** (the original
+  draft assumed it was). Use `thunar` or `pavucontrol` — both GTK3, both
+  honour `GTK_THEME`. libadwaita apps will not look retro regardless; that
+  is the portal/libadwaita gap above, not a defect.
 
 ## 5. Ghostty retro palette
 
 - The fork writes `~/.config/ghostty/retroism.conf` (ported kitty palette:
   16 ANSI colors, bg `#101010`, fg `#d8d8d8`, cursor `#207874`,
   `background-opacity 0.985`, window padding 7×10).
-- `rice/retroism.nix` builds a one-file shim package: `bin/ghostty` →
-  `exec ${real ghostty} --config-file=<that file> "$@"`, prepended to PATH
-  only inside the retroism session (§2 env). Ghostty loads the include on
-  top of the user's normal config, so behavior/keybinds survive; only looks
-  change. `$terminal = ghostty` in the shared base resolves to the shim
-  automatically.
+- `rice/retroism.nix` builds a one-file wrapper package: `bin/ghostty` →
+  `exec ${real ghostty} --config-file=<that file> "$@"`. **Not a PATH
+  prepend** as this draft proposed — hyprland `env =` lines are literal and
+  do not expand `$PATH`. The retro layer instead points `$terminal`,
+  `$fileManager`, and the clipse bind at the wrapper's store path directly.
+- Verified in review: `--config-file` layers *on top of* the user's normal
+  ghostty config rather than replacing it, and because the retro file loads
+  later, its colors win while font and keybinds survive.
 
 ## 6. Flake wiring
 
-`flake.nix`: input `retroism.url = "github:insipx/linux-retroism"` (or a
-local path during iteration), `homeManagerModules.retroism` added to the
-linux home-manager module list. The `themes` package is also referenced
-directly for the §4 `XDG_DATA_DIRS` prepend.
+`flake.nix`: input `retroism.url = "path:/home/insipx/code/insipx/linux-retroism"`
+while iterating (a `path:` URL, so uncommitted fork files are visible;
+switch to `github:insipx/linux-retroism` once pushed), with
+`homeManagerModules.retroism` added to the linux home-manager module list.
+No direct package reference is needed — the module puts `themesPackage` in
+`home.packages` itself. Note a `path:` input locks a narHash: after editing
+the fork, run `nix flake update retroism` before rebuilding.
 
 ## 7. Testing & rollout
 
@@ -182,23 +230,28 @@ directly for the §4 `XDG_DATA_DIRS` prepend.
 2. Add the retroism session; rebuild. lemurs lists `Retroism` automatically
    (it enumerates `/etc/lemurs/wayland/*`).
 3. In-session checks: `~/.config/hypr/retroism.conf` exists and is what
-   hyprland loaded; `systemctl --user show-environment | grep RICE` says
-   `retroism`; `graphical-session.target` is active; exactly one wallpaper
-   daemon (swww) running; quickshell bar up; Super+R opens the retro
-   launcher; `hyprctl getoption general:border_size` = 1; GTK app (nemo)
-   shows ClassicPlatinum + retro icons; a GTK4/portal app themes correctly
-   (§4 gap check); `notify-send` renders through mako; ghostty opens with
-   retro palette; keybinds/hy3/resize-submap behave; cursor per
-   `cursor.name`.
-4. Log out → `Hypr`: `RICE=noctalia` in the user-manager env, noctalia up,
-   catppuccin theming intact, no retro leak (`gsettings get
-   org.gnome.desktop.interface icon-theme` unchanged, ghostty normal
-   palette).
+   hyprland loaded; `systemctl --user show-environment` has `RICE=retroism`
+   and the retro `DCONF_PROFILE`; `graphical-session.target` active;
+   `noctalia.service` inactive (condition failed) and
+   `retroism-wallpaper.service` active (exited); exactly one `swww-daemon`,
+   showing the retro image; quickshell bar up; Super+R opens the retro
+   launcher; `hyprctl getoption general:border_size` = 1; `thunar`/
+   `pavucontrol` show ClassicPlatinum + retro icons; `dconf read` returns
+   `'RetroismIcons'` *and* a `dconf write` succeeds (the hyphen bug above);
+   a notification renders through mako; ghostty retro palette;
+   keybinds/hy3/resize-submap behave; cursor per `cursor.name`.
+4. Log out → `Hyprland`: `RICE=noctalia`, `DCONF_PROFILE` gone from
+   `show-environment`, noctalia up, catppuccin theming intact, normal
+   ghostty palette, and **the wallpaper is not the retro one** (the swww
+   cache leak this design originally missed).
 5. Rollback: single jj commit revert + rebuild.
 
-Known risks: retroism QML hardcoding paths or pinning a quickshell version
-(fixed in the fork — that is what the fork is for); `systemctl --user
-set-environment` reachability from the lemurs script pre-compositor
-(verified first thing in the plan; the §2 bootstrap import is the second
-channel); mako vs quickshell notification overlap (test step 3); portal
-theming (§4 gap).
+Known risks: `systemctl --user set-environment` reachability from the lemurs
+script pre-compositor (each session has a second channel via the §2
+bootstrap); mako losing the D-Bus name race on a session switch (it retries
+for ~10s, then the session has no notification daemon for its life); portal
+and libadwaita apps not honouring the session dconf profile (§4 gap).
+
+Accepted, not fixed (cosmetic, noctalia→retro direction): `hypridle`/
+`hyprlock` are un-gated, so the retro session's lock screen is Catppuccin,
+and `$run` (Super+D) still opens tofi rather than a retro launcher.
