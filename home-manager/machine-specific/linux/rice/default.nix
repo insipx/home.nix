@@ -7,5 +7,6 @@
     ./wallpaper.nix
     ./catppuccin.nix
     ./noctalia-v5.nix
+    ./retroism.nix
   ];
 }
