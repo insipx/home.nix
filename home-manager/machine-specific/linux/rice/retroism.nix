@@ -45,6 +45,18 @@ let
   # dconf: per-session profile. First line = writable db (in-session tweaks
   # land there, never in the shared user db). Second = read-only retro
   # defaults. Third = the normal user db as fallback for everything else.
+  #
+  # The writable db's name (`retroism_user`, below) must be a valid D-Bus
+  # object-path element. libdconf interpolates it straight into
+  # /ca/desrt/dconf/Writer/%s with no validation, and object-path elements
+  # permit only [A-Za-z0-9_] — so a hyphen is illegal. Under the earlier
+  # `retroism-user` every write died at `g_dbus_connection_call_sync_internal:
+  # assertion 'object_path != NULL && g_variant_is_object_path (object_path)'
+  # failed`: the `dconf` CLI core-dumps and GTK/GSettings writes fail silently
+  # with a GLib CRITICAL on stderr. *Reads* keep working, so the session looks
+  # correct while nothing a user changes in it ever persists — and the design's
+  # promise that in-session writes land in a separate db rather than the shared
+  # user db is silently void. Keep it underscored.
   dconfProfilePath = "${config.xdg.configHome}/dconf-retroism-profile";
 
   # Fails eval loudly if the option doesn't exist in the implemented fork.
@@ -195,7 +207,7 @@ in
 
   # dconf profile file (absolute DCONF_PROFILE path; dconf uses it directly).
   xdg.configFile."dconf-retroism-profile".text = ''
-    user-db:retroism-user
+    user-db:retroism_user
     file-db:${retroDconfDefaults}
     user-db:user
   '';
@@ -234,7 +246,35 @@ in
   # Keep noctalia out of the retro session. Stamped by the lemurs scripts
   # (linux/services.nix) via `systemctl --user set-environment` and the
   # rendered config's bootstrap import.
-  systemd.user.services.noctalia.Unit.ConditionEnvironment = "RICE=noctalia";
+  #
+  # Deliberately the *negative* form, asymmetric with retroism-wallpaper's
+  # positive `RICE=retroism` below. The two conditions fail in opposite
+  # directions, so each one is written to fail safe for the unit it guards:
+  #
+  #   - A missing/unexpected RICE must still get the shell. `RICE=noctalia`
+  #     would treat "no stamp" as "not the noctalia session" and silently skip
+  #     noctalia.service, leaving bare Hyprland with no bar, no launcher and no
+  #     notifications — a broken desktop with nothing in the journal to explain
+  #     it. `!RICE=retroism` treats anything that is not explicitly the retro
+  #     session as the default session, which is the correct reading: noctalia
+  #     is the default rice, and the retro session is the exception.
+  #   - retroism-wallpaper must stay inert unless explicitly asked for, so its
+  #     condition stays positive. An unstamped session getting the noctalia
+  #     shell is a graceful degradation; an unstamped session getting the retro
+  #     wallpaper is the cross-session leak the design forbids.
+  #
+  # This is defense in depth, not the primary guarantee — but the guarantee is
+  # narrower than "every entry lemurs offers stamps RICE". It does not: the tty
+  # shell (`environment_switcher.include_tty_shell`) and the Gamez session
+  # script both leave RICE alone. Neither ever starts graphical-session.target,
+  # so this unit is unreachable from them regardless of the stamp. The claim
+  # that holds is about graphical sessions: every greeter entry that reaches
+  # graphical-session.target stamps RICE, which the sessions-path overrides in
+  # linux/services.nix maintain by keeping non-stamping `.desktop` entries out
+  # of the greeter entirely. This condition is what keeps a session that slips
+  # past that — a hand-run `Hyprland`, a future session script that forgets the
+  # stamp — usable.
+  systemd.user.services.noctalia.Unit.ConditionEnvironment = "!RICE=retroism";
 
   # The wallpaper, as a unit systemd orders rather than an exec-once that races.
   # The `systemd --user` manager outlives logins, so at retro login the swww
@@ -271,6 +311,38 @@ in
       # moment it succeeds; PartOf above still clears it when the session ends.
       RemainAfterExit = true;
       ExecStart = setWallpaperCommand;
+      # Close the leak back into the noctalia session. `swww img` writes a
+      # per-output entry under ~/.cache/swww/<version>/, and swww-daemon
+      # restores from that cache at startup unless run with --no-cache. The
+      # daemon is deliberately shared with the noctalia session
+      # (rice/wallpaper.nix) and carries no such flag, so without this the next
+      # noctalia login — whose bootstrap restarts awww.service — would come up
+      # wearing metropolis.png. That is the forbidden leak direction, and
+      # nothing would overwrite it: the noctalia session sets no wallpaper of
+      # its own. Un-gating it at the daemon (--no-cache in wallpaper.nix) would
+      # change the noctalia session's behaviour too; making the retro session
+      # clean up after *itself* returns noctalia to exactly today's behaviour, a
+      # plain black background.
+      #
+      # This runs on the real stop path, not in theory: Type=oneshot +
+      # RemainAfterExit leaves the unit in active(exited), and
+      # PartOf=graphical-session.target propagates a genuine stop job to it at
+      # session teardown — a transient unit of exactly this shape was observed
+      # running its ExecStopPost when its PartOf= parent was stopped. Ordering
+      # also works out: After=awww.service means we stop *before* the daemon
+      # does, but `swww clear-cache` is handled entirely client-side (verified:
+      # it succeeds with no daemon reachable at all), so the daemon's state is
+      # irrelevant here.
+      #
+      # The `-` prefix is load-bearing rather than defensive habit. `swww
+      # clear-cache` exits 1 with "failed to clean the cache: No such file or
+      # directory" when ~/.cache/swww does not exist — the case where ExecStart
+      # never got far enough to create it. An unprefixed ExecStopPost failure
+      # drives the unit to `failed`, and unlike a clean stop a failed unit is
+      # not garbage-collected, so every such logout would leave litter in
+      # `systemctl --user list-units --failed`. There is nothing worth reporting
+      # when there was nothing to clear.
+      ExecStopPost = "-${swwwBin} clear-cache";
     };
     Install.WantedBy = [ "graphical-session.target" ];
   };

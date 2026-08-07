@@ -1,5 +1,6 @@
 {
   lib,
+  options,
   pkgs,
   ...
 }:
@@ -103,5 +104,27 @@ in
     plugins = [ pkgs.hy3 ];
     settings = lib.recursiveUpdate base.settings noctaliaVisuals;
     extraConfig = base.resizeSubmap;
+
+    # Second channel for stamping RICE into the systemd/D-Bus user
+    # environment, so this session matches the retro one.
+    #
+    # The lemurs session script (`/etc/lemurs/wayland/Hyprland`, linux/services.nix)
+    # already runs `systemctl --user set-environment RICE=noctalia`, but its
+    # `|| true` swallows a failure and the script's own `export RICE=noctalia`
+    # reaches only the compositor process — never the user manager, which is
+    # where noctalia.service's ConditionEnvironment is evaluated. A single
+    # `systemctl` hiccup at greeter time would therefore yield a silently
+    # shell-less session with nothing to fall back on. The Retroism session has
+    # had two channels all along (its script plus the rendered config's
+    # `dbus-update-activation-environment --systemd ... RICE DCONF_PROFILE`
+    # bootstrap); this gives the noctalia session the same backstop.
+    #
+    # The option's value replaces the upstream default rather than extending it
+    # (`variables` declares `default = [...]`, and a default is not a definition
+    # that `listOf` would concatenate with). Referencing the declaration's own
+    # default keeps this an append even if home-manager adds a variable
+    # upstream, instead of freezing today's five names into a literal list that
+    # would silently drop a future addition.
+    systemd.variables = options.wayland.windowManager.hyprland.systemd.variables.default ++ [ "RICE" ];
   };
 }
