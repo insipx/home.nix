@@ -101,6 +101,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.sops-nix.follows = "sops-nix";
     };
+    retroism = {
+      # Local path while iterating (picks up uncommitted files in the fork
+      # working copy — a git+file: URL would only see committed state).
+      # Switch to github:insipx/linux-retroism once the fork is pushed.
+      url = "path:/home/insipx/code/insipx/linux-retroism";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.1.0";
       inputs.nixpkgs.follows = "nixpkgs";

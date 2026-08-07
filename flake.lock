@@ -1919,6 +1919,23 @@
         "type": "github"
       }
     },
+    "retroism": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786124520,
+        "narHash": "sha256-epwXPogVw1wuy6q9S5xXioxJR6FD9wXcsOJpfGq/4dQ=",
+        "path": "/home/insipx/code/insipx/linux-retroism",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/insipx/code/insipx/linux-retroism",
+        "type": "path"
+      }
+    },
     "root": {
       "inputs": {
         "catppuccin": "catppuccin",
@@ -1940,6 +1957,7 @@
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs_7",
         "noctalia": "noctalia",
+        "retroism": "retroism",
         "rust-overlay": "rust-overlay_2",
         "sccache": "sccache",
         "shadow-nvim": "shadow-nvim",

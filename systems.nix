@@ -86,6 +86,7 @@
                     inputs.catppuccin.homeModules.catppuccin
                     inputs.hyprland.homeManagerModules.default
                     inputs.textfox.homeManagerModules.default
+                    inputs.retroism.homeManagerModules.retroism
                     # inputs.doom-emacs.homeModule
                     ./home-manager
                     ./home-manager/machine-specific/linux
