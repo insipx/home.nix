@@ -20,13 +20,22 @@
       url = "github:marienz/nix-doom-emacs-unstraightened";
       inputs = {
         nixpkgs.follows = "";
-        doomdir.url = "git+https://github.com/insipx/doom-emacs";
+        # Local path while iterating on the doom config (picks up uncommitted
+        # files in the working copy — a git+file: URL would only see committed
+        # state). Switch back to git+https://github.com/insipx/doom-emacs once
+        # the config settles; this path does not exist on cyllene/kusanagi, so
+        # darwin evaluation fails while it is set.
+        doomdir.url = "path:/home/insipx/code/insipx/doom-emacs";
       };
     };
     # doom-config = {
     #   url = "github:insipx/doom-emacs";
     #   flake = false;
     # };
+    # The glaze <8 constraint that breaks against nixpkgs' glaze 8.0.0 affects
+    # 0.55.4 and 0.56.0 alike; the pin lives in systems.nix's glaze-hyprland
+    # override, not here. This ref is just the last version known good on this
+    # machine — 0.56.0 should build fine too now.
     hyprland.url = "github:hyprwm/Hyprland?ref=v0.55.4";
     claude-chill.url = "github:davidbeesley/claude-chill";
     hy3 = {

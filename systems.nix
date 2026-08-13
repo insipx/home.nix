@@ -11,6 +11,43 @@
         jujutsu = prev.jujutsu.overrideAttrs {
           doCheck = false;
         };
+        # moonlight-qt 6.1.0 — still the latest release, from Sept 2024 —
+        # predates FFmpeg 9.0 removing AVVulkanDeviceContext's
+        # queue_family_decode_index and nb_decode_queues, which plvk.cpp uses.
+        # Upstream master guards them behind
+        # LIBAVUTIL_VERSION_INT < AV_VERSION_INT(60, 26, 100) but has not cut a
+        # release since, so pin the last ffmpeg that still has the fields.
+        # Same breakage as FreeBSD ports bug 297357. Drop once a release lands.
+        moonlight-qt = prev.moonlight-qt.override { ffmpeg = prev.ffmpeg_8; };
+        # Hyprland's CMake wants `find_package(glaze 7...<8)`, but the flake's
+        # glaze-hyprland is just nixpkgs' glaze with SSL/interop disabled, and
+        # nixpkgs has moved to 8.0.0. The version range rejects it, CMake falls
+        # back to a FetchContent git clone, and the sandbox has no network — so
+        # the build dies with "could not find git for clone of glaze". Pin the
+        # last 7.x here, keeping the flake's own override (hence overrideAttrs
+        # on glaze-hyprland rather than rebuilding it from prev.glaze).
+        # Hyprland is called with final.callPackage, so this reaches it.
+        # Drop once upstream pins glaze itself.
+        glaze-hyprland = prev.glaze-hyprland.overrideAttrs (_: rec {
+          version = "7.2.0";
+          src = prev.fetchFromGitHub {
+            owner = "stephenberry";
+            repo = "glaze";
+            rev = "v${version}";
+            hash = "sha256-f3NVRi3SXKo42hn0WCw7JsOK3EkdOVJIcuzhPorKjFY=";
+          };
+        });
+        # hyprland-guiutils comes from the Hyprland flake's hyprland-extras
+        # overlay and builds with the plain stdenv (gcc 15 here), but its
+        # hyprtoolkit dependency is not supplied by that flake — it resolves to
+        # nixpkgs, which builds it with gcc16Stdenv on purpose. Linking then
+        # fails on the C++23 std::format symbols hyprtoolkit references
+        # (_M_handle_unrecognized@GLIBCXX_3.4.36 is absent from gcc 15's
+        # libstdc++). Borrow hyprtoolkit's own stdenv rather than naming a gcc
+        # version, so the two cannot drift apart again.
+        hyprland-guiutils = prev.hyprland-guiutils.override {
+          inherit (prev.hyprtoolkit) stdenv;
+        };
         inherit (inputs'.hy3.packages) hy3;
         inherit (inputs'.claude-chill.packages) claude-chill;
       };

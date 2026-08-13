@@ -37,7 +37,10 @@
 
   services.ollama = {
     enable = true;
-    loadModels = [ "gemma4:e4b" ] ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin [ "gemma4:26b-mlx" ];
+    loadModels = [
+      "gemma4:e4b"
+    ]
+    ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin [ "gemma4:26b-mlx" ];
     package = pkgs.ollama-cuda;
   };
   # Authenticate private github: flake inputs via netrc. This works on both
@@ -45,16 +48,21 @@
   # wired per-host in systems.nix), so it is the single credential mechanism.
   nix.settings.netrc-file = config.sops.secrets.nixGithubNetrc.path;
   environment = {
-    systemPackages = with pkgs; [
-      opensc
-      lspmux
-      zellij
-      nix-output-monitor
-    ] ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
-      (pkgs.ollama.override {
-      acceleration = "cuda";
-      })
-    ];
+    systemPackages =
+      with pkgs;
+      [
+        opensc
+        lspmux
+        zellij
+        nix-output-monitor
+      ]
+      ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+        # CLI only. It talks to the server over HTTP on 127.0.0.1:11434 and never
+        # runs inference itself, so it needs no CUDA of its own — the accelerated
+        # build is `services.ollama.package` above. Overriding acceleration here
+        # built a second, redundant CUDA closure.
+        ollama
+      ];
 
     etc."volos.crt" = {
       source = ./volos.cert;

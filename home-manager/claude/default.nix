@@ -67,7 +67,6 @@ in
   };
 
   home.packages = with pkgs; [
-    llm-agents.catnip
     llm-agents.code-review-graph
     llm-agents.codex
     mcp-server-filesystem

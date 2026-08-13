@@ -307,7 +307,7 @@ in
     hyprlock
     catppuccin-cursors.mochaDark
     rpi-imager
-    moonlight-qt
+    # moonlight-qt
 
     sbctl
   ];
