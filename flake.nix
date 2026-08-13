@@ -16,10 +16,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Other Sources
-    # doom-emacs = {
-    #   url = "github:marienz/nix-doom-emacs-unstraightened";
-    #   inputs.nixpkgs.follows = "";
-    # };
+    doom-emacs = {
+      url = "github:marienz/nix-doom-emacs-unstraightened";
+      inputs = {
+        nixpkgs.follows = "";
+        doomdir.url = "git+https://github.com/insipx/doom-emacs";
+      };
+    };
     # doom-config = {
     #   url = "github:insipx/doom-emacs";
     #   flake = false;

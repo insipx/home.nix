@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   config,
   ...
 }:
@@ -34,6 +35,11 @@
     };
   };
 
+  services.ollama = {
+    enable = true;
+    loadModels = [ "gemma4:e4b" ] ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin [ "gemma4:26b-mlx" ];
+    package = pkgs.ollama-cuda;
+  };
   # Authenticate private github: flake inputs via netrc. This works on both
   # stock Nix (netrc-file below) and Determinate Nix (additionalNetrcSources,
   # wired per-host in systems.nix), so it is the single credential mechanism.
@@ -44,14 +50,10 @@
       lspmux
       zellij
       nix-output-monitor
-      llm-agents.catnip
-      llm-agents.code-review-graph
-      llm-agents.codex
-      mcp-server-filesystem
-      notion-mcp-server
-      github-mcp-server
-      mcp-nixos
-      claude-chill
+    ] ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+      (pkgs.ollama.override {
+      acceleration = "cuda";
+      })
     ];
 
     etc."volos.crt" = {

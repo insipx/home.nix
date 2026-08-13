@@ -48,7 +48,7 @@
         {
           imports = [
             inputs.catppuccin.homeModules.catppuccin
-            # inputs.doom-emacs.homeModule
+            inputs.doom-emacs.homeModule
             ./home-manager
             ./home-manager/machine-specific/mac
           ];
@@ -86,7 +86,7 @@
                     inputs.catppuccin.homeModules.catppuccin
                     inputs.hyprland.homeManagerModules.default
                     inputs.textfox.homeManagerModules.default
-                    # inputs.doom-emacs.homeModule
+                    inputs.doom-emacs.homeModule
                     ./home-manager
                     ./home-manager/machine-specific/linux
                   ];

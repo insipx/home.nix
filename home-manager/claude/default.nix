@@ -65,4 +65,14 @@ in
     source = ./statusline.sh;
     executable = true;
   };
+
+  home.packages = with pkgs; [
+    llm-agents.catnip
+    llm-agents.code-review-graph
+    llm-agents.codex
+    mcp-server-filesystem
+    notion-mcp-server
+    github-mcp-server
+    mcp-nixos
+  ];
 }
