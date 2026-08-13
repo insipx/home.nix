@@ -8,6 +8,16 @@
   services = {
     flatpak.enable = true;
     avahi.enable = true;
+    # Lives here rather than common.nix because nix-darwin has no
+    # services.ollama module at all, so defining it there breaks evaluation of
+    # the cyllene/kusanagi configurations. home-manager's services.ollama does
+    # cover darwin (launchd.agents.ollama), but it offers no loadModels or
+    # package options, so this stays NixOS-side.
+    ollama = {
+      enable = true;
+      loadModels = [ "gemma4:e4b" ];
+      package = pkgs.ollama-cuda;
+    };
     chrony = {
       enable = true;
       enableNTS = true;

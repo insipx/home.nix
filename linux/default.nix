@@ -34,11 +34,6 @@ in
     "ssh-ng://nixbuilder@kusanagi?ssh-key=/root/.ssh/nixremote"
     "ssh-ng://nixbuilder@cyllene?ssh-key=/root/.ssh/nixremote"
   ];
-  jupiter-secrets = {
-    enable = true;
-    settings.claudevm = true;
-    generateKey = false;
-  };
   fonts.packages = [
     pkgs.berkeley-mono
   ];
