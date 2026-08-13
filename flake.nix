@@ -25,7 +25,8 @@
         # state). Switch back to git+https://github.com/insipx/doom-emacs once
         # the config settles; this path does not exist on cyllene/kusanagi, so
         # darwin evaluation fails while it is set.
-        doomdir.url = "path:/home/insipx/code/insipx/doom-emacs";
+        # doomdir.url = "path:/home/insipx/code/insipx/doom-emacs";
+        doomdir.url = "git+https://github.com/insipx/doom-emacs";
       };
     };
     # doom-config = {
@@ -107,11 +108,6 @@
     textfox = {
       url = "github:adriankarlen/textfox";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    jupiter-secrets = {
-      url = "github:insipx/jupiter-secrets";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.sops-nix.follows = "sops-nix";
     };
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.1.0";

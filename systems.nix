@@ -68,7 +68,6 @@
           environments.overlays.default
           sccache.overlays.default
           unfree.overlays.default
-          jupiter-secrets.overlays.default
           llm-agents.overlays.shared-nixpkgs
           mcp-servers.overlays.default
           override
@@ -96,7 +95,6 @@
         system = "x86_64-linux";
         modules = with inputs; [
           inputs.lanzaboote.nixosModules.lanzaboote
-          inputs.jupiter-secrets.nixosModules.default
           disko.nixosModules.disko
           ./linux
           ./cachix.nix
