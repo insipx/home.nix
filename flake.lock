@@ -105,6 +105,22 @@
         "type": "github"
       }
     },
+    "cloudflare-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786124673,
+        "narHash": "sha256-r8HeH9XWV9qhbMq3fPASNfT5Y1mrfsgBI5STiUi/LVA=",
+        "owner": "cloudflare",
+        "repo": "skills",
+        "rev": "f96bff754e428838818017f75817f0f9428acd48",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cloudflare",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1781825982,
@@ -723,6 +739,22 @@
         "type": "github"
       }
     },
+    "gh-stack-skill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785805944,
+        "narHash": "sha256-SBP6z6G35wGY31RMhPpsZ1QDOhmVBlLv7ktLXIA3HwI=",
+        "owner": "github",
+        "repo": "gh-stack",
+        "rev": "14fc42ed9b6c376a53b2f999f138d3bd26dac546",
+        "type": "github"
+      },
+      "original": {
+        "owner": "github",
+        "repo": "gh-stack",
+        "type": "github"
+      }
+    },
     "ghostty": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -815,6 +847,22 @@
       "original": {
         "owner": "hercules-ci",
         "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
+    "hallmark-skill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786033158,
+        "narHash": "sha256-JflLR1ZgJZuqktK8rnYu7P0l0lKbB+MoQzs/SY/gcJs=",
+        "owner": "Nutlope",
+        "repo": "hallmark",
+        "rev": "13ac0ec7e148655948100b6396439e481361d690",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Nutlope",
+        "repo": "hallmark",
         "type": "github"
       }
     },
@@ -1238,6 +1286,22 @@
         "owner": "jj-vcs",
         "ref": "v0.38.0",
         "repo": "jj",
+        "type": "github"
+      }
+    },
+    "jujutsu-skill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781318777,
+        "narHash": "sha256-EcQWhnk4KQBQncemlQQTn2XXvUXVdYKkB2OJSpGQ4AI=",
+        "owner": "danverbraganza",
+        "repo": "jujutsu-skill",
+        "rev": "b0668317ec8b375ea3d5815d3f029f4104443a0b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "danverbraganza",
+        "repo": "jujutsu-skill",
         "type": "github"
       }
     },
@@ -1832,6 +1896,22 @@
         "type": "github"
       }
     },
+    "noodle-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773906063,
+        "narHash": "sha256-V3IFt7lj4OrsDZVHO5yVWZ2+QrMG569EmKORSSxE5ZY=",
+        "owner": "poteto",
+        "repo": "noodle",
+        "rev": "82d2921c52370f23f29086de81ccfb600939c037",
+        "type": "github"
+      },
+      "original": {
+        "owner": "poteto",
+        "repo": "noodle",
+        "type": "github"
+      }
+    },
     "norg": {
       "inputs": {
         "flake-compat": "flake-compat_5",
@@ -1943,20 +2023,40 @@
         "type": "github"
       }
     },
+    "research-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778170086,
+        "narHash": "sha256-5R4HgbTPtEds4CMuN8kzlHpPcph9m0/taRrfN0uQnak=",
+        "owner": "Weizhena",
+        "repo": "Deep-Research-skills",
+        "rev": "e5479f857f484cde13fe69d2f3ce8de7af193bc7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Weizhena",
+        "repo": "Deep-Research-skills",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "catppuccin": "catppuccin",
         "claude-chill": "claude-chill",
+        "cloudflare-skills": "cloudflare-skills",
         "determinate": "determinate",
         "disko": "disko",
         "environments": "environments",
         "fenix": "fenix_2",
         "flake-parts": "flake-parts_2",
+        "gh-stack-skill": "gh-stack-skill",
         "ghostty": "ghostty",
+        "hallmark-skill": "hallmark-skill",
         "home-manager": "home-manager_2",
         "hy3": "hy3",
         "hyprland": "hyprland",
         "jujutsu": "jujutsu",
+        "jujutsu-skill": "jujutsu-skill",
         "jupiter-secrets": "jupiter-secrets",
         "lanzaboote": "lanzaboote",
         "llm-agents": "llm-agents",
@@ -1964,6 +2064,8 @@
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs_7",
         "noctalia": "noctalia",
+        "noodle-skills": "noodle-skills",
+        "research-skills": "research-skills",
         "rust-overlay": "rust-overlay_2",
         "sccache": "sccache",
         "shadow-nvim": "shadow-nvim",

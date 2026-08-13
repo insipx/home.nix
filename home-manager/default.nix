@@ -11,6 +11,7 @@
     ./fish.nix
     ./lspmux.nix
     ./mcp.nix
+    ./claude
     ./neovide.nix
     # ./emacs.nix
     #   (import privateConfiguration)

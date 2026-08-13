@@ -105,6 +105,30 @@
       url = "github:nix-community/lanzaboote/v1.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    cloudflare-skills = {
+      url = "github:cloudflare/skills";
+      flake = false;
+    };
+    hallmark-skill = {
+      url = "github:Nutlope/hallmark";
+      flake = false;
+    };
+    research-skills = {
+      url = "github:Weizhena/Deep-Research-skills";
+      flake = false;
+    };
+    gh-stack-skill = {
+      url = "github:github/gh-stack";
+      flake = false;
+    };
+    noodle-skills = {
+      url = "github:poteto/noodle";
+      flake = false;
+    };
+    jujutsu-skill = {
+      url = "github:danverbraganza/jujutsu-skill";
+      flake = false;
+    };
   };
 
   # `...` allows defining additional inputs to the outputs
