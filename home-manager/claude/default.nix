@@ -58,6 +58,13 @@ in
         rev = "6d578313aa15e37f0562afb7535f6d0d5e612040";
         hash = "sha256-cB3KY7jTCjiYOLrxiEO6QL3xNxfpFV1B04L+CDNbV8E=";
       })
+      (pkgs.fetchFromGitHub {
+        name = "claudish-to-english";
+        owner = "gvzdv";
+        repo = "claudish-to-english";
+        rev = "2c78a0ff4f5bfed96244c6de58f4a2be106d6873";
+        hash = "sha256-C0OnpiKGOORmZUpxdOCAN/oASlK8gCwaEyRNu7gTfVU=";
+      })
     ];
   };
 

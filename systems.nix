@@ -50,6 +50,7 @@
         };
         inherit (inputs'.hy3.packages) hy3;
         inherit (inputs'.claude-chill.packages) claude-chill;
+        inherit (inputs'.jayjay.packages) jayjay-gpui;
       };
     in
     {
@@ -84,7 +85,7 @@
         {
           imports = [
             inputs.catppuccin.homeModules.catppuccin
-            inputs.doom-emacs.homeModule
+            # inputs.doom-emacs.homeModule
             ./home-manager
             ./home-manager/machine-specific/mac
           ];

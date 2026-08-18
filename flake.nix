@@ -137,6 +137,9 @@
       url = "github:danverbraganza/jujutsu-skill";
       flake = false;
     };
+    jayjay = {
+      url = "github:hewigovens/jayjay";
+    };
   };
 
   # `...` allows defining additional inputs to the outputs

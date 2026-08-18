@@ -13,7 +13,7 @@
     ./mcp.nix
     ./claude
     ./neovide.nix
-    ./emacs.nix
+    # ./emacs.nix
     #   (import privateConfiguration)
   ];
 

@@ -6,15 +6,15 @@
     git
     betterdisplay
   ];
-  launchd.user.agents.sunshine = {
-    command = "/opt/homebrew/bin/sunshine";
-    serviceConfig = {
-      KeepAlive = true;
-      RunAtLoad = true;
-      StandardOutPath = "/tmp/sunshine.out.log";
-      StandardErrorPath = "/tmp/sunshine.err.log";
-    };
-  };
+  #launchd.user.agents.sunshine = {
+  #  command = "/opt/homebrew/bin/sunshine";
+  #  serviceConfig = {
+  #    KeepAlive = true;
+  #    RunAtLoad = true;
+  #    StandardOutPath = "/tmp/sunshine.out.log";
+  #    StandardErrorPath = "/tmp/sunshine.err.log";
+  #  };
+  #};
   ids.gids.nixbld = 350;
   sops = {
     age = {
@@ -72,7 +72,7 @@
       "ykman"
       "pinentry"
       "pinentry-mac"
-      "sunshine"
+      # "sunshine"
       "ruby-build"
       # "cxreiff/tap/ttysvr"
     ];
@@ -81,6 +81,7 @@
       "raycast"
       "orbstack"
       "vimr"
+      "hewigovens/tap/jayjay"
     ];
     taps = [
       "LizardByte/homebrew"
