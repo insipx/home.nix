@@ -97,6 +97,12 @@
         modules = with inputs; [
           inputs.lanzaboote.nixosModules.lanzaboote
           disko.nixosModules.disko
+          # common.nix both defines sops.secrets and reads
+          # config.sops.secrets.nixGithubNetrc.path, so the NixOS sops module
+          # has to be here. It used to arrive transitively via jupiter-secrets;
+          # the darwin hosts import darwinModules.sops directly for the same
+          # reason.
+          sops-nix.nixosModules.sops
           ./linux
           ./cachix.nix
           ./common.nix
