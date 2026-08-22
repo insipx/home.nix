@@ -65,6 +65,13 @@ in
         rev = "2c78a0ff4f5bfed96244c6de58f4a2be106d6873";
         hash = "sha256-C0OnpiKGOORmZUpxdOCAN/oASlK8gCwaEyRNu7gTfVU=";
       })
+      (pkgs.fetchFromGitHub {
+        name = "ponytail";
+        repo = "ponytail";
+        owner = "DietrichGebert";
+        rev = "2ed6c52c9d7e5e56942508591085fd45dea277d3";
+        hash = "sha256-bGdXvzhWPwGdz3T2Yh2h6lf+3PBRFAfdBxP5pESmCHI=";
+      })
     ];
   };
 
