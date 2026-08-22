@@ -10,6 +10,7 @@ let
     "android-nixpkgs"
     "nixpkgs-contributions"
     "orchestrating-pr-agents"
+    "python"
   ] (name: ./skills + "/${name}");
 
   cloudflareSkills = lib.genAttrs [
