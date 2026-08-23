@@ -106,6 +106,7 @@
           ./linux
           ./cachix.nix
           ./common.nix
+          ./cyllene_linux
           home-manager.nixosModules.home-manager
           inputs.catppuccin.nixosModules.default
           inputs.shadow-nvim.nixosModules.default
@@ -243,6 +244,7 @@
           ./common.nix
           ./determinate.nix
           ./cachix.nix
+          ./cyllene_linux
           home-manager.darwinModules.home-manager
           sops-nix.darwinModules.sops
           shadow-nvim.darwinModules.shadow-nvim
@@ -303,6 +305,7 @@
           ./darwin-config.nix
           ./common.nix
           ./cachix.nix
+          ./kusanagi
           home-manager.darwinModules.home-manager
           sops-nix.darwinModules.sops
           shadow-nvim.darwinModules.shadow-nvim
