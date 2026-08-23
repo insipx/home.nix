@@ -164,40 +164,40 @@
       #     "kvm"
       #   ];
       # }
-      {
-        hostName = "kusanagi";
-        sshUser = "nixbuilder";
-        sshKey = "/root/.ssh/nixremote";
-        systems = [
-          "x86_64-darwin"
-          "aarch64-darwin"
-        ];
-        maxJobs = 8;
-        speedFactor = 2;
-        supportedFeatures = [
-          "nixos-test"
-          "benchmark"
-          "big-parallel"
-        ];
-        protocol = "ssh-ng";
-      }
-      {
-        hostName = "cyllene";
-        sshUser = "nixbuilder";
-        sshKey = "/root/.ssh/nixremote";
-        systems = [
-          "x86_64-darwin"
-          "aarch64-darwin"
-        ];
-        maxJobs = 8;
-        speedFactor = 2;
-        supportedFeatures = [
-          "nixos-test"
-          "benchmark"
-          "big-parallel"
-        ];
-        protocol = "ssh-ng";
-      }
+      #{
+      #  hostName = "kusanagi";
+      #  sshUser = "nixbuilder";
+      #  sshKey = "/root/.ssh/nixremote";
+      #  systems = [
+      #    "x86_64-darwin"
+      #    "aarch64-darwin"
+      #  ];
+      #  maxJobs = 8;
+      #  speedFactor = 2;
+      #  supportedFeatures = [
+      #    "nixos-test"
+      #    "benchmark"
+      #    "big-parallel"
+      #  ];
+      #  protocol = "ssh-ng";
+      #}
+      #{
+      #  hostName = "cyllene";
+      #  sshUser = "nixbuilder";
+      #  sshKey = "/root/.ssh/nixremote";
+      #  systems = [
+      #    "x86_64-darwin"
+      #    "aarch64-darwin"
+      #  ];
+      #  maxJobs = 8;
+      #  speedFactor = 2;
+      #  supportedFeatures = [
+      #    "nixos-test"
+      #    "benchmark"
+      #    "big-parallel"
+      #  ];
+      #  protocol = "ssh-ng";
+      #}
     ];
     settings = {
       extra-experimental-features = [
