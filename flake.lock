@@ -2361,11 +2361,11 @@
         "nvim-fff": "nvim-fff"
       },
       "locked": {
-        "lastModified": 1777304771,
-        "narHash": "sha256-7hQg4CsUg0NaBJSi5gUsdU85mmS2mQRDucFmr+s2sNk=",
+        "lastModified": 1788486641,
+        "narHash": "sha256-w67OPHKsbeiWen4BYErFYAdRPL0t1J/htdvSj2JSpZw=",
         "owner": "insipx",
         "repo": "neovim",
-        "rev": "d705131e79438736b290e08f60bebc4b36113877",
+        "rev": "e9195503200338e7cef69299563779a0dbbedc18",
         "type": "github"
       },
       "original": {
