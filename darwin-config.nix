@@ -39,6 +39,32 @@
       UsePAM no
     '';
   };
+  # tanjiro as an x86_64-linux remote builder. Lives here rather than
+  # common.nix so tanjiro does not list itself. The daemon sshes as root,
+  # which has no ~/.ssh on macOS, so reuse the host key; its .pub is in
+  # users.users.builder.openssh.authorizedKeys on tanjiro (linux/default.nix).
+  nix.buildMachines = [
+    {
+      hostName = "tanjiro";
+      system = "x86_64-linux";
+      sshUser = "builder";
+      sshKey = "/etc/ssh/ssh_host_ed25519_key";
+      protocol = "ssh-ng";
+      maxJobs = 16;
+      speedFactor = 50;
+      supportedFeatures = [
+        "nixos-test"
+        "benchmark"
+        "big-parallel"
+        "kvm"
+      ];
+    }
+  ];
+  programs.ssh.knownHosts.tanjiro = {
+    hostNames = [ "tanjiro" ];
+    publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOeFXTgCo4fPLJE41dg1+gDmaw9dc2p1vn3JfxAXhVFf";
+  };
+
   programs.zsh.enable = true; # default shell on catalina
   programs.fish = {
     enable = true;

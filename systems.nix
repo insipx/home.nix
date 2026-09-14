@@ -187,7 +187,7 @@
                 ];
               };
               security.sudo.wheelNeedsPassword = false;
-              boot.loader.grub.configurationLimit = 3;
+              boot.loader.grub.configurationLimit = 2;
               nix.gc = {
                 automatic = true;
                 options = "--delete-older-than 7d";

@@ -221,12 +221,17 @@ in
   }; # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
+  # Remote-builder account for the darwin hosts (see darwin-config.nix
+  # nix.buildMachines). Their nix daemons ssh in as root using the host key.
   users.users.builder = {
     isNormalUser = true;
     home = "/var/lib/builder";
     shell = "${nixBuilderShell}/bin/nix-builder-shell";
-    openssh.authorizedKeys.keys = [ ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP7YtvrqIK6wGvf1usTeTtegPM7iaxhnXXHYEmr4GMsw root@kusanagi"
+    ];
   };
+  environment.shells = [ nixBuilderShell ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.insipx = {

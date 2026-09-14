@@ -52,6 +52,10 @@
         hostNames = [ "eu.nixbuild.net" ];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
       };
+      arm64-builder = {
+        hostNames = [ "arm64-builder.insipx.xyz" ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC3yqH3hvKqDTNkX4jnrw+OZHjYwAEkbMc/6YKumR8Sn";
+      };
     };
     extraConfig = ''
       Host eu.nixbuild.net
@@ -86,6 +90,7 @@
         ];
         mandatoryFeatures = [ ];
         sshUser = "nixremote";
+        sshKey = if pkgs.stdenv.hostPlatform.isDarwin then "/etc/ssh/ssh_host_ed25519_key" else null;
         protocol = "ssh-ng";
       }
       # {
