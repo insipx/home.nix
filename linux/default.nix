@@ -231,7 +231,7 @@ in
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP7YtvrqIK6wGvf1usTeTtegPM7iaxhnXXHYEmr4GMsw root@kusanagi"
     ];
   };
-  environment.shells = [ nixBuilderShell ];
+  environment.shells = [ "${nixBuilderShell}/bin/nix-builder-shell" ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.insipx = {
