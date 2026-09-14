@@ -88,7 +88,6 @@
           "big-parallel"
           "kvm"
         ];
-        mandatoryFeatures = [ ];
         sshUser = "nixremote";
         sshKey = if pkgs.stdenv.hostPlatform.isDarwin then "/etc/ssh/ssh_host_ed25519_key" else null;
         protocol = "ssh-ng";
