@@ -17,8 +17,8 @@
       };
       nixGithubNetrc = {
         mode = "0440";
-        owner = "andrewplaza";
-        group = "staff";
+        owner = "root";
+        group = "wheel";
       };
     };
   };

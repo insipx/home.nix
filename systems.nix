@@ -183,6 +183,7 @@
                 ];
                 openssh.authorizedKeys.keys = [
                   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOIPrcoSB8P1OImd7wxZ7TqW4QQ02JQ4aIhpbtaOmweC root@tanjiro"
+                  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP7YtvrqIK6wGvf1usTeTtegPM7iaxhnXXHYEmr4GMsw root@kusanagi"
                 ];
               };
               nix.settings = {

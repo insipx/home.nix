@@ -5,10 +5,10 @@
   ...
 }:
 {
-  # Authenticate private github: flake inputs via netrc. This works on both
-  # stock Nix (netrc-file below) and Determinate Nix (additionalNetrcSources,
-  # wired per-host in systems.nix), so it is the single credential mechanism.
   nix.settings.netrc-file = config.sops.secrets.nixGithubNetrc.path;
+  nix.extraOptions = ''
+    !include /run/secrets/nixAccessTokens
+  '';
   environment = {
     systemPackages =
       with pkgs;
@@ -19,11 +19,6 @@
         nix-output-monitor
       ]
       ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
-        # CLI only. It talks to the server over HTTP on 127.0.0.1:11434 and never
-        # runs inference itself, so it needs no CUDA of its own — the accelerated
-        # build is `services.ollama.package` in linux/services.nix. Overriding
-        # acceleration here
-        # built a second, redundant CUDA closure.
         ollama
       ];
 
