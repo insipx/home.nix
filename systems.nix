@@ -186,6 +186,12 @@
                   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP7YtvrqIK6wGvf1usTeTtegPM7iaxhnXXHYEmr4GMsw root@kusanagi"
                 ];
               };
+              security.sudo.wheelNeedsPassword = false;
+              boot.loader.grub.configurationLimit = 3;
+              nix.gc = {
+                automatic = true;
+                options = "--delete-older-than 7d";
+              };
               nix.settings = {
                 experimental-features = [
                   "nix-command"
