@@ -55,6 +55,7 @@
         "GBM_BACKEND,nvidia-drm"
         "XDG_SESSION_TYPE,wayland"
         "NODE_EXTRA_CA_CERTS,/etc/volos.crt"
+        "TZDIR,/etc/zoneinfo"
       ];
       "$mainMod" = "SUPER";
       "$terminal" = "ghostty";
@@ -63,9 +64,12 @@
       "$run" = "tofi-run | xargs hyprctl dispatch exec";
       # "$run" = "tofi-run --prompt-text 'Run: ' | xargs -I {} hyprctl dispatch exec 'ghostty -e {}; sleep infinity'";
       # screenshot: grab region/window/screen -> annotate in satty -> copy to clipboard
-      "$screenshotRegion" = "hyprshot -m region --raw | satty --filename - --copy-command wl-copy --early-exit";
-      "$screenshotWindow" = "hyprshot -m window --raw | satty --filename - --copy-command wl-copy --early-exit";
-      "$screenshotScreen" = "hyprshot -m output --raw | satty --filename - --copy-command wl-copy --early-exit";
+      "$screenshotRegion" =
+        "hyprshot -m region --raw | satty --filename - --copy-command wl-copy --early-exit";
+      "$screenshotWindow" =
+        "hyprshot -m window --raw | satty --filename - --copy-command wl-copy --early-exit";
+      "$screenshotScreen" =
+        "hyprshot -m output --raw | satty --filename - --copy-command wl-copy --early-exit";
       # clipse listener now runs as a systemd user service (see services.* below), not here.
       exec-once = [ ];
       bind = [

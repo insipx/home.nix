@@ -116,33 +116,10 @@ in
       ];
     };
   };
-
-  systemd.network = {
-    enable = true;
-
-    netdevs."10-dns-xmtpd" = {
-      netdevConfig = {
-        Name = "dns-xmtpd";
-        Kind = "dummy";
-      };
-    };
-
-    networks."10-dns-xmtpd" = {
-      matchConfig.Name = "dns-xmtpd";
-      networkConfig = {
-        DNS = "127.0.0.1:5354";
-        Domains = "~xmtpd.local";
-        DNSSEC = false;
-        DNSOverTLS = false;
-      };
-      address = [ "192.168.254.253/32" ];
-    };
-  };
   networking = {
     hostName = "tanjiro"; # Define your hostname.
     networkmanager = {
       enable = true;
-      dns = "systemd-resolved";
     };
   };
 
@@ -210,6 +187,9 @@ in
   programs = {
     fish = {
       enable = true;
+      interactiveShellInit = ''
+        time.timeZone = "America/New_York";
+      '';
       #      # Set your time zone.
       #      interactiveShellInit = ''
       #        time.timeZone = "America/New_York"
