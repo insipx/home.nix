@@ -40,20 +40,10 @@
 
   # Servers without an mcp-servers-nix module
   mcp-servers.settings.servers = {
-    # Official Datadog remote MCP server; claude-code does OAuth at runtime
-    datadog = {
-      url = "https://mcp.datadoghq.com/v1/mcp";
-    };
     # Needs a graph: run `code-review-graph build` once per repo
     code-review-graph = {
       command = lib.getExe pkgs.llm-agents.code-review-graph;
       args = [ "serve" ];
-    };
-    linear = {
-      url = "https://mcp.linear.app/mcp";
-    };
-    okx = {
-      url = "https://www.okx.com/api/v1/mcp/trading-oauth";
     };
     # Bare `semble` (no subcommand) is the stdio MCP server. Use the nix
     # package directly - `uvx` is not on PATH here, and would re-download a
@@ -70,15 +60,10 @@
   };
 
   # Codex consumes the same programs.mcp.servers set, so code-review-graph and
-  # the rest arrive without a second declaration. The binary comes from
-  # environment.systemPackages in common.nix, so package is null here to avoid
-  # a duplicate copy in the home profile.
-  #
-  # NOTE: this makes ~/.codex/config.toml a read-only store symlink. Anything
-  # Codex used to write there itself now has to be declared in `settings`.
+  # co. are baked in.
   programs.codex = {
     enable = true;
-    package = null;
+    package = pkgs.llm-agents.codex;
     enableMcpIntegration = true;
 
     # ~/.codex/AGENTS.md: global context merged into every session, including
@@ -119,11 +104,14 @@
     '';
 
     settings = {
-      # Trusted project roots. Codex normally records these itself when you
-      # approve a folder; with config.toml owned by home-manager, new ones go
-      # here instead.
-      projects."/home/insipx".trust_level = "trusted";
-      projects."/home/insipx/code/xmtplabs/convos-backend".trust_level = "trusted";
+      projects = {
+        "/home/insipx".trust_level = "trusted";
+        "/Users/andrewplaza".trust_level = "trusted";
+        "/Users/andrewplaza/code/insipx/jupiter".trust_level = "trusted";
+        "/Users/andrewplaza/code/insipx/nixos-lab".trust_level = "trusted";
+        "/private/etc/nix-darwin".trust_level = "trusted";
+
+      };
 
       # Dismissed model-availability notices. Cosmetic; safe to drop.
       tui.model_availability_nux = {
@@ -132,15 +120,6 @@
       };
     };
 
-    # ~/.codex/hooks.json. Keeps the graph fresh without the agent having to
-    # remember to rebuild it. `code-review-graph` is pinned to the same store
-    # path the MCP server uses so the hook and the tools can never drift to
-    # different versions.
-    #
-    # The `git rev-parse --git-dir` guard is repo detection, not agent VCS
-    # usage - it succeeds in colocated jj repos, which all of these are. The
-    # leading `cat >/dev/null` drains the hook's JSON payload on stdin so the
-    # command does not see a broken pipe.
     hooks = {
       PostToolUse = [
         {

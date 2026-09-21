@@ -29,10 +29,10 @@
         doomdir.url = "git+https://github.com/insipx/doom-emacs";
       };
     };
-    # doom-config = {
-    #   url = "github:insipx/doom-emacs";
-    #   flake = false;
-    # };
+    doom-config = {
+      url = "github:insipx/doom-emacs";
+      flake = false;
+    };
     # The glaze <8 constraint that breaks against nixpkgs' glaze 8.0.0 affects
     # 0.55.4 and 0.56.0 alike; the pin lives in systems.nix's glaze-hyprland
     # override, not here. This ref is just the last version known good on this

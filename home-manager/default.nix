@@ -13,24 +13,19 @@
     ./mcp.nix
     ./claude
     ./neovide.nix
-    # ./emacs.nix
+    ./emacs.nix
     #   (import privateConfiguration)
   ];
 
   # emacs 30.2 fails to build on darwin (macfont.o compile error in the macOS
   # Core Text font backend), so only enable the service on Linux for now.
   services.emacs.enable = pkgs.stdenv.hostPlatform.isLinux;
-  catppuccin.enable = true;
-  # Opt into the current auto-enroll behavior explicitly. catppuccin/nix is
-  # splitting `enable` (global toggle) from `autoEnable` (enroll all ports);
-  # setting this to match silences the migration warning and keeps behavior.
-  catppuccin.autoEnable = true;
-  catppuccin.mako.enable = false;
+  catppuccin = {
+    enable = true;
+    autoEnable = true;
+    mako.enable = false;
+  };
   home = {
-    # This value determines the Home Manager release that your configuration is
-    # compatible with. This helps avoid breakage when a new Home Manager release
-    # introduces backwards incompatible changes.
-    #
     # You should not change this value, even if you update Home Manager. If you do
     # want to update the value, then make sure to first check the Home Manager
     # release notes.

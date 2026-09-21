@@ -244,6 +244,22 @@
         "type": "github"
       }
     },
+    "doom-config": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1789953611,
+        "narHash": "sha256-Y53jMvMxnUOk3O1taNy8mVpdB2rL2BvJo7DOFMcAk0k=",
+        "owner": "insipx",
+        "repo": "doom-emacs",
+        "rev": "e27aed7c767edd2d673f08b3ce21079548896c8f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "insipx",
+        "repo": "doom-emacs",
+        "type": "github"
+      }
+    },
     "doom-emacs": {
       "inputs": {
         "doomdir": "doomdir",
@@ -2182,6 +2198,7 @@
         "cloudflare-skills": "cloudflare-skills",
         "determinate": "determinate",
         "disko": "disko",
+        "doom-config": "doom-config",
         "doom-emacs": "doom-emacs",
         "environments": "environments",
         "fenix": "fenix_2",

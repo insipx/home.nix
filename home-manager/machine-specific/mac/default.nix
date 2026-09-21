@@ -1,12 +1,6 @@
 { pkgs, ... }:
 let
-  # Upstream's prebuilt darwin CLI release instead of the nixpkgs build. The
-  # nixpkgs derivation configures with -DOLLAMA_MLX_BACKENDS="" — Xcode's
-  # Metal shader compiler isn't available in the nix sandbox — so its payload
-  # has no MLX runner and `:mlx`-tagged models fail with "MLX not available".
-  # Upstream's tarball ships the MLX metal runners (mlx_metal_v3/v4) next to
-  # the llama.cpp payload. Update: bump version + hash from
-  # https://github.com/ollama/ollama/releases (asset ollama-darwin.tgz).
+  # prebuilt darwin package
   ollama-darwin-bin = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
     pname = "ollama-darwin-bin";
     version = "0.32.13";
@@ -52,7 +46,6 @@ in
   # the hm module call package.override { acceleration }, which this binary
   # derivation doesn't accept.
   services.ollama.package = ollama-darwin-bin;
-
   home.file = {
     ".gnupg/gpg-agent.conf".text = ''
       # https://github.com/drduh/config/blob/master/gpg-agent.conf

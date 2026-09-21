@@ -85,7 +85,7 @@
         {
           imports = [
             inputs.catppuccin.homeModules.catppuccin
-            # inputs.doom-emacs.homeModule
+            inputs.doom-emacs.homeModule
             ./home-manager
             ./home-manager/machine-specific/mac
           ];
