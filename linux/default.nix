@@ -185,19 +185,7 @@ in
     defaultSopsFile = ./../secrets/env.yaml;
   };
   programs = {
-    fish = {
-      enable = true;
-      interactiveShellInit = ''
-        time.timeZone = "America/New_York";
-      '';
-      #      # Set your time zone.
-      #      interactiveShellInit = ''
-      #        time.timeZone = "America/New_York"
-      #                 set -x ANTHROPIC_API_KEY (cat ${config.sops.secrets.anthropic_key.path})
-      #                 set -x CACHIX_AUTH_TOKEN (cat ${config.sops.secrets.cachix_auth_token.path})
-      #      '';
-      #    };
-    };
+    fish.enable = true;
   }; # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
