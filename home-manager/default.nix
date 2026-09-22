@@ -14,6 +14,7 @@
     ./claude
     ./neovide.nix
     ./emacs.nix
+    ./secrets.nix
     #   (import privateConfiguration)
   ];
 

@@ -17,6 +17,7 @@
         lspmux
         zellij
         nix-output-monitor
+        languagetool
       ]
       ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
         ollama
