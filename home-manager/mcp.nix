@@ -110,6 +110,7 @@
         "/Users/andrewplaza/code/insipx/jupiter".trust_level = "trusted";
         "/Users/andrewplaza/code/insipx/nixos-lab".trust_level = "trusted";
         "/Users/andrewplaza/code/insipx/neovim".trust_level = "trusted";
+        "/Users/andrewplaza/code/insipx/website".trust_level = "trusted";
         "/private/etc/nix-darwin".trust_level = "trusted";
 
       };

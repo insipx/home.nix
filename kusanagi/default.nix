@@ -6,6 +6,11 @@
   sops = {
     defaultSopsFile = ./../secrets/env.yaml;
     secrets = {
+      languagetool_api_key = {
+        owner = config.users.users.andrewplaza.name;
+        mode = "0400";
+        path = "${config.users.users.andrewplaza.home}/.config/neovim-secrets/languagetool";
+      };
       nixAccessTokens = {
         mode = "0440";
         owner = "andrewplaza";
