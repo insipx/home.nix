@@ -112,7 +112,8 @@
         "/Users/andrewplaza/code/insipx/neovim".trust_level = "trusted";
         "/Users/andrewplaza/code/insipx/website".trust_level = "trusted";
         "/private/etc/nix-darwin".trust_level = "trusted";
-
+        "/home/insipx/code/insipx/status-display-rs".trust_level = "trusted";
+        "/home/insipx/code/insipx/roasted-rs".trust_level = "trusted";
       };
 
       # Dismissed model-availability notices. Cosmetic; safe to drop.

@@ -18,6 +18,7 @@
         zellij
         nix-output-monitor
         languagetool
+        mermaid-cli
       ]
       ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
         ollama
